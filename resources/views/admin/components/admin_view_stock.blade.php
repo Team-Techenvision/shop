@@ -10,9 +10,10 @@
           <thead>     
               <tr>
                 <th>Sr. No.</th> 
-                <th>User Name</th> 
-                <th>Email</th>
-                <th>User Phone</th>                 
+                <th>Product Name</th> 
+                <th>Quantity</th>
+                <th>Available Quantity</th>  
+                <th>Expiry Date</th>                 
               </tr>
             </thead>
             <tbody> 
@@ -20,14 +21,14 @@
               $count = 1;  
 
               @endphp 
-              @foreach($stock as $r)
+              @foreach($product as $r)
               
             <tr> 
             <td> {{$count++}} </td>
-            <td>{{$r->products_id}}</td>     
-            <td>{{$r->shop_id}}</td>
+            <td>{{$r->product_name}}</td>     
+            <!-- <td>{{$r->shop_id}}</td> -->
             <td>{{$r->input_quantity}}</td>
-            <td>{{$r->avl_quantity}}</td>
+            <td>{{$r->input_quantity}}</td>
             <td>{{$r->expiry_date}}</td>    
             </tr>
 

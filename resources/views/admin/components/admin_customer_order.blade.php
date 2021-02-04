@@ -10,6 +10,8 @@
         <h6 class="card-title">{{$page_title}}</h6>
       <form action="{{url('add-cust-order') }}" method="post"> 
       @csrf
+      shop id :
+          <input type="text" class="form-control text-center col-sm-2 ml-1" name="shop_id"  value="101" readonly>
         <div class="row">        
           <div class="col-sm-2 text-right">                           
             <div class="form-group p-2">             

@@ -26,10 +26,16 @@ Route::post('product-order','AdminController@addproductorder');
 Route::get('cust-order', 'AdminController@customerorder');
 Route::post('add-cust-order', 'AdminController@add_cust_order');
 Route::post('product-detail', 'AdminController@product_detail');
+Route::post('submit-cust-order', 'AdminController@submitcustorder');
+ Route::get('pdf-view', 'AdminController@pdf_view');
+ Route::get('generate-barcode', 'BarcodeController@barcode');
+//Route::get('invoice', 'AdminController@pdf_view');
+Route::get('Add-employee', 'AdminController@add_shopEmployee');
+Route::get('view-Emplist', 'AdminController@show_shopEmployee');
+Route::post('submit-employee', 'AdminController@submit_shopEmp');
+//new code 
 
-//new code rahul
-
-
+Route::post('shop-home','AdminController@ShopHome');
 Route::get('home-bash', function () {
     $data['flag'] = 1;
     return view('dashboard');

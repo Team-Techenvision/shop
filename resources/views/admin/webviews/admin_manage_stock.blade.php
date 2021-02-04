@@ -24,7 +24,13 @@
             @elseif($flag == 6)
             	@include('admin.components/admin_customer_order')
             @elseif($flag == 7)
-            	@include('admin.components/add_cust_order')      
+            	@include('admin.components/add_cust_order') 
+            @elseif($flag == 8)
+            	@include('admin.components/view_order') 
+            @elseif($flag == 9)
+            	@include('admin.components/view_shopEmp')  
+            @elseif($flag == 10)
+            	@include('admin.components/add_shop_Employee')      
             @endif
         </div>
 

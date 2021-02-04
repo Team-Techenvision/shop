@@ -2,8 +2,9 @@
   <nav class="navbar top-navbar">
     <div class="container">
       <div class="navbar-content">
-        <a href="#" class="navbar-brand">
-         Dr<span>&nbsp;Help Desk</span>
+        <a href="#" class="brand-logo">
+         <!-- Dr<span>&nbsp;Help Desk</span> -->
+         <img src="{{asset('assets/images/logo.png') }}" alt="profile" class="img-fluid">
         </a>
         <!-- <form class="search-form">
           <div class="input-group">
@@ -28,7 +29,7 @@
               <a href="javascript:;" class="dropdown-item py-2"><i class="flag-icon flag-icon-es" title="es" id="es"></i> <span class="ml-1"> Spanish </span></a>
             </div>
           </li> -->
-          <li class="nav-item dropdown nav-apps">
+          <!-- <li class="nav-item dropdown nav-apps">
             <a class="nav-link dropdown-toggle" href="#" id="appsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i data-feather="grid"></i>
             </a>
@@ -49,8 +50,8 @@
                 <a href="javascript:;">View all</a>
               </div>
             </div>
-          </li>
-          <li class="nav-item dropdown nav-messages">
+          </li> -->
+          <!-- <li class="nav-item dropdown nav-messages">
             <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i data-feather="mail"></i>
             </a>
@@ -125,8 +126,8 @@
                 <a href="javascript:;">View all</a>
               </div>
             </div>
-          </li>
-          <li class="nav-item dropdown nav-notifications">
+          </li> -->
+          <!-- <li class="nav-item dropdown nav-notifications">
             <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i data-feather="bell"></i>
               <div class="indicator">
@@ -189,15 +190,15 @@
                 <a href="javascript:;">View all</a>
               </div>
             </div>
-          </li>
+          </li> -->
           <li class="nav-item dropdown nav-profile">
             <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img src="{{asset('assets/images/1.png') }}" alt="profile" class="img-fluid">
+              <img src="{{asset('assets/images/logo.png') }}" alt="profile" class="img-fluid">
             </a>
             <div class="dropdown-menu" aria-labelledby="profileDropdown">
               <div class="dropdown-header d-flex flex-column align-items-center">
                 <div class="figure mb-3">
-                  <img src="{{asset('assets/images/1.png') }}" alt="" class="img-fluid">
+                  <img src="{{asset('assets/images/logo.png') }}" alt="" class="img-fluid w-100">
                 </div>
                 <div class="info text-center">
                   <p class="name font-weight-bold mb-0">Shop_name</p>
@@ -207,7 +208,7 @@
               <div class="dropdown-body">
                 <ul class="profile-nav p-0 pt-3">
                   <li class="nav-item">
-                    <a href="{{ url('/general/profile') }}" class="nav-link">
+                   <a href="javascript:;" class="nav-link"> <!--  {{ url('/general/profile') }} -->
                       <i data-feather="user"></i>
                       <span>Profile</span>
                     </a>
@@ -253,14 +254,29 @@
         <li class="nav-item {{ active_class(['email/*', 'apps/*']) }}">
           <a href="#" class="nav-link">
             <i class="link-icon" data-feather="mail"></i>
-            <span class="menu-title">Product</span>
+            <span class="menu-title">Shop Manage</span>
             <i class="link-arrow"></i>
           </a>
           <div class="submenu">
             <ul class="submenu-item">
               <li class="category-heading">Shop Employee</li>
-              <li class="nav-item"><a class="nav-link {{ active_class(['email/inbox']) }}" href="{{ url('/View-User') }}">List</a></li>
-              <li class="nav-item"><a class="nav-link {{ active_class(['email/read']) }}" href="{{ url('/email/read') }}">Add</a></li>              
+              <li class="nav-item"><a class="nav-link {{ active_class(['email/inbox']) }}" href="{{url('/view-Emplist')}}">List</a></li>
+              <li class="nav-item"><a class="nav-link {{ active_class(['email/read']) }}" href="{{url('/Add-employee')}}">Add Employee</a></li>              
+              
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item {{ active_class(['email/*', 'apps/*']) }}">
+          <a href="#" class="nav-link">
+            <i class="link-icon" data-feather="mail"></i>
+            <span class="menu-title">Product</span>
+            <i class="link-arrow"></i>
+          </a>
+          <div class="submenu">
+            <ul class="submenu-item">
+              <!-- <li class="category-heading">Shop Employee</li>
+              <li class="nav-item"><a class="nav-link {{ active_class(['email/inbox']) }}" href="#">List</a></li>
+              <li class="nav-item"><a class="nav-link {{ active_class(['email/read']) }}" href="#">Add</a></li>               -->
               <li class="category-heading">Stock</li>
               <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{ url('/View-Stock') }}">list</a></li>
               <li class="nav-item"><a class="nav-link {{ active_class(['apps/calendar']) }}" href="{{ url('/Add-Stock') }}">Add</a></li>             
@@ -299,7 +315,8 @@
           <div class="submenu">
             <ul class="submenu-item">
             <li class="category-heading">Reports</li>
-              <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="#">Report</a></li><!--href="{{ url('/cust-report') }}"-->
+              <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="#">Report</a></li>
+              <!--href="{{ url('/cust-report') }}"-->
               
               <!-- <li class="category-heading">Order</li>
               <li class="nav-item"><a class="nav-link {{ active_class(['email/inbox']) }}" href="{{ url('/email/inbox') }}">Inbox</a></li>
@@ -385,7 +402,7 @@
             </div>
           </div>
         </li> -->
-        <li class="nav-item {{ active_class(['forms/*']) }}">
+        <!-- <li class="nav-item {{ active_class(['forms/*']) }}">
           <a href="#" class="nav-link">
             <i class="link-icon" data-feather="inbox"></i>
             <span class="menu-title">Forms</span>
@@ -399,7 +416,7 @@
               <li class="nav-item"><a href="{{ url('/forms/wizard') }}" class="nav-link {{ active_class(['forms/wizard']) }}">Wizard</a></li>
             </ul>
           </div>
-        </li>
+        </li> -->
         <!-- <li class="nav-item {{ active_class(['charts/*', 'tables/*']) }}">
           <a href="#" class="nav-link">
             <i class="link-icon" data-feather="pie-chart"></i>
