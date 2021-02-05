@@ -30,7 +30,11 @@
             @elseif($flag == 9)
             	@include('admin.components/view_shopEmp')  
             @elseif($flag == 10)
-            	@include('admin.components/add_shop_Employee')      
+            	@include('admin.components/add_shop_Employee')
+            @elseif($flag == 11)
+            	@include('admin.components/cust_order_list') 
+            @elseif($flag == 12)
+            	@include('admin.components/print_product_barcode')               
             @endif
         </div>
 
