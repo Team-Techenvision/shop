@@ -139,7 +139,7 @@ class AdminController extends Controller
            ->select('products.*')
            ->where('shop_stocks.shop_id','=',$shop_id)
            ->get(); 
-          // dd($data['product']);
+        //   dd($data['product']);
            return view('admin/webviews/admin_manage_stock',$data);
          
     }
@@ -302,14 +302,18 @@ public function submit_shopEmp(Request $req)
         $gst = DB::table('products')->where('products_id', $product_id)->first();       
          $tax = $gst->gst_id;
          //dd($tax);
-        $shop_id = 101;      
+        $shop_id = 101;  
+        $seven_random_number = mt_rand(0, 9999999); 
+        $barcode =  $shop_id.$seven_random_number; 
+        // dd($barcode);
 
         $data1 = new shop_stock;           
             $data1->products_id=$product_id;
             $data1->shop_id= $shop_id;
             $data1->input_quantity=$product_qty; 
             $data1->expiry_date=$product_expiry;
-            $data1->tax=$tax; 
+            $data1->tax=$tax;
+            $data1->barcode =$barcode; 
             $result = $data1->save();
             if($result)
             {
