@@ -10,13 +10,20 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes(); 
+
 Route::get('/', function () {
-    return view('pages.auth.login');
+    return view('admin/common/login');
     //return view('dashboard');
 });
 
+Route::get('Register', function () {
+    return view('admin/common/register');
+    //return view('dashboard');
+});
+Route::post('post-login', 'AdminController@postlogin');
 
+
+Route::middleware(['ShopAdmin'])->group(function() {
 Route::get('View-User', 'AdminController@UserList');
 Route::get('Add-User', 'AdminController@UserAdd');
 Route::get('View-Stock', 'AdminController@StockList');
@@ -37,7 +44,9 @@ Route::post('submit-employee', 'AdminController@submit_shopEmp');
 // Route::get('cust-orderList', 'AdminController@cust_order_list');
 Route::get('print-barcode', 'AdminController@print_Barcode');
 Route::post('change-status','AdminController@change_emp_status');
-
+Route::get('download-invoice/{order_id}','AdminController@downloadInvoice');
+Route::get('logout', 'AdminController@logout');
+});
 //new code 
 
 Route::post('shop-home','AdminController@ShopHome');
@@ -46,6 +55,8 @@ Route::get('home-bash', function () {
     return view('dashboard');
     //return view('admin/webviews/home_dashboard',$data);    
 });
+
+
 
 Route::group(['prefix' => 'email'], function(){
     Route::get('inbox', function () { return view('pages.email.inbox'); });

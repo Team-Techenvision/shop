@@ -21,6 +21,7 @@
 
   <!-- common css -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
+  
   <!-- end common css -->
 
   @stack('style')
@@ -53,6 +54,8 @@
     <script src="{{ asset('assets/js/template.js') }}"></script>
     <!-- end common js -->
   
-    @stack('custom-scripts')       
+    @stack('custom-scripts')    
+    @toastr_js
+    @toastr_render   
 </body>
 </html>

@@ -1,20 +1,51 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Input;
 use DB;
+use Validator;
 use App\shop_stock;
 use App\gsttax;
 use App\product_order;
 use App\User;
 use App\order_item;
 use App;
+use Auth;
 use PDF;
+use redirect;
+use Session;
+
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
 class AdminController extends Controller
 {
+
+    // login code
+    public function postlogin(Request $req){
+    // dd($req);
+    $data['phone'] = $req->get('phone');
+    $data['password'] = $req->get('password');
+
+    if(Auth::attempt($data))
+    {
+        return redirect('/home-bash');
+    }else {
+            // toastr()->success('Your Address Edit Successfull');
+            return back()->with('message','Invalid Username Or Password');
+            
+        }
+    }
+
+    // logout code
+    public function logout() {
+        Session::flush();
+        Auth::logout();
+        return Redirect('/');
+    }
+ 
     public function UserList(){
         $data['flag'] = 1;
         $data['page_title'] = 'View User';
@@ -303,6 +334,21 @@ public function cust_order_list()
 }
 
 // ========================================
+
+
+// Print invoice
+public function downloadInvoice($order_id){ 
+    $orderDetails = DB::table('orders')->where('order_id', $order_id)->first();
+    $orders = DB::table('order_items')->where('order_id',$order_id)->get();
+    $orderStatus = DB::table('order_status')->get();  
+   $data['orderDetails'] = $orderDetails;
+   $data['order'] = $orders;
+   $data['orderStatus'] = $orderStatus;
+   return view('admin/common/downloadinvoice', $data);
+   
+//    $pdf = PDF::loadView('admin/common/downloadinvoice', $data);
+//    return $pdf->download('invoice.pdf');
+}
 
 
     public function pdf_view()
