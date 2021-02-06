@@ -13,7 +13,13 @@ class BarCode extends Controller
     public function quantity($barcode){
         $data['barcode'] = $barcode;
         // dd($data['barcode']);
-        return view('admin/common/print', $data);
+
+        // return view('admin/common/print', $data);
+        $data['main_breadcrum'] = 'BarCode';
+        $data['page_title'] = 'Create BarCode';
+        $data['flag'] = 12; 
+        //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
+        return view('admin/webviews/admin_manage_stock',$data);
     }
     //
     public function barcode(Request $req){

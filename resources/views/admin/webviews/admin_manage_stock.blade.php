@@ -34,7 +34,9 @@
             @elseif($flag == 11)
             	@include('admin.components/cust_order_list') 
             @elseif($flag == 12)
-            	@include('admin.components/print_product_barcode')               
+            	@include('admin.components/print_product_barcode')
+            @elseif($flag == 13)
+            	@include('admin.components/order_detail')                  
             @endif
         </div>
 

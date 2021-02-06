@@ -273,21 +273,21 @@ public function submit_shopEmp(Request $req)
         $result = $data->save();
         if($result)
         {
-            $req->session()->flash('alert-success', 'Employee was successful added!');
+            $req->session()->flash('alert-success', 'Employee was Successfully Added!');
         }
         else
         {
-            $req->session()->flash('alert-danger', 'Employee Not added!');
+            $req->session()->flash('alert-danger', 'Employee Not Added!');
         }       
 
      return back(); 
 }
 
-public function cust_order_list()
+public function cust_order_list($order_id)
 {
     // echo "hello";
-    // $order_id = "601b66e5319f4";
-    $order_id = $order_id;
+    //  $order_id = "601b66e5319f4";
+    // $order_id = $order_id;
     $data['main_breadcrum'] = 'Order';
     $data['page_title'] = 'Customer Oder';
     $data['flag'] = 11; 
@@ -362,11 +362,11 @@ public function cust_order_list()
             $result = $data1->save();
             if($result)
             {
-                $req->session()->flash('alert-success', 'Product was successful added!');
+                $req->session()->flash('alert-success', 'Product was Successful Added!');
             }
             else
             {
-                $req->session()->flash('alert-danger', 'Product Not added!');
+                $req->session()->flash('alert-danger', 'Product Not Added!');
             }
             return back(); 
         
@@ -400,12 +400,28 @@ public function cust_order_list()
               ->update(['is_block' => $ch_value]);
           if($affected)
           {             
-            $req->session()->flash('alert-success', 'Employee Status Updated Sccussfully!!');             
+            $req->session()->flash('alert-success', 'Employee Status Updated Successfully!!');             
           }
           else
           {
             $req->session()->flash('alert-danger', 'Employee Status Not Updated!!');            
           }    
         return back();
+    }
+    // new new code
+    public function show_shop_invoice()
+    {
+        $shop_id = 101;
+        $data['main_breadcrum'] = 'Shop';
+        $data['page_title'] = 'Shop Order List';
+        $data['flag'] = 13; 
+        $data['shop_orders'] = DB::table('users')
+        ->join('orders', 'users.id', '=','orders.user_id')
+        ->select('orders.*','users.phone')
+        ->where('orders.shop_id','=', $shop_id)
+        ->get(); 
+        // dd( $data['shop_orders']);
+        //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
+        return view('admin/webviews/admin_manage_stock',$data);
     }
 }

@@ -293,6 +293,8 @@
           </a>
           <div class="submenu">
             <ul class="submenu-item">
+            <li class="category-heading">Shop Order List</li>
+              <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{ url('/list-invoice') }}">Show List</a></li>
             <li class="category-heading">Customer Order</li>
               <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{ url('/cust-order') }}">Add order</a></li>
               

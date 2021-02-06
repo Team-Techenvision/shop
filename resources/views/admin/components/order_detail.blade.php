@@ -10,11 +10,11 @@
           <thead>     
               <tr>
                 <th>Sr. No.</th> 
-                <th>Product Name</th> 
-                <th>Quantity</th>
-                <th>Available Quantity</th>  
-                <th>Expiry Date</th>    
-                <th>Print Barcode</th>             
+                <th>Customer Name</th> 
+                <th>Order ID</th>
+                <th>Price</th>  
+                <th>order Date</th>    
+                <th>Action</th>             
               </tr>
             </thead>
             <tbody> 
@@ -22,16 +22,16 @@
               $count = 1;  
 
               @endphp 
-              @foreach($product as $r)
+              @foreach($shop_orders as $r)
               
             <tr> 
             <td> {{$count++}} </td>
-            <td>{{$r->product_name}}</td>     
+            <td>{{$r->phone}}</td>     
             <!-- <td>{{$r->shop_id}}</td> -->
-            <td>{{$r->input_quantity}}</td>
-            <td>{{$r->input_quantity}}</td>
-            <td>{{$r->expiry_date}}</td> 
-            <td> <a href="{{url('generate-barcode/'.$r->barcode)}}"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-printer"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> </a> </td>   
+            <td>{{$r->order_id}}</td>
+            <td>{{$r->amount}}</td>
+            <td>{{$r->created_at}}</td> 
+            <td><a href="{{url('cust-orderDetail/'.$r->order_id)}}" class="btn btn-success">View Details</a></td>   
             </tr>
 
             @endforeach
