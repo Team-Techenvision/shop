@@ -201,8 +201,16 @@
                   <img src="{{asset('assets/images/logo.png') }}" alt="" class="img-fluid w-100">
                 </div>
                 <div class="info text-center">
-                  <p class="name font-weight-bold mb-0">Shop_name</p>
-                  <p class="email text-muted mb-3">Shop_name@gmail.com</p>
+                  <p class="name font-weight-bold mb-0">
+                  <?php  if(Auth::user()->name != ""){
+                   echo Auth::user()->name;
+                  } ?>
+                  </p>
+                  <p class="email text-muted mb-3">
+                 <?php  if(Auth::user()->email != ""){
+                   echo Auth::user()->email;
+                  } ?>
+                  </p>
                 </div>
               </div>
               <div class="dropdown-body">
@@ -226,7 +234,7 @@
                     </a>
                   </li> -->
                   <li class="nav-item">
-                    <a href="javascript:;" class="nav-link">
+                    <a href="{{url('/logout')}}" class="nav-link">
                       <i data-feather="log-out"></i>
                       <span>Log Out</span>
                     </a>

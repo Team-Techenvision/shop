@@ -27,10 +27,8 @@ class BarCode extends Controller
         $quantity = $req->quantity;
         $d = new DNS1D();
         $d->setStorPath(__DIR__.'/cache/');
-        $barcode_data= $d->getBarcodeHTML($barcode, 'UPCA', 2,55,'black', true);
+        $barcode_data= $d->getBarcodeHTML($barcode, 'C128C', 2,55,'black', true);
         $quantity = $quantity; 
         return view('admin/common/barcode', compact('barcode_data', 'quantity'));
-
-        
     }
 }
