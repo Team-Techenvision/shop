@@ -34,6 +34,10 @@ Route::post('submit-cust-order', 'AdminController@submitcustorder');
 Route::get('Add-employee', 'AdminController@add_shopEmployee');
 Route::get('view-Emplist', 'AdminController@show_shopEmployee');
 Route::post('submit-employee', 'AdminController@submit_shopEmp');
+// Route::get('cust-orderList', 'AdminController@cust_order_list');
+Route::get('print-barcode', 'AdminController@print_Barcode');
+Route::post('change-status','AdminController@change_emp_status');
+
 //new code 
 
 Route::post('shop-home','AdminController@ShopHome');

@@ -30,7 +30,8 @@
             </div>
           </div>       
       </div>
-    </form>   
+    </form> 
+  <div class="any_message">  
     @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -40,9 +41,22 @@
         </ul>
     </div>
 @endif
+</div>
+
     </div>
   </div>
 </div>
+
+         
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script>
+      $(document).ready(function()
+      {
+        $('.any_message').fadeOut(5500);
+      });
+         
+      </script>  
+
 
 
 

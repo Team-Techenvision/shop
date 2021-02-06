@@ -50,7 +50,7 @@
               <td class="col-sm-2">
                 <div class="form-group">
                   <label class="control-label">Quantity</label>
-                  <input type="number" class="form-control text-center productqty" name="p_qty[]"  value="1" required>
+                  <input type="number" class="form-control text-center productqty" name="p_qty[]"  value="1" min="1" required>
                 </div>
               </td>
               <td class="col-sm-2">

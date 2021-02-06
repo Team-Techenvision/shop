@@ -27,7 +27,7 @@
                   <div class="col-sm-4">                  
                     <div class="form-group">
                       <label class="control-label">Quantity</label>
-                      <input type="number" class="form-control text-center" name="p_qty" id="productqty" value="1" required>
+                      <input type="number" class="form-control text-center" name="p_qty" id="productqty" value="1" min="1" required>
                     </div>
                   </div>
                   <div class="col-sm-4">
