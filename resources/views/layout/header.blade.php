@@ -216,13 +216,13 @@
               <div class="dropdown-body">
                 <ul class="profile-nav p-0 pt-3">
                   <li class="nav-item">
-                   <a href="javascript:;" class="nav-link"> <!--  {{ url('/general/profile') }} -->
+                   <a href="{{url('profile')}}" class="nav-link"> <!--  {{ url('/general/profile') }} -->
                       <i data-feather="user"></i>
                       <span>Profile</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="javascript:;" class="nav-link">
+                    <a href="{{url('change-password')}}" class="nav-link">
                       <i data-feather="edit"></i>
                       <span>Change Password</span>
                     </a>
@@ -325,7 +325,7 @@
           <div class="submenu">
             <ul class="submenu-item">
             <li class="category-heading">Reports</li>
-              <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="#">Report</a></li>
+              <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{url('barcode-order')}}">Report</a></li>
               <!--href="{{ url('/cust-report') }}"-->
               
               <!-- <li class="category-heading">Order</li>

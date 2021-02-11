@@ -16,7 +16,7 @@ class ShopAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user() &&  Auth::user()->user_type == 1) {
+        if (Auth::user() &&  Auth::user()->user_type == 7) {
             return $next($request);
         }
         return redirect('/');

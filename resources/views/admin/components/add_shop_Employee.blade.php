@@ -10,11 +10,7 @@
                                     <div class="form-group">
                                         <label>Employee Name</label>
                                         <input type="text" class="form-control" name="emp_name" required>                                     
-                                    </div>
-                                    <!-- <div class="form-group">
-                                        <label>Last Name</label>
-                                        <input type="text" class="form-control" name="last_name" required>                                     
-                                    </div>  -->
+                                    </div>                                   
                                     <div class="form-group">
                                         <label>Email</label>
                                         <input type="email" class="form-control" name="email">                                     
@@ -25,11 +21,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Password</label>
-                                        <input type="text" class="form-control" name="password" maxlength="8" required>                                     
+                                        <input type="text" class="form-control" name="password" maxlength="8" value="12345" readonly>                                     
                                     </div>
                                     <div class="form-group">
                                         <input type="submit" class="btn btn-primary mr-2">
-                                        <input type="reset" class="btn btn-sccess">                            
+                                        <input type="reset" class="btn btn-light">                            
                                     </div>
                                     <div class="any_message">
                                     @if ($errors->any())
@@ -92,11 +88,4 @@
             </div>
             
             
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script>
-      $(document).ready(function()
-      {
-        $('.any_message').fadeOut(5500);
-      });
-         
-      </script>     
+    

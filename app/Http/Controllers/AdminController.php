@@ -60,25 +60,42 @@ class AdminController extends Controller
 
     //Shop stock Add
     public function StockList(){
-        $shop_id = "101";
-        $data['main_breadcrum'] = 'Stock';
-        $data['page_title'] = 'View Stock';
-        $data['flag'] = 1; 
-       // $data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
-        $data['product'] = DB::table('shop_stocks')
-           ->join('products', 'products.products_id', '=', 'shop_stocks.products_id')            
-           ->select('products.*','shop_stocks.*')
-           ->where('shop_stocks.shop_id','=',$shop_id)
-           ->get(); 
-        return view('admin/webviews/admin_manage_stock',$data);
+
+        if(Auth::user()->role == 1)
+        {
+            $shop_id = Auth::user()->shop_id;
+            $data['main_breadcrum'] = 'Stock';
+            $data['page_title'] = 'View Stock';
+            $data['flag'] = 1; 
+            // $data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
+            $data['product'] = DB::table('shop_stocks')
+            ->join('products', 'products.products_id', '=', 'shop_stocks.products_id')            
+            ->select('products.*','shop_stocks.*')
+            ->where('shop_stocks.shop_id','=',$shop_id)
+            ->get(); 
+            return view('admin/webviews/admin_manage_stock',$data);
+        }
+        else
+        {
+            return back();
+        }    
+
     }
 
     public function StockAdd(){
-        $data['main_breadcrum'] = 'Stock';
-        $data['page_title'] = 'Add Stock';
-        $data['flag'] = 2; 
-        $data['product'] = DB::table('products')->where('status',0)->get(); 
-        return view('admin/webviews/admin_manage_stock',$data);
+        
+        if(Auth::user()->role == 1)
+        {
+            $data['main_breadcrum'] = 'Stock';
+            $data['page_title'] = 'Add Stock';
+            $data['flag'] = 2; 
+            $data['product'] = DB::table('products')->where('status',0)->get(); 
+            return view('admin/webviews/admin_manage_stock',$data);
+        }
+        else
+        {
+            return back();
+        }    
     }
 
     public function StockEdit($shop_stock_id){
@@ -135,7 +152,7 @@ class AdminController extends Controller
     public function add_cust_order(Request $req)
     {
         // dd($req);
-        $shop_id = $req->shop_id;        
+        $shop_id = Auth::user()->shop_id;                
         $cust_phone = $req->customer_no;
         //dd($shop_id);
         $this->validate($req, [
@@ -195,19 +212,21 @@ class AdminController extends Controller
     }
     // ==============================================================
     public function submitcustorder(Request $req)
-    {  //dd($req);
+    {  
+        // dd($req);
        //dd(count($req->product_name));
        // $lenght = count($req->product_name);
-       //for($i=0;i<lenght;$i++)   
+       //for($i=0;i<lenght;$i++)      
        
-      $shop_id = $req->shop_id;
+    //   $shop_id = $req->shop_id;
+      $emp_id = Auth::user()->id; 
       $cust_id = $req->cust_id;
       $total_amt = $req->total;
       $order_id = uniqid();
       $payment_mode = "shop";
 
       $data1 = new product_order; 
-             $data1->shop_id=$shop_id;
+             $data1->emp_id= $emp_id;
              $data1->user_id= $cust_id;
              $data1->amount=$total_amt;                      
              $data1->order_id=$order_id;
@@ -215,13 +234,13 @@ class AdminController extends Controller
              $data1->save();
              $last_id=$data1->id;
              $orders = DB::table('orders')->where('id',$last_id)->first();
-             $order_id = $orders->order_id;
+             $order_id = $orders->order_id;            
 
-             //dd( $order_id);
+             //dd( $req->product_name);
             
              $i = 0;
              foreach($req->product_name as $row)
-             {             
+             {                             
               $data = new order_item; 
               $data->order_id= $order_id;
               $data->sub_order_id= $order_id;
@@ -231,19 +250,11 @@ class AdminController extends Controller
               $data->sub_total=$req->p_price[$i];             
               $data->save();  
               $i++;
-             }
-            //  =============================== 
-            // $data['product'] = DB::table('orders')
-            // ->join('order_items', 'order_items.order_id', '=', 'orders.order_id')
-            // ->join('products', 'products.products_id', '=', 'order_items.prod_id')
-            // ->join('gst_tax', 'gst_tax.gst_id', '=', 'products.gst_id')             
-            // ->select('orders.*','order_items.*','products.*','gst_tax.*')
-            // ->where('orders.order_id','=', $order_id )
-            // ->get(); 
+             }            
           
             $data['main_breadcrum'] = 'Order';
             $data['page_title'] = 'Customer Oder';
-            $data['flag'] = 11; 
+            $data['flag'] = 11;            
             $data['product_order'] = DB::table('orders')
             ->join('order_items', 'order_items.order_id', '=', 'orders.order_id')
             ->join('products', 'products.products_id', '=', 'order_items.prod_id')
@@ -251,9 +262,8 @@ class AdminController extends Controller
             ->select('orders.*','order_items.*','products.product_name','gst_tax.*')
             ->where('orders.order_id','=', $order_id )
             ->get(); 
-            
-            //dd($data['product']);
-            // return view('dashboard');
+            $data['order_id'] = $order_id;
+            //dd($data['product']);            
                 
          return view('admin/webviews/admin_manage_stock',$data);    
     }
@@ -261,23 +271,39 @@ class AdminController extends Controller
 public function add_shopEmployee()
 {
     //echo "Hello";
-    $data['main_breadcrum'] = 'Shop';
-    $data['page_title'] = 'Add Employee';
-    $data['flag'] = 10; 
-    return view('admin/webviews/admin_manage_stock',$data);
+    if(Auth::user()->role == 1)
+    {
+        $data['main_breadcrum'] = 'Shop';
+        $data['page_title'] = 'Add Employee';
+        $data['flag'] = 10; 
+        return view('admin/webviews/admin_manage_stock',$data);
+    }
+    else
+    {
+        return back();
+    }    
 
 }
 
 public function show_shopEmployee()
 {
     //echo "hello";
-    $data['main_breadcrum'] = 'Shop';
-    $data['page_title'] = 'Employee';
-    $data['flag'] = 9;
-    $shop_id = 101;   
-    $data['shop_Employee'] = DB::table('users')->where('shop_id',$shop_id)->where('user_type',7)->get(); 
-    //dd($data['shop_Employee']);
-    return view('admin/webviews/admin_manage_stock',$data);
+    if(Auth::user()->role == 1)
+    {
+        $data['main_breadcrum'] = 'Shop';
+        $data['page_title'] = 'Employee';
+        $data['flag'] = 9;
+        $shop_id = Auth::user()->shop_id;   
+        $data['shop_Employee'] = DB::table('users')->where('shop_id',$shop_id)->where('user_type',7)->orderBy('role','asc')->get(); 
+        // dd($data['shop_Employee']);
+        return view('admin/webviews/admin_manage_stock',$data);
+    }
+    else
+    {
+        return back();
+    }
+    
+   
 }
 
 public function submit_shopEmp(Request $req)
@@ -290,17 +316,26 @@ public function submit_shopEmp(Request $req)
         'password'=>'required|max:8|Min:5'
      ]);
         
-       $password = "123456";
-       $shop_id = 101;
+    //    $password = "123456";
+    //   =========================================
+    $result = DB::table('users')->where('phone', $req->phone_no)->first(); 
+
+    if(!$result)
+    {   
+    // ======================================
+    
+       $shop_id = Auth::user()->shop_id;
        $user_type = 7; //(7- shop Employee)
+       $role = 2;
      
         $data = new User;
             $data->name=$req->emp_name;
             $data->email=$req->email;
             $data->phone=$req->phone_no;
-            $data->password=$password;            
+            $data->password= Hash::make($req->password);            
             $data->user_type=$user_type;
             $data->shop_id=$shop_id;
+            $data->role= $role;
         $result = $data->save();
         if($result)
         {
@@ -308,17 +343,20 @@ public function submit_shopEmp(Request $req)
         }
         else
         {
-            $req->session()->flash('alert-danger', 'Employee Not Added!');
-        }       
+            $req->session()->flash('alert-danger', 'Employee Not Added!!!');
+        } 
+    }
+    else
+    {
+        $req->session()->flash('alert-danger', 'Phone No Already Exists!!!');
+    }         
 
      return back(); 
 }
 
 public function cust_order_list($order_id)
 {
-    // echo "hello";
-    //  $order_id = "601b66e5319f4";
-    // $order_id = $order_id;
+  
     $data['main_breadcrum'] = 'Order';
     $data['page_title'] = 'Customer Oder';
     $data['flag'] = 11; 
@@ -329,6 +367,7 @@ public function cust_order_list($order_id)
     ->select('orders.*','order_items.*','products.product_name','gst_tax.*')
     ->where('orders.order_id','=', $order_id )
     ->get(); 
+    $data['order_id'] = $order_id;
     //dd($data['product_order']); 
     return view('admin/webviews/admin_manage_stock',$data);
 }
@@ -339,10 +378,17 @@ public function cust_order_list($order_id)
 // Print invoice
 public function downloadInvoice($order_id){ 
     $orderDetails = DB::table('orders')->where('order_id', $order_id)->first();
-    $orders = DB::table('order_items')->where('order_id',$order_id)->get();
-    $orderStatus = DB::table('order_status')->get();  
+    // $orders = DB::table('order_items')->where('order_id',$order_id)->get();
+    $orderStatus = DB::table('order_status')->get();
+    $data['order'] = DB::table('order_items')    
+    ->join('products', 'products.products_id', '=', 'order_items.prod_id')
+    ->join('gst_tax', 'gst_tax.gst_id', '=', 'products.gst_id')             
+    ->select('order_items.*','products.product_name','gst_tax.gst_value_percentage')
+    ->where('order_items.order_id','=', $order_id )
+    ->get(); 
+    //  dd($orderDetails);
    $data['orderDetails'] = $orderDetails;
-   $data['order'] = $orders;
+//    $data['order'] = $orders;
    $data['orderStatus'] = $orderStatus;
    return view('admin/common/downloadinvoice', $data);
    
@@ -351,25 +397,12 @@ public function downloadInvoice($order_id){
 }
 
 
-    public function pdf_view()
-     {  
-        $pdf = PDF::loadView('invoice');
-        return $pdf->download('invoice.pdf');
+    // public function pdf_view()
+    //  {  
+    //     $pdf = PDF::loadView('invoice');
+    //     return $pdf->download('invoice.pdf');
 
-       // return view('admin/webviews/order_pdf');
-         //   $p_id = 512;
-    //     $product = DB::table('products')->where('products_id',$p_id)->first();
-    //     view()->share('items',$product);        
-        
-    //         $pdf = PDF::loadView('order_pdf');
-    //        $pdf->download('order_pdf.pdf');
-    // $pdf = App::make('dompdf.wrapper');
-    // $data = "<table style='border:1px solid black;width:95%;margin:auto;'><thead><tr><th>Product</th><th>Price</th><th>Quntity</th></tr></thead><tbody><tr><th>ABC</th><th>100</th><th>10</th></tr></tbody></table>";
-    // // $pdf->loadhtml('<h1>Welcome</h1>');
-    // $pdf->loadhtml($data);
-    // return $pdf->stream();
-        // return view('admin/webviews/order_pdf');
-    }
+    // }
     public function vieworder(Request $req)
     {
         $data['main_breadcrum'] = 'Order';
@@ -392,7 +425,7 @@ public function downloadInvoice($order_id){
         $gst = DB::table('products')->where('products_id', $product_id)->first();       
          $tax = $gst->gst_id;
          //dd($tax);
-        $shop_id = 101;  
+        $shop_id = Auth::user()->shop_id;  
         $seven_random_number = mt_rand(0, 9999999); 
         $barcode =  $shop_id.$seven_random_number; 
         // dd($barcode);
@@ -457,17 +490,139 @@ public function downloadInvoice($order_id){
     // new new code
     public function show_shop_invoice()
     {
-        $shop_id = 101;
+        $emp_id = Auth::user()->id;
+        $shop_id = Auth::user()->shop_id;
+        // echo $shop_id;
         $data['main_breadcrum'] = 'Shop';
         $data['page_title'] = 'Shop Order List';
         $data['flag'] = 13; 
         $data['shop_orders'] = DB::table('users')
-        ->join('orders', 'users.id', '=','orders.user_id')
-        ->select('orders.*','users.phone')
-        ->where('orders.shop_id','=', $shop_id)
+        ->join('orders', 'users.id', '=','orders.emp_id')
+        ->select('orders.*','users.phone','users.name')
+        ->where('users.shop_id','=', $shop_id)
+        ->orderBy('orders.created_at', 'DESC')
         ->get(); 
-        // dd( $data['shop_orders']);
+        //  dd( $data['shop_orders']);
         //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
         return view('admin/webviews/admin_manage_stock',$data);
     }
+    // ====================================================
+
+    public function user_profile()
+    {
+        $data['main_breadcrum'] = 'Profile';
+        $data['page_title'] = 'My Profile';
+        $data['flag'] = 1;
+        $user_id = Auth::user()->id;        
+        $data['user'] = DB::table('users')->where('id',$user_id)->first(); 
+        // dd( $data['user']); 
+        return view('admin/webviews/user_manage',$data);
+
+    }
+
+    public function update_profile(Request $req)
+    {
+        // dd($req);
+        $this->validate($req,[
+            'emp_name'=>'required|alpha',        
+            'email'=>'nullable|email',
+            'phone_no'=>'required|numeric' 
+         ]);
+         $user_id = Auth::user()->id;         
+         $update = DB::table('users')->where('id', $user_id) ->update([ 'name' => $req->emp_name, 'email' => $req->email, 'phone' => $req->phone_no]); 
+         if($update)
+         {
+
+            $req->session()->flash('alert-success', 'Profile Updated Successfully!!');             
+        }
+        else
+        {
+          $req->session()->flash('alert-danger', 'Profile Not Updated!!'); 
+
+         }
+         return back();
+    }
+
+    public function change_password()
+    {
+        // echo "hello";
+        $data['main_breadcrum'] = 'Profile';
+        $data['page_title'] = 'Change Password';
+        $data['flag'] = 2;        
+        return view('admin/webviews/user_manage',$data);
+    }
+    public function submit_Password(Request $req)
+    {
+        // dd($req);
+        $this->validate($req,[
+            'old_pass'=>'required',        
+            'new_pass'=>'required',
+            'confirm_pass'=>'required' 
+         ]);
+         if($req->new_pass == $req->confirm_pass)
+         {  
+            if(Hash::check($req->old_pass, Auth::user()->password))
+            { 
+                $user_id = Auth::user()->id;         
+                $update = DB::table('users')->where('id', $user_id)->update(['password'=> Hash::make($req->new_pass)]); 
+                if($update)
+                {
+                    $req->session()->flash('alert-success', 'Profile Updated Successfully!!');             
+                }
+                else
+                {
+                    $req->session()->flash('alert-danger', 'Profile Not Updated!!');
+                }
+            }
+            else
+            {
+                $req->session()->flash('alert-danger', 'Old Password Not Match!!');
+            }   
+        }
+        else
+        {
+            $req->session()->flash('alert-danger', 'New Password And Confirm Password Must be Same!!');
+        }    
+         return back();
+    }
+    
+
+    // =====================================================
+                    // 10/2/21
+    public function BarCode_Order()
+    {
+        $data['main_breadcrum'] = 'BarCode';
+        $data['page_title'] = 'Create BarCode';
+        $data['flag'] = 14;
+        $data['u_id'] = 120;
+        $shop_id = Auth::user()->shop_id; 
+        $data['product'] = DB::table('shop_stocks')
+        ->join('products', 'products.products_id', '=', 'shop_stocks.products_id')            
+        ->select('products.*','shop_stocks.*')
+        ->where('shop_stocks.shop_id','=',$shop_id)
+        ->get(); 
+        //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
+        return view('admin/webviews/admin_manage_stock',$data);
+
+    }  
+    
+    public function br_product_detail()
+    {
+        $p_id  = $_POST['product'];
+        // echo $p_id ;
+        $product = DB::table('shop_stocks')       
+        ->join('products', 'shop_stocks.products_id', '=', 'products.products_id') 
+        ->join('gst_tax','gst_tax.gst_id', '=', 'shop_stocks.tax')          
+        ->select('products.price','products.special_price','shop_stocks.*','gst_tax.gst_value_percentage')
+        ->where('shop_stocks.barcode','=',$p_id )
+        ->get(); 
+
+       $producttest['data'] =  $product; 
+   echo json_encode($producttest);
+   exit; 
+
+    }
+
+
+
 }

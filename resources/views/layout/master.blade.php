@@ -52,6 +52,13 @@
 
     <!-- common js -->
     <script src="{{ asset('assets/js/template.js') }}"></script>
+    <!-- ========================== -->
+    <script>
+      $(document).ready(function(){
+        $(".any_message").fadeOut(4500);
+      });
+    </script>
+    <!-- ======================== -->
     <!-- end common js -->
   
     @stack('custom-scripts')    

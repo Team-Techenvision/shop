@@ -35,44 +35,34 @@
                       <label class="control-label">Expiry Date</label>
                       <input type="date" class="form-control" name="exp_date">
                     </div>
-                  </div>
-                  <!-- <div class="col-sm-4">                  
-                    <div class="form-group">
-                      <label class="control-label">Tax</label>
-                      <select name="product_tax" id="tax" class="form-control rounded" required>
-                      <option value="10">5%</option>
-                      <option value="12">12%</option>
-                      <option value="18">18%</option>
-                      <option value="20">28%</option>
-                      </select>
-                    </div>
-                  </div> -->
+                  </div>                 
                 </div>           
               <div class="row">
               <div class="col-sm-6">
                   <div class="form-group">
                   <button class="btn btn-primary mr-1" type="submit">Add Quantity</button>
                   <button class="btn btn-light" type="reset">Reset</button>
-                  @if (count($errors) > 0)
-                    <div class = "alert alert-danger">
-                        <ul>
-                          @foreach ($errors->all() as $error)
-                              <li>{{ $error }}</li>
-                          @endforeach
-                        </ul>
-                    </div>
-                  @endif
-                </div>
-                @if(session()->has('alert-danger'))
-                  <div class="alert alert-danger">
-                      {{ session()->get('alert-danger') }}
-                  </div>
-              @endif
-                @if(session()->has('alert-success'))
-                  <div class="alert alert-success">
-                      {{ session()->get('alert-success') }}
-                  </div>
-              @endif
+                  <div class="any_message mt-3">
+                      @if (count($errors) > 0)
+                        <div class = "alert alert-danger">
+                            <ul>
+                              @foreach ($errors->all() as $error)
+                                  <li>{{ $error }}</li>
+                              @endforeach
+                            </ul>
+                        </div>
+                      @endif                   
+                    @if(session()->has('alert-danger'))
+                      <div class="alert alert-danger">
+                          {{ session()->get('alert-danger') }}
+                      </div>
+                    @endif
+                    @if(session()->has('alert-success'))
+                      <div class="alert alert-success">
+                          {{ session()->get('alert-success') }}
+                      </div>
+                    @endif
+                  </div> 
               </div><!-- Col --> 
             </div> 
           </form>            

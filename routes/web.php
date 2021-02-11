@@ -51,6 +51,13 @@ Route::get('cust-orderDetail/{order_id}', 'AdminController@cust_order_list');
 Route::get('download-invoice/{order_id}','AdminController@downloadInvoice');
 Route::get('logout', 'AdminController@logout');
 });
+// ============================
+Route::get('profile', 'AdminController@user_profile');
+Route::post('update-profile','AdminController@update_profile');
+Route::get('change-password', 'AdminController@change_password');
+Route::post('submit-Password','AdminController@submit_Password');
+Route::get('barcode-order', 'AdminController@BarCode_Order');
+Route::post('br-product-detail','AdminController@br_product_detail');
 //new code 
 
 Route::post('shop-home','AdminController@ShopHome');

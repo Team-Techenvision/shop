@@ -13,7 +13,8 @@
                 <th>Customer Name</th> 
                 <th>Order ID</th>
                 <th>Price</th>  
-                <th>order Date</th>    
+                <th>order Date</th>
+                <th>Employee</th>    
                 <th>Action</th>             
               </tr>
             </thead>
@@ -31,7 +32,8 @@
             <td>{{$r->order_id}}</td>
             <td>{{$r->amount}}</td>
             <td>{{$r->created_at}}</td> 
-            <td><a href="{{url('cust-orderDetail/'.$r->order_id)}}" class="btn btn-success">View Details</a></td>   
+            <td>{{$r->name}}</td> 
+            <td><a href="{{url('cust-orderDetail/'.$r->order_id)}}" class="btn btn-info">View Details</a></td>   
             </tr>
 
             @endforeach

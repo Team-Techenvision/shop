@@ -27,7 +27,7 @@
                 <th>Email</th>  
                 <th>Phone</th>
                 <th>User Id</th> 
-                <th>Password</th>
+                <!-- <th>Password</th> -->
                 <th>Change Status</th>                  
               </tr>
             </thead>
@@ -41,17 +41,20 @@
                 <th>{{$row->email}}</th>               
                 <th>{{$row->phone}}</th>
                 <th>{{$row->phone}}</th> 
-                <th>{{$row->password}}</th> 
+                <!-- <th>{{$row->password}}</th>  -->
                   <th>                         
                    <form action="{{url('change-status')}}" method="post" >
                    @csrf
                    <div>
                       <input type="hidden" name="emp_id" value="{{$row->id}}" />
                       <input type="hidden" name="emp_isblock" value="{{$row->is_block}}" />
+                      <?php if($row->role != 1) {?>
                       <?php if($row->is_block != "0"){ ?>
-                        <button type="submit" class="btn btn-primary" >Active</button>
+                        <button type="submit" class="btn btn-danger" >Active</button>
                         
-                    <?php }else{?>  <button type="submit" class="btn btn-danger" >InActive</button> <?php } ?>  
+                    <?php }else{?>  <button type="submit" class="btn btn-primary" >InActive</button> <?php } } else {?>
+                      <button type="submit" class="btn btn-warning" disabled>Admin</button>
+                    <?php } ?>  
                      
                  
                       </div>

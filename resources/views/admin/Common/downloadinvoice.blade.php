@@ -81,70 +81,34 @@
 			@if(count($order)>0)
 			<table style="width: 100%;" class="table">  
 				<tr>
-					<td style="border: 1px solid black;">Sr.No.</td> 
+					<td style="border: 1px solid black;text-align: center;">Sr.No.</td> 
 			 		<!-- <td style="border: 1px solid black;">Order Id</td>
 					<td style="border: 1px solid black;">Sub Order Id</td> -->
-					<td style="border: 1px solid black;" colspan="4">Product Name</td>
-					<td style="border: 1px solid black;">Quantity</td>
-					<td style="border: 1px solid black;">Amount</td>
-					<td style="border: 1px solid black;">Extra Discount</td>
-					<td style="border: 1px solid black;">Total Amount</td> 
+					<td style="border: 1px solid black;text-align: center;" colspan="4">Product Name</td>
+					<td style="border: 1px solid black;text-align: center;">Quantity</td>
+					<td style="border: 1px solid black;text-align: center;">Amount</td>
+					<td style="border: 1px solid black;text-align: center;">GST</td>
+					<td style="border: 1px solid black;text-align: center;">Total Amount</td> 
 				</tr> 
 				<?php
 					$f = 0;
 					$copoun1= 0;
-				?> 
-				
-				@foreach($order as $key=> $r)
-					<?php 
-						$count = $key+1;  
-						if($r->type == 1 ||$r->type == 2){
-						$status = DB::table('order_status')->where('status_value',$r->order_status)->first();  
-						$image = DB::table('product_images')->where('type',2)->where('products_id' , $r->prod_id)->pluck('product_image')->first();
-						$product_category = DB::table('products')->where('products_id',$r->prod_id)->first(); 
-						    
-						}elseif($r->type == 3){
-							$status = DB::table('order_status')->where('status_value',$r->order_status)->first(); 
-							$image= DB::table('packages')->where('id',$r->prod_id)->pluck('image')->first();  
-						}
-
-						$copoun = DB::table('order_coupon_histories')->where('order_id',$r->order_id)->first();  
-					?>
+					$count = 1;
+				?> 				
+				 @foreach($order as $row)					
 					<tr>
-						<td style="border: 1px solid black;">{{$count++}}</td>
+						<td style="border: 1px solid black;text-align: center;">{{$count++}}</td>	 
 						 
-						<!-- <td style="border: 1px solid black;">{{$r->order_id}} </td> 
-						<td style="border: 1px solid black;">{{$r->sub_order_id}} </td>   -->
-						<td style="border:1px solid black;" colspan="4">{{$r->prod_name}} <br> Sub Order Id : {{$r->sub_order_id}}  </td> 
-						<td style="border: 1px solid black;">{{$r->quantity}}</td> 
-						<td style="border: 1px solid black;">Rs {{$r->sub_total}}</td>  
-						<td style="border: 1px solid black;">
-							@if($r->extra_discount != null)
-							<?php $discount = ($r->sub_total * $r->extra_discount)/100 ; //dd($discount); ?>
-							{{$r->extra_discount}} <b>% Per Item </b>
-							{{$discount}} <b> Rs Per Item</b>
-							@else
-							0 %
-							@endif
-						</td> 
-						<td style="border: 1px solid black;">
-							@if($r->extra_discount != null)
-							<?php
-							$f = $f + $r->quantity * $r->sub_total - $discount * $r->quantity;
-							?>
-							Rs {{$r->quantity * $r->sub_total - $discount * $r->quantity}}  
-							@else
-							<?php
-							$f = $f+$r->quantity * $r->sub_total;
-							?>
-							Rs {{$r->quantity * $r->sub_total}} 
-							@endif
-						</td> 
+						<td style="border:1px solid black;" colspan="4">{{$row->product_name}} </td> <!--<br> Sub Order Id : {{$row-> sub_order_id}}  -->
+						<td style="border: 1px solid black;text-align: center;">{{$row->quantity}}</td> 
+						<td style="border: 1px solid black;text-align: center;">Rs {{$row->sub_total}}</td>  
+						<td style="border: 1px solid black;text-align: center;">{{$row->gst_value_percentage}}</td> 
+						<td style="border: 1px solid black;text-align: center;">{{(($row->sub_total * $row->quantity)/100 * $row->gst_value_percentage) + ($row->sub_total * $row->quantity)}}</td> 
 					</tr>
 				@endforeach 				
 				<tr>
 					<td colspan="8" style="font-weight: 700; color: black;">TOTAL AMOUNT:</td>
-					<td style=" background-color: #eee;">Rs 15000</td> 
+					<td style=" background-color: #eee;;text-align: center;">Rs {{$orderDetails->amount}}</td> 
 				</tr> 
 				<tr style="width: 100%;">
 					<td colspan="9" style="font-weight: 700; color: black; text-align: right; ">For Aensa Health Solutions Private Limited:<br> <br> <img src="{{asset('images/invoice-signature.jpeg')}}" style="width: 100px; border: 1px solid black;"> <br>Authorized Signatory

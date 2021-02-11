@@ -25,11 +25,17 @@
             </div>
           </div>
           <table class="form-table w-100" id="customFields">
-            <tr valign="top" class="row addrows">                       
+            <tr valign="top" class="row addrows">
+            <td class="col-sm-2">
+                <div class="form-group">
+                      <label class="control-label">BarCode</label>
+                     <input type="text" class="form-control product_brcodes" name="product_brcode" >
+                </div>
+              </td>                
               <td class="col-sm-3">
                 <div class="form-group">
                       <label class="control-label">Product</label>
-                    <select name="product_name[]" class="form-control rounded product_id" required>
+                    <select name="product_name[]" class="form-control rounded product_id" readonly>
                     <option value="">Select Order</option>
                       @foreach($product as $row)
                         <option value="{{$row->products_id}}">{{$row->product_name}}</option>
@@ -37,7 +43,7 @@
                     </select>
                 </div>
               </td>
-              <td class="col-sm-2">
+              <td class="col-sm-1">
                 <div class="form-group">
                       <label class="control-label">Price</label>
                       <input type="text" class="form-control text-center product_price" name="p_price[]"  value="1" readonly>
@@ -61,7 +67,7 @@
                   <input type="text" class="form-control text-center amount" name="amt[]"  value="" readonly>
                 </div>
               </td>
-              <td class="col-sm-2">  
+              <td class="col-sm-1">  
                 <!-- <input type="text" class="code" name="customFieldName[]" value="" placeholder="Input Name" /> &nbsp;
                 <input type="text" class="code" name="customFieldValue[]" value="" placeholder="Input Value" /> &nbsp; -->
                 <a href="javascript:void(0);" id="addCF" class="btn btn-info mt-4">Add</a>
@@ -72,7 +78,7 @@
             <input type="text" name="total" id="total" value="" class="form-control col-sm-2" readonly>
           </div>
           <div>
-          <button class="btn btn-primary submit_btn" >Submit</button> 
+          <button type="button" class="btn btn-primary submit_btn" >Submit</button> 
           <!-- <input type="submit" name="Submit" class="btn btn-primary" > -->           
           </div>
           </form> 
@@ -97,11 +103,17 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
    
-    $(document).ready(function(){
+$(document).ready(function()
+{
+
+  $('.submit_btn').click(function(){
+    $('.submit_btn').removeAttr("type").attr("type", "submit");
+  });
+ 
 // ====================================
     $("#addCF").click(function()
     {
-        $("#customFields").append('<tr class="row addrows"><td class="col-sm-3"> <select name="product_name[]" class="form-control rounded product_id" required> <option value="">Select Order</option>@foreach($product as $row)<option value="{{$row->products_id}}">{{$row->product_name}}</option>@endforeach</select></td><td class="col-sm-2"><input type="text" class="form-control text-center product_price" name="p_price[]"  value="1" readonly></td><td class="col-sm-1"><input type="text" class="form-control text-center product_gst" name="gst[]" value="1" readonly></td><td class="col-sm-2"><input type="number" class="form-control text-center productqty" name="p_qty[]"  value="1" min="1" required></td><td class="col-sm-2"><input type="text" class="form-control text-center amount" name="amt[]"  value="" readonly></td> <td class="col-sm-2"> <a href="javascript:void(0);" class="remCF btn btn-danger">Remove</a></td></tr>');
+        $("#customFields").append('<tr class="row addrows"> <td class="col-sm-2"><input type="text" class="form-control product_brcodes" name="product_brcode" ></td><td class="col-sm-3"> <select name="product_name[]" class="form-control rounded product_id" readonly> <option value="">Select Order</option>@foreach($product as $row)<option value="{{$row->products_id}}">{{$row->product_name}}</option>@endforeach</select></td><td class="col-sm-1"><input type="text" class="form-control text-center product_price" name="p_price[]"  value="1" readonly></td><td class="col-sm-1"><input type="text" class="form-control text-center product_gst" name="gst[]" value="1" readonly></td><td class="col-sm-2"><input type="number" class="form-control text-center productqty" name="p_qty[]"  value="1" min="1" required></td><td class="col-sm-2"><input type="text" class="form-control text-center amount" name="amt[]"  value="" readonly></td> <td class="col-sm-1"> <a href="javascript:void(0);" class="remCF btn btn-danger">Remove</a></td></tr>');
         final_amount();
     });
   // =========================
@@ -111,9 +123,10 @@
         final_amount();
     });
     
-});
+
 // ==========================================
-$('table').on("change", ".productqty", function(event){ 
+  $('table').on("change", ".productqty", function(event)
+  { 
         
         var qtyvalue = this.value;
         //alert(qtyvalue);
@@ -135,11 +148,11 @@ $('table').on("change", ".productqty", function(event){
         $columns.find('.amount').val($final_amt);       
         final_amount();
         //total($final_amt);
-    });
+  });
     // ==================================     
 
-    function final_amount()
-    {
+  function final_amount()
+  {
         var $row = jQuery(this).closest('tr');
         var $columns = $row.find('td');
 
@@ -153,17 +166,17 @@ $('table').on("change", ".productqty", function(event){
 
         })
         $('#total').val(sum.toFixed(2)); 
-    }
+  }
     // ============================================
-    $('table').on("change", ".product_id", function(event){ 
+  $('table').on("change", ".product_id", function(event)
+  { 
         
           //alert( this.value );
             var p_value = this.value;
             var $row = jQuery(this).closest('tr');
             var $columns = $row.find('td');           
            
-           // console.log($columns.addClass('product_price'));       
-         
+           // console.log($columns.addClass('product_price'));          
          
           if(p_value)
           {               
@@ -183,22 +196,16 @@ $('table').on("change", ".productqty", function(event){
                     len = response['data'].length;
                     if(len > 0 )
                     {
-                      for(var i = 0;i < len;i++){
+                      for(var i = 0;i < len;i++)
+                      {
                        
                        if(response['data'][i].special_price)
                        {
-                        $columns.find('.product_price').val(response['data'][i].special_price);
-                         
-                        //var amt = (response['data'][i].special_price * 1)/100 * 10;
-                        //$columns.find('.amount').val(response['data'][i].special_price * 1);
-                        //$columns.find('.amount').val(response['data'][i].special_price-amt);
+                          $columns.find('.product_price').val(response['data'][i].special_price);                         
                        }
-                       else{
-                        $columns.find('.product_price').val(response['data'][i].price);
-                       
-                         //var amt = (response['data'][i].special_price * 1)/100 * 10;
-                        // $columns.find('.amount').val(response['data'][i].special_price * 1);
-                        // $columns.find('.amount').val(response['data'][i].special_price-amt);
+                       else
+                       {
+                          $columns.find('.product_price').val(response['data'][i].price);                       
                        }
                        $columns.find('.product_gst').val(response['data'][i].gst_value_percentage);
 
@@ -213,12 +220,7 @@ $('table').on("change", ".productqty", function(event){
                             $gst_amt = ($price * 1)/100 * 10;
                             $final_amt =$total + $gst_amt;                            
                             $columns.find('.amount').val($final_amt);
-
-                            final_amount(); 
-                            //total($final_amt);
-                            //total_amount();
-                     // console.log($columns.find('.product_gst').val());
-                      //   console.log(response['data'][i].gst_value_percentage);
+                            final_amount();                             
                       }
                     }
                   }
@@ -227,24 +229,73 @@ $('table').on("change", ".productqty", function(event){
           }
           else
           {
-           // tr.find(".product_price").val();
-            //tr.find(".product_gst").val();
-           
             $('tr,this,.product_price').val("");
             $('tr,this,.product_gst').val("");
           }
+  });        
 // ======================================
+$('table').on("keyup", ".product_brcodes", function(event)
+  { 
+  // $(".product_brcodes").focusout(function(){
+    $len = $(this).val().length;
+    var $row = jQuery(this).closest('tr');
+    var $columns = $row.find('td'); 
+    if($len == 10 )
+    {
+      // alert($(this).val());
+      $.ajax({
+                type: "post",          
+                url: "{{ url('br-product-detail') }}",
+                dataType: "json",
+                data: {"_token": "{{ csrf_token() }}",
+                      "product": $(this).val()},
+                success : function(response){ 
+                  var len = 0;
+                  // alert(response);
+                 // tr.find('.product_price').val(response["special_price"]);
 
-// $('.submit_btn').click(function()
-// {
-//   if($('.amount').val() == empty)
-//   {
-//     alert("!!!!");
-//   }
-// });
+                  if(response['data'] != null)
+                  {
+                    len = response['data'].length;
+                    if(len > 0 )
+                    {
+                      for(var i = 0;i < len;i++)
+                      {
+                       
+                       if(response['data'][i].special_price)
+                       {
+                          $columns.find('.product_price').val(response['data'][i].special_price);                         
+                       }
+                       else
+                       {
+                          $columns.find('.product_price').val(response['data'][i].price);                       
+                       }
+                       $columns.find('.product_id').val(response['data'][i].products_id);
+
+                       $columns.find('.product_gst').val(response['data'][i].gst_value_percentage);
+
+                       $columns.find('.productqty').val(1);
+                       
+
+                            $price = $columns.find('.product_price').val();
+                            $gst = $columns.find('.product_gst').val();
+                             
+
+                            $total = $price * 1;
+                            $gst_amt = ($price * 1)/100 * 10;
+                            $final_amt =$total + $gst_amt;                            
+                            $columns.find('.amount').val($final_amt);
+                            final_amount();                             
+                      }
+                    }
+                  }
+                }
+            });
+    }
+  });
 // ====================================
 // ====================================
-        });
+});
 </script> 
 
 
