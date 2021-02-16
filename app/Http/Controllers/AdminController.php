@@ -159,26 +159,26 @@ class AdminController extends Controller
 
     //new code rahul
 
-    public function ShopHome(Request $req)
-    {              
-        //dd($req);
-        $this->validate($req, [
-            'login_id' => 'required',
-            'login_pass'=> 'required'
-        ]);
-        $sh_id = $req->login_id;
-        $password = $req->login_pass;
+    // public function ShopHome(Request $req)
+    // {              
+    //     //dd($req);
+    //     $this->validate($req, [
+    //         'login_id' => 'required',
+    //         'login_pass'=> 'required'
+    //     ]);
+    //     $sh_id = $req->login_id;
+    //     $password = $req->login_pass;
 
-        if($sh_id == "1234567890" &&  $password == "12345")
-        {
-            return view('dashboard');
-        }
-        else
-        {
-            return back();
-        }
+    //     if($sh_id == "1234567890" &&  $password == "12345")
+    //     {
+    //         return view('dashboard');
+    //     }
+    //     else
+    //     {
+    //         return back();
+    //     }
 
-    }
+    // }
     public function customerorder()
     {
         $data['main_breadcrum'] = 'Stock';
@@ -299,7 +299,7 @@ class AdminController extends Controller
             ->join('order_items', 'order_items.order_id', '=', 'orders.order_id')
             ->join('products', 'products.products_id', '=', 'order_items.prod_id')
             ->join('gst_tax', 'gst_tax.gst_id', '=', 'products.gst_id')             
-            ->select('orders.*','order_items.*','products.product_name','gst_tax.*')
+            ->select('orders.*','order_items.*','products.product_name','products.price','gst_tax.*')
             ->where('orders.order_id','=', $order_id )
             ->get(); 
             $data['order_id'] = $order_id;
@@ -423,7 +423,7 @@ public function downloadInvoice($order_id){
     $data['order'] = DB::table('order_items')    
     ->join('products', 'products.products_id', '=', 'order_items.prod_id')
     ->join('gst_tax', 'gst_tax.gst_id', '=', 'products.gst_id')             
-    ->select('order_items.*','products.product_name','gst_tax.gst_value_percentage')
+    ->select('order_items.*','products.product_name','products.price','gst_tax.gst_value_percentage')
     ->where('order_items.order_id','=', $order_id )
     ->get(); 
     //  dd($orderDetails);

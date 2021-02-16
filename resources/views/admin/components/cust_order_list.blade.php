@@ -25,7 +25,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            <?php $i=1; ?>
+                            <?php $i=1; $t_gst = 0;	$dis_count = 0; ?>
                         @foreach($product_order as $row)
                             <tr>
                                 <th><?php echo $i; ?></th> 
@@ -33,10 +33,28 @@
                                 <th>{{$row->sub_total}}</th>
                                 <th>{{$row->gst_value_percentage}}</th>  
                                 <th>{{$row->quantity}}</th>
-                                <th>{{($row->sub_total * $row->quantity) }}</th>                                            
+                                <th>{{($row->sub_total * $row->quantity) }}</th> 
+                                <?php $t_gst = $t_gst + (($row->sub_total/100) * $row->gst_value_percentage) *  $row->quantity ;
+							$dis_count = $dis_count + (($row->price - $row->sub_total) * $row->quantity);
+						?>                                           
                             </tr>
                             <?php $i++; ?>
                          @endforeach
+                         <tr>
+                            <td colspan="5" class="font-weight-bold" style="font-weight: 400; color: black; text-align: left;">CGST
+                            </td>
+                            <td style="text-align: left;  font-size:14px;">Rs <?php echo $t_gst/2; ?></td> 
+                        </tr>
+                        <tr>
+                            <td colspan="5" class="font-weight-bold" style="font-weight: 400; color: black; text-align: left;">SGST
+                            </td>
+                            <td style="text-align: left;  font-size:14px;">Rs <?php echo $t_gst/2; ?></td> 
+                        </tr>
+                        <tr>
+                            <td colspan="5" class="font-weight-bold" style="font-weight: 400; color: black; text-align: left;">Total Discount
+                            </td>
+                            <td style="text-align: left;  font-size:14px;">Rs  <?php echo $dis_count; ?></td> 
+                        </tr>
                          <tr>
                                 <th></th> 
                                 <th></th> 
