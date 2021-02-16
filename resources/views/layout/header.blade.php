@@ -325,7 +325,7 @@
           <div class="submenu">
             <ul class="submenu-item">
             <li class="category-heading">Reports</li>
-              <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{url('avaliable-quantity')}}">Report</a></li>
+              <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{url('avaliable-quantity')}}">Avaliable Stock</a></li>
               <!--href="{{ url('/cust-report') }}"-->
               
               <!-- <li class="category-heading">Order</li>
