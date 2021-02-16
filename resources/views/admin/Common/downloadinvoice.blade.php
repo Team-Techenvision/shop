@@ -132,6 +132,8 @@
 					$f = 0;
 					$copoun1= 0;
 					$count = 1;
+					$t_gst = 0;
+					$dis_count = 0;
 				?> 				
 				 @foreach($order as $row)					
 					<tr>
@@ -141,30 +143,33 @@
 						<td style="border: 1px solid black;text-align: center;">{{$row->quantity}}</td> 
 						<td style="border: 1px solid black;text-align: center;">Rs {{$row->sub_total}}</td>  
 						<td style="border: 1px solid black;text-align: center;">{{$row->gst_value_percentage}}</td> 
-						<td style="border: 1px solid black;text-align: center;">{{(($row->sub_total * $row->quantity)/100 * $row->gst_value_percentage) + ($row->sub_total * $row->quantity)}}</td> 
+						<td style="border: 1px solid black;text-align: center;">{{($row->sub_total * $row->quantity)}}</td> 
+						<?php $t_gst = $t_gst + (($row->sub_total/100) * $row->gst_value_percentage) *  $row->quantity ;
+							$dis_count = $dis_count + (($row->price - $row->sub_total) * $row->quantity);
+						?> 
 					</tr>
 				@endforeach 			
 				<tr style="width: 100%;">
 					<td colspan="8" style="font-weight: 400; color: black; text-align: left; font-size:14px;">CGST
 					</td>
-					<td style="text-align: center;  font-size:14px;">Rs 150.00</td> 
+					<td style="text-align: center;  font-size:14px;">Rs <?php echo $t_gst/2; ?></td> 
 				</tr>
 			
 				<tr style="width: 100%;">
 					<td colspan="8" style="font-weight: 400; color: black; text-align: left; font-size:14px;">SGST
 					</td>
-					<td style="text-align: center;  font-size:14px;">Rs 150.00</td> 
+					<td style="text-align: center;  font-size:14px;">Rs <?php echo $t_gst/2; ?></td> 
 				</tr>
 
-				<tr style="width: 100%;">
+				<!-- <tr style="width: 100%;">
 					<td colspan="8" style="font-weight: 400; color: black; text-align: left; font-size:14px;">IGST
 					</td>
 					<td style="text-align: center;  font-size:14px;">Rs 300.00</td> 
-				</tr>
+				</tr> -->
 				<tr style="width: 100%;">
 					<td colspan="8" style="font-weight: 400; color: black; text-align: left; font-size:14px;">Total Discount
 					</td>
-					<td style="text-align: center;  font-size:14px;">Rs 100.00</td> 
+					<td style="text-align: center;  font-size:14px;">Rs <?php echo $dis_count; ?></td> 
 				</tr>
 
 				<tr style="">

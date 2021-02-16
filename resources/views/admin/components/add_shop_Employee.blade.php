@@ -47,40 +47,9 @@
                                             {{ session()->get('alert-success') }}
                                         </div>
                                     @endif
-                                  </div>  
-                                    <!-- <div class="form-group">
-                                        <label>City</label>
-                                        <input type="text" class="form-control" name="city" required>                                     
-                                    </div> -->
-                                    <!-- <div class="form-group">
-                                        <label>Store Name</label>
-                                        <input type="text" class="form-control" name="store_name" required>                                     
-                                    </div> --> 
-                                </div> 
-                                <!-- <div class="col-md-6"> -->
-                                    <!-- <div class="form-group">
-                                        <label>user Login</label>
-                                        <input type="text" class="form-control" name="user_name" required>                                     
-                                    </div> -->
-                                    <!-- <div class="form-group">
-                                        <label>Password</label>
-                                        <input type="text" class="form-control" name="password" required>                                     
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="submit" class="btn btn-primary mr-2">
-                                        <input type="reset" class="btn btn-sccess">                            
-                                    </div>
-                                    @if ($errors->any())
-                                        <div class="alert alert-danger">
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                    @endif -->
-                                <!-- </div> -->
-                                </div> 
+                                  </div> 
+                                </div>                              
+                            </div> 
                           </div>  
                         </form>		
                     </div> 

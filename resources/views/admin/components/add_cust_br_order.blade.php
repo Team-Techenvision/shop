@@ -36,13 +36,7 @@
                 <div class="form-group">
                       <label class="control-label">Product</label>
                       <input type="text" class="form-control text-center product_name" name="product_name[]" readonly>
-                      <input type="hidden" class="form-control text-center product_id" name="product_id[]" readonly>   
-                    <!-- <select name="product_name[]" class="form-control rounded product_id" readonly>
-                    <option value="">Select Order</option>
-                      @foreach($product as $row)
-                        <option value="{{$row->products_id}}">{{$row->product_name}}</option>
-                      @endforeach                   
-                    </select> -->
+                      <input type="hidden" class="form-control text-center product_id" name="product_id[]" readonly>                       
                 </div>
               </td>
               <td class="col-sm-1">
@@ -69,9 +63,7 @@
                   <input type="text" class="form-control text-center amount" name="amt[]"  value="" readonly>
                 </div>
               </td>
-              <td class="col-sm-1">  
-                <!-- <input type="text" class="code" name="customFieldName[]" value="" placeholder="Input Name" /> &nbsp;
-                <input type="text" class="code" name="customFieldValue[]" value="" placeholder="Input Value" /> &nbsp; -->
+              <td class="col-sm-1">                  
                 <a href="javascript:void(0);" id="addCF" class="btn btn-info mt-4">Add</a>
               </td>
             </tr>
@@ -170,71 +162,71 @@ $(document).ready(function()
         $('#total').val(sum.toFixed(2)); 
   }
     // ============================================
-  $('table').on("change", ".product_id", function(event)
-  { 
+  // $('table').on("change", ".product_id", function(event)
+  // { 
         
-          //alert( this.value );
-            var p_value = this.value;
-            var $row = jQuery(this).closest('tr');
-            var $columns = $row.find('td');           
+  //         //alert( this.value );
+  //           var p_value = this.value;
+  //           var $row = jQuery(this).closest('tr');
+  //           var $columns = $row.find('td');           
            
-           // console.log($columns.addClass('product_price'));          
+  //          // console.log($columns.addClass('product_price'));          
          
-          if(p_value)
-          {               
-          $.ajax({
-                type: "post",          
-                url: "{{ url('product-detail') }}",
-                dataType: "json",
-                data: {"_token": "{{ csrf_token() }}",
-                      "product": p_value},
-                success : function(response){ 
-                  var len = 0;
+  //         if(p_value)
+  //         {               
+  //         $.ajax({
+  //               type: "post",          
+  //               url: "{{ url('product-detail') }}",
+  //               dataType: "json",
+  //               data: {"_token": "{{ csrf_token() }}",
+  //                     "product": p_value},
+  //               success : function(response){ 
+  //                 var len = 0;
 
-                 // tr.find('.product_price').val(response["special_price"]);
+  //                // tr.find('.product_price').val(response["special_price"]);
 
-                  if(response['data'] != null)
-                  {
-                    len = response['data'].length;
-                    if(len > 0 )
-                    {
-                      for(var i = 0;i < len;i++)
-                      {
+  //                 if(response['data'] != null)
+  //                 {
+  //                   len = response['data'].length;
+  //                   if(len > 0 )
+  //                   {
+  //                     for(var i = 0;i < len;i++)
+  //                     {
                        
-                       if(response['data'][i].special_price)
-                       {
-                          $columns.find('.product_price').val(response['data'][i].special_price);                         
-                       }
-                       else
-                       {
-                          $columns.find('.product_price').val(response['data'][i].price);                       
-                       }
-                       $columns.find('.product_gst').val(response['data'][i].gst_value_percentage);
+  //                      if(response['data'][i].special_price)
+  //                      {
+  //                         $columns.find('.product_price').val(response['data'][i].special_price);                         
+  //                      }
+  //                      else
+  //                      {
+  //                         $columns.find('.product_price').val(response['data'][i].price);                       
+  //                      }
+  //                      $columns.find('.product_gst').val(response['data'][i].gst_value_percentage);
 
-                       $columns.find('.productqty').val(1);
+  //                      $columns.find('.productqty').val(1);
                        
 
-                            $price = $columns.find('.product_price').val();
-                            $gst = $columns.find('.product_gst').val();
+  //                           $price = $columns.find('.product_price').val();
+  //                           $gst = $columns.find('.product_gst').val();
                              
 
-                            $total = $price * 1;
-                            // $gst_amt = ($price * 1)/100 * 10;
-                            // $final_amt =$total + $gst_amt;                            
-                            $columns.find('.amount').val($total);
-                            final_amount();                             
-                      }
-                    }
-                  }
-                }
-            });
-          }
-          else
-          {
-            $('tr,this,.product_price').val("");
-            $('tr,this,.product_gst').val("");
-          }
-  });        
+  //                           $total = $price * 1;
+  //                           // $gst_amt = ($price * 1)/100 * 10;
+  //                           // $final_amt =$total + $gst_amt;                            
+  //                           $columns.find('.amount').val($total);
+  //                           final_amount();                             
+  //                     }
+  //                   }
+  //                 }
+  //               }
+  //           });
+  //         }
+  //         else
+  //         {
+  //           $('tr,this,.product_price').val("");
+  //           $('tr,this,.product_gst').val("");
+  //         }
+  // });        
 // ======================================
 $('table').on("keyup", ".product_brcodes", function(event)
   { 
@@ -254,7 +246,7 @@ $('table').on("keyup", ".product_brcodes", function(event)
                 success : function(response){ 
                   var len = 0;
                   // alert(response);
-                  console.log(response);
+                  // console.log(response);
                  // tr.find('.product_price').val(response["special_price"]);
 
                   if(response['data'] != null)
