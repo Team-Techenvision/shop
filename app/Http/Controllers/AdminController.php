@@ -298,6 +298,16 @@ class AdminController extends Controller
               $data->order_status=5;
               $data->sub_total=$req->p_price[$i];             
               $data->save();  
+
+            $purchase_quantity = $req->p_qty[$i];
+            $stock_info = shop_stock::where('products_id', $req->product_id[$i])->first();
+            
+            $avl_quantity1 = $stock_info->avl_quantity;
+            $avl_quantity = $avl_quantity1 - $purchase_quantity;
+            // dd($avl_quantity);
+              shop_stock::where('products_id',$req->product_id[$i])->update([
+                'avl_quantity' => $avl_quantity
+            ]);
               $i++;
              }            
           
@@ -413,7 +423,7 @@ public function cust_order_list($order_id)
     ->join('order_items', 'order_items.order_id', '=', 'orders.order_id')
     ->join('products', 'products.products_id', '=', 'order_items.prod_id')
     ->join('gst_tax', 'gst_tax.gst_id', '=', 'products.gst_id')             
-    ->select('orders.*','order_items.*','products.product_name','gst_tax.*')
+    ->select('orders.*','order_items.*','products.product_name','products.price','gst_tax.*')
     ->where('orders.order_id','=', $order_id )
     ->get(); 
     $data['order_id'] = $order_id;
