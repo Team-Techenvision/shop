@@ -146,14 +146,23 @@ class AdminController extends Controller
        $avl_quantity = $req->avl_quantity;
 
        if($return_quantity <= $avl_quantity){
-
-       }else{
-           echo 'error';
-    //     $data['main_breadcrum'] = 'Stock';
-    //     $data['page_title'] = 'Return Stock';
-    //     $data['flag'] = 15;
-    //  return view('admin/webviews/admin_manage_stock', $data)->with('message', 'Return Quantity Must Be Less Available Quantity');
-    //  
+        $avl_quantity = $avl_quantity - $return_quantity;
+        // dd($avl_quantity);
+        shop_stock::where('id',$req->id)->update([
+            'avl_quantity' => $avl_quantity           
+        ]);
+        $data['main_breadcrum'] = 'Stock';
+        $data['page_title'] = 'Return Stock';
+        $data['flag'] = 15;
+        $req->session()->flash('message_success', 'Quantity Return Successfully');
+        return view('admin/webviews/admin_manage_stock', $data);
+       }else{           
+        $data['main_breadcrum'] = 'Stock';
+        $data['page_title'] = 'Return Stock';
+        $data['flag'] = 15;
+        $req->session()->flash('message', 'Return Quantity Must Be Less Than Available Quantity');
+     return view('admin/webviews/admin_manage_stock', $data);
+     
   }
     }
 
