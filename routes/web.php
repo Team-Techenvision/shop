@@ -28,6 +28,10 @@ Route::get('View-User', 'AdminController@UserList');
 Route::get('Add-User', 'AdminController@UserAdd');
 Route::get('View-Stock', 'AdminController@StockList');
 Route::get('Add-Stock', 'AdminController@StockAdd');
+Route::get('Return-Stock', 'AdminController@Returnstock');
+Route::post('search-product-barcode', 'AdminController@Productbarcode');
+Route::post('return-product-submit', 'AdminController@Productreturnsubmit');
+
 Route::post('product-order','AdminController@addproductorder');
 //new code rahul
 Route::get('cust-order', 'AdminController@customerorder');

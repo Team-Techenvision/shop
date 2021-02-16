@@ -33,7 +33,7 @@
                                 <th>{{$row->sub_total}}</th>
                                 <th>{{$row->gst_value_percentage}}</th>  
                                 <th>{{$row->quantity}}</th>
-                                <th>{{(($row->sub_total * $row->quantity)/100 * $row->gst_value_percentage) + ($row->sub_total * $row->quantity) }}</th>                                            
+                                <th>{{($row->sub_total * $row->quantity) }}</th>                                            
                             </tr>
                             <?php $i++; ?>
                          @endforeach

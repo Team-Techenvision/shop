@@ -118,6 +118,45 @@ class AdminController extends Controller
         $data['flag'] = 5; 
         return view('admin/webviews/admin_manage_stock',$data);
     }
+
+    public function Returnstock(){
+        $data['main_breadcrum'] = 'Stock';
+        $data['page_title'] = 'Return Stock';
+        $data['flag'] = 15;
+        // $data['product'] = DB::table('products')->where('status',0)->get(); 
+        return view('admin/webviews/admin_manage_stock',$data);
+    }
+
+    public function Productbarcode(Request $req){
+        // dd($req);
+        $data['main_breadcrum'] = 'Stock';
+        $data['page_title'] = 'Return Stock';
+        $data['flag'] = 15;
+        $barcode = $req->barcode;
+        $data['stock'] = DB::table('shop_stocks')
+                        ->join('products', 'products.products_id', '=', 'shop_stocks.products_id')
+                        ->select('shop_stocks.*','products.product_name' )
+                        ->where('barcode',$barcode)->first(); 
+        // dd($data);
+        return view('admin/webviews/admin_manage_stock',$data);
+    }
+
+    public function Productreturnsubmit(Request $req){
+       $return_quantity = $req->return_quantity;
+       $avl_quantity = $req->avl_quantity;
+
+       if($return_quantity <= $avl_quantity){
+
+       }else{
+           echo 'error';
+    //     $data['main_breadcrum'] = 'Stock';
+    //     $data['page_title'] = 'Return Stock';
+    //     $data['flag'] = 15;
+    //  return view('admin/webviews/admin_manage_stock', $data)->with('message', 'Return Quantity Must Be Less Available Quantity');
+    //  
+  }
+    }
+
     //new code rahul
 
     public function ShopHome(Request $req)
@@ -244,7 +283,8 @@ class AdminController extends Controller
               $data = new order_item; 
               $data->order_id= $order_id;
               $data->sub_order_id= $order_id;
-              $data->prod_id=$req->product_name[$i];              
+              $data->prod_name=$req->product_name[$i]; 
+              $data->prod_id=$req->product_id[$i];             
               $data->quantity=$req->p_qty[$i];
               $data->order_status=5;
               $data->sub_total=$req->p_price[$i];             
@@ -613,7 +653,7 @@ public function downloadInvoice($order_id){
         $product = DB::table('shop_stocks')       
         ->join('products', 'shop_stocks.products_id', '=', 'products.products_id') 
         ->join('gst_tax','gst_tax.gst_id', '=', 'shop_stocks.tax')          
-        ->select('products.price','products.special_price','shop_stocks.*','gst_tax.gst_value_percentage')
+        ->select('products.price','products.product_name','products.special_price','shop_stocks.*','gst_tax.gst_value_percentage')
         ->where('shop_stocks.barcode','=',$p_id )
         ->get(); 
 

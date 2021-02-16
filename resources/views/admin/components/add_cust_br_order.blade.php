@@ -35,12 +35,14 @@
               <td class="col-sm-3">
                 <div class="form-group">
                       <label class="control-label">Product</label>
-                    <select name="product_name[]" class="form-control rounded product_id" readonly>
+                      <input type="text" class="form-control text-center product_name" name="product_name[]" readonly>
+                      <input type="hidden" class="form-control text-center product_id" name="product_id[]" readonly>   
+                    <!-- <select name="product_name[]" class="form-control rounded product_id" readonly>
                     <option value="">Select Order</option>
                       @foreach($product as $row)
                         <option value="{{$row->products_id}}">{{$row->product_name}}</option>
                       @endforeach                   
-                    </select>
+                    </select> -->
                 </div>
               </td>
               <td class="col-sm-1">
@@ -113,7 +115,7 @@ $(document).ready(function()
 // ====================================
     $("#addCF").click(function()
     {
-        $("#customFields").append('<tr class="row addrows"> <td class="col-sm-2"><input type="text" class="form-control product_brcodes" name="product_brcode" ></td><td class="col-sm-3"> <select name="product_name[]" class="form-control rounded product_id" readonly> <option value="">Select Order</option>@foreach($product as $row)<option value="{{$row->products_id}}">{{$row->product_name}}</option>@endforeach</select></td><td class="col-sm-1"><input type="text" class="form-control text-center product_price" name="p_price[]"  value="1" readonly></td><td class="col-sm-1"><input type="text" class="form-control text-center product_gst" name="gst[]" value="1" readonly></td><td class="col-sm-2"><input type="number" class="form-control text-center productqty" name="p_qty[]"  value="1" min="1" required></td><td class="col-sm-2"><input type="text" class="form-control text-center amount" name="amt[]"  value="" readonly></td> <td class="col-sm-1"> <a href="javascript:void(0);" class="remCF btn btn-danger">Remove</a></td></tr>');
+        $("#customFields").append('<tr class="row addrows"><td class="col-sm-2"><input type="text" class="form-control product_brcodes" name="product_brcode" ></td><td class="col-sm-3"> <input type="text" class="form-control text-center product_name" name="product_name[]" readonly><input type="hidden" class="form-control text-center product_id" name="product_id[]" readonly></td><td class="col-sm-1"><input type="text" class="form-control text-center product_price" name="p_price[]"  value="1" readonly></td><td class="col-sm-1"><input type="text" class="form-control text-center product_gst" name="gst[]" value="1" readonly></td><td class="col-sm-2"><input type="number" class="form-control text-center productqty" name="p_qty[]"  value="1" min="1" required></td><td class="col-sm-2"><input type="text" class="form-control text-center amount" name="amt[]"  value="" readonly></td> <td class="col-sm-1"> <a href="javascript:void(0);" class="remCF btn btn-danger">Remove</a></td></tr>');
         final_amount();
     });
   // =========================
@@ -143,9 +145,9 @@ $(document).ready(function()
         $gst = $columns.find('.product_gst').val();
 
         $total = $price * qtyvalue;
-        $gst_amt = ($price * qtyvalue)/100 * 10;
-        $final_amt =$total + $gst_amt;
-        $columns.find('.amount').val($final_amt);       
+        // $gst_amt = ($price * qtyvalue)/100 * 10;
+        // $final_amt =$total + $gst_amt;
+        $columns.find('.amount').val($total);       
         final_amount();
         //total($final_amt);
   });
@@ -217,9 +219,9 @@ $(document).ready(function()
                              
 
                             $total = $price * 1;
-                            $gst_amt = ($price * 1)/100 * 10;
-                            $final_amt =$total + $gst_amt;                            
-                            $columns.find('.amount').val($final_amt);
+                            // $gst_amt = ($price * 1)/100 * 10;
+                            // $final_amt =$total + $gst_amt;                            
+                            $columns.find('.amount').val($total);
                             final_amount();                             
                       }
                     }
@@ -252,6 +254,7 @@ $('table').on("keyup", ".product_brcodes", function(event)
                 success : function(response){ 
                   var len = 0;
                   // alert(response);
+                  console.log(response);
                  // tr.find('.product_price').val(response["special_price"]);
 
                   if(response['data'] != null)
@@ -270,7 +273,9 @@ $('table').on("keyup", ".product_brcodes", function(event)
                        {
                           $columns.find('.product_price').val(response['data'][i].price);                       
                        }
+                       $columns.find('.product_name').val(response['data'][i].product_name);
                        $columns.find('.product_id').val(response['data'][i].products_id);
+
 
                        $columns.find('.product_gst').val(response['data'][i].gst_value_percentage);
 
@@ -282,9 +287,9 @@ $('table').on("keyup", ".product_brcodes", function(event)
                              
 
                             $total = $price * 1;
-                            $gst_amt = ($price * 1)/100 * 10;
-                            $final_amt =$total + $gst_amt;                            
-                            $columns.find('.amount').val($final_amt);
+                            // $gst_amt = ($price * 1)/100 * 10;
+                            // $final_amt =$total + $gst_amt;                            
+                            $columns.find('.amount').val($total);
                             final_amount();                             
                       }
                     }

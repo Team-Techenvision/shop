@@ -130,9 +130,9 @@ $('table').on("change", ".productqty", function(event){
         $gst = $columns.find('.product_gst').val();
 
         $total = $price * qtyvalue;
-        $gst_amt = ($price * qtyvalue)/100 * 10;
-        $final_amt =$total + $gst_amt;
-        $columns.find('.amount').val($final_amt);       
+        // $gst_amt = ($price * qtyvalue)/100 * 10;
+        // $final_amt =$total + $gst_amt;
+        $columns.find('.amount').val($total);       
         final_amount();
         //total($final_amt);
     });
@@ -210,9 +210,9 @@ $('table').on("change", ".productqty", function(event){
                              
 
                             $total = $price * 1;
-                            $gst_amt = ($price * 1)/100 * 10;
-                            $final_amt =$total + $gst_amt;                            
-                            $columns.find('.amount').val($final_amt);
+                            // $gst_amt = ($price * 1)/100 * 10;
+                            // $final_amt =$total + $gst_amt;                            
+                            $columns.find('.amount').val($total);
 
                             final_amount(); 
                             //total($final_amt);

@@ -24,7 +24,7 @@
             @elseif($flag == 6)
             	@include('admin.components/admin_customer_order')
             @elseif($flag == 7)
-            	@include('admin.components/add_cust_order') 
+            @include('admin.components/add_cust_br_order')            	
             @elseif($flag == 8)
             	@include('admin.components/view_order') 
             @elseif($flag == 9)
@@ -38,7 +38,10 @@
             @elseif($flag == 13)
             	@include('admin.components/order_detail')
             @elseif($flag == 14)
-            	@include('admin.components/add_cust_br_order')                      
+            	@include('admin.components/add_cust_br_order')
+              <!-- @include('admin.components/add_cust_order')  --> 
+            @elseif($flag == 15)
+            	@include('admin.components/return_stock')                     
             @endif
         </div>
 
