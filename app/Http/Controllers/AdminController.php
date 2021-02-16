@@ -638,22 +638,22 @@ public function downloadInvoice($order_id){
 
     // =====================================================
                     // 10/2/21
-    public function BarCode_Order()
-    {
-        $data['main_breadcrum'] = 'BarCode';
-        $data['page_title'] = 'Create BarCode';
-        $data['flag'] = 14;
-        $data['u_id'] = 120;
-        $shop_id = Auth::user()->shop_id; 
-        $data['product'] = DB::table('shop_stocks')
-        ->join('products', 'products.products_id', '=', 'shop_stocks.products_id')            
-        ->select('products.*','shop_stocks.*')
-        ->where('shop_stocks.shop_id','=',$shop_id)
-        ->get(); 
-        //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
-        return view('admin/webviews/admin_manage_stock',$data);
+    // public function BarCode_Order()
+    // {
+    //     $data['main_breadcrum'] = 'BarCode';
+    //     $data['page_title'] = 'Create BarCode';
+    //     $data['flag'] = 14;
+    //     $data['u_id'] = 120;
+    //     $shop_id = Auth::user()->shop_id; 
+    //     $data['product'] = DB::table('shop_stocks')
+    //     ->join('products', 'products.products_id', '=', 'shop_stocks.products_id')            
+    //     ->select('products.*','shop_stocks.*')
+    //     ->where('shop_stocks.shop_id','=',$shop_id)
+    //     ->get(); 
+    //     //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
+    //     return view('admin/webviews/admin_manage_stock',$data);
 
-    }  
+    // }  
     
     public function br_product_detail()
     {
@@ -669,6 +669,20 @@ public function downloadInvoice($order_id){
        $producttest['data'] =  $product; 
    echo json_encode($producttest);
    exit; 
+
+    }
+
+    public function avaliable_quantity()
+    {
+        $data['main_breadcrum'] = 'Stock';
+        $data['page_title'] = 'Available Quantity';
+        $data['flag'] = 14;       
+        $shop_id = Auth::user()->shop_id;         
+        $data['product']=DB::select("SELECT products_id,SUM(avl_quantity) as total FROM `shop_stocks` GROUP BY (products_id) ORDER BY total DESC");       
+        // $data['product']=DB::select("SELECT products.product_name,SUM(shop_stocks.avl_quantity) as total FROM shop_stocks INNER JOIN products ON(products.products_id = shop_stocks.products_id) GROUP BY (shop_stocks.products_id)");       
+        // dd($data['product'] );
+        //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
+        return view('admin/webviews/admin_manage_stock',$data);
 
     }
 

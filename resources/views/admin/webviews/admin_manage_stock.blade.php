@@ -38,8 +38,7 @@
             @elseif($flag == 13)
             	@include('admin.components/order_detail')
             @elseif($flag == 14)
-            	@include('admin.components/add_cust_br_order')
-              <!-- @include('admin.components/add_cust_order')  --> 
+            	@include('admin.components/show_total_stock')         
             @elseif($flag == 15)
             	@include('admin.components/return_stock')                     
             @endif
