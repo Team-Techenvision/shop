@@ -88,6 +88,11 @@
                   </ul>
               </div>
           @endif
+          @if(session()->has('alert-danger'))
+            <div class="alert alert-danger">
+                {{ session()->get('alert-danger') }}
+            </div>
+          @endif
           </div>   
           <!-- ==================================         -->
       </div> 
@@ -220,7 +225,7 @@ $('table').on("change", ".productqty", function(event){
                      // console.log($columns.find('.product_gst').val());
                       //   console.log(response['data'][i].gst_value_percentage);
                       }
-                    }
+                    }                   
                   }
                 }
             });

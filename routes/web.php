@@ -62,6 +62,9 @@ Route::get('change-password', 'AdminController@change_password');
 Route::post('submit-Password','AdminController@submit_Password');
 Route::get('barcode-order', 'AdminController@BarCode_Order');
 Route::post('br-product-detail','AdminController@br_product_detail');
+// ===============================
+Route::get('avaliable-quantity', 'AdminController@avaliable_quantity');
+
 //new code 
 
 Route::post('shop-home','AdminController@ShopHome');
