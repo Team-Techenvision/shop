@@ -5,13 +5,36 @@
       <div class="card-body">
         <h6 class="card-title">{{$page_title}}</h6>
         <!-- <p class="card-description">Read the <a href="https://datatables.net/" target="_blank"> Official DataTables Documentation </a>for a full list of instructions and other options.</p> -->
+        <form action="{{url('check-expiry')}}" method="post">
+        @csrf 
+              <div class="row m-auto">
+                <div class="col-sm-8">
+                  <div class="form-group w-50 mr-1">
+                    <label class="control-label">Filter</label>
+                    <select name="Exp_date" id="Exp_date" class="form-control rounded" required>
+                      <option value="">Select Day</option>                   
+                      <option value="5">5 Day</option>
+                      <option value="15">15 Day</option>
+                      <option value="30">1 Month</option>
+                      <option value="60">2 Month</option>
+                      <option value="180">6 Month</option>
+                    </select>                   
+                  </div>                         
+                </div><!-- Col -->
+              <div  class="col-sm-4 text-left"> 
+              <!-- <button type="submit" name="search" class="btn btn-info mt-4">Search</button>            -->
+                <input type="submit" name="search" value="search" class="btn btn-info mt-4" >
+              </div>  
+            </div>
+        </form>
         <div class="table-responsive">
           <table id="dataTableExample" class="table">
           <thead>     
               <tr>
                 <th>Sr. No.</th>
                 <!-- <th>Barcode</th>   -->
-                <th>Product Name</th>                 
+                <th>Product Name</th>
+                <th>Expiry Date</th>                  
                 <th>Available Quantity</th>               
               </tr>
             </thead>
@@ -27,8 +50,9 @@
           <?php  $product_name = DB::table('products')->select('product_name')->where('products_id',$r->products_id)->first();  ?> 
           
             <td>{{$product_name->product_name}}</td> 
-            <?php if($r->total) { ?>                  
-            <td>{{$r->total}}</td> 
+            <td>{{$r->expiry_date}}</td>
+            <?php if($r->avl_quantity) { ?>                  
+            <td>{{$r->avl_quantity}}</td> 
             <?php } else { ?> 
                 <td>00</td> <?php } ?>
             </tr>

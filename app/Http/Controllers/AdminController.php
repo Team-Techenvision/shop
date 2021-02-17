@@ -404,11 +404,11 @@ public function cust_order_list($order_id)
     ->join('order_items', 'order_items.order_id', '=', 'orders.order_id')
     ->join('products', 'products.products_id', '=', 'order_items.prod_id')
     ->join('gst_tax', 'gst_tax.gst_id', '=', 'products.gst_id')             
-    ->select('orders.*','order_items.*','products.product_name','gst_tax.*')
+    ->select('orders.*','order_items.*','products.product_name','products.price','gst_tax.*')
     ->where('orders.order_id','=', $order_id )
     ->get(); 
     $data['order_id'] = $order_id;
-    //dd($data['product_order']); 
+    //  dd($data['product_order']); 
     return view('admin/webviews/admin_manage_stock',$data);
 }
 
@@ -669,12 +669,32 @@ public function downloadInvoice($order_id){
         $data['page_title'] = 'Available Quantity';
         $data['flag'] = 14;       
         $shop_id = Auth::user()->shop_id;         
-        $data['product']=DB::select("SELECT products_id,SUM(avl_quantity) as total FROM `shop_stocks` GROUP BY (products_id) ORDER BY total DESC");       
+        // $data['product']=DB::select("SELECT products_id,SUM(avl_quantity) as avl_quantity FROM `shop_stocks` where (shop_id =$shop_id)  GROUP BY (products_id) ORDER BY avl_quantity DESC");       
         // $data['product']=DB::select("SELECT products.product_name,SUM(shop_stocks.avl_quantity) as total FROM shop_stocks INNER JOIN products ON(products.products_id = shop_stocks.products_id) GROUP BY (shop_stocks.products_id)");       
+        $data['product']=DB::select("select * from shop_stocks where  shop_id=$shop_id;"); 
         // dd($data['product'] );
         //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
         return view('admin/webviews/admin_manage_stock',$data);
 
+    }
+
+    public function check_expiry(Request $req)
+    {
+        // dd($req->Exp_date);
+        $data['main_breadcrum'] = 'Stock';
+        $data['page_title'] = 'Available Quantity';
+        $data['flag'] = 14;       
+        $shop_id = Auth::user()->shop_id;  
+        $expiry_day = $req->Exp_date;
+        // $currentDate = date('Y-m-d'); 
+        // echo  $currentDate;die();      
+        // $data['product']=DB::select("SELECT products_id,SUM(avl_quantity) as total FROM `shop_stocks` GROUP BY (products_id) ORDER BY total DESC");       
+        // $data['product']=DB::select("SELECT * FROM `shop_stocks` WHERE (DATEDIFF(`expiry_date`,  $currentDate) <= 15) && (`shop_id` = 13)"); 
+        $data['product']=DB::select("select * from shop_stocks where expiry_date < now() + INTERVAL $expiry_day day AND shop_id=$shop_id;"); 
+
+        //  dd($data['product'] );
+        //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
+        return view('admin/webviews/admin_manage_stock',$data);
     }
 
 
