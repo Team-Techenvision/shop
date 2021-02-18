@@ -485,7 +485,7 @@ public function downloadInvoice($order_id){
          $tax = $gst->gst_id;
          //dd($tax);
         $shop_id = Auth::user()->shop_id;  
-        $seven_random_number = mt_rand(0, 9999999); 
+        $seven_random_number = mt_rand(1000000, 9999999); 
         $barcode =  $shop_id.$seven_random_number; 
         // dd($barcode);
 
@@ -691,7 +691,7 @@ public function downloadInvoice($order_id){
         // $data['product']=DB::select("SELECT products_id,SUM(avl_quantity) as avl_quantity FROM `shop_stocks` where (shop_id =$shop_id)  GROUP BY (products_id) ORDER BY avl_quantity DESC");       
         // $data['product']=DB::select("SELECT products.product_name,SUM(shop_stocks.avl_quantity) as total FROM shop_stocks INNER JOIN products ON(products.products_id = shop_stocks.products_id) GROUP BY (shop_stocks.products_id)");       
         $data['product']=DB::select("select * from shop_stocks where  shop_id=$shop_id;"); 
-        // dd($data['product'] );
+        dd($data['product'] );
         //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
         return view('admin/webviews/admin_manage_stock',$data);
 
@@ -707,11 +707,11 @@ public function downloadInvoice($order_id){
         $expiry_day = $req->Exp_date;
         // $currentDate = date('Y-m-d'); 
         // echo  $currentDate;die();      
-        // $data['product']=DB::select("SELECT products_id,SUM(avl_quantity) as total FROM `shop_stocks` GROUP BY (products_id) ORDER BY total DESC");       
+        // $data['product']=DB::select("SELECT products_id,SUM(avl_quantity) as avl_quantity FROM `shop_stocks` where (shop_id =$shop_id)  GROUP BY (products_id) ORDER BY avl_quantity DESC");       
         // $data['product']=DB::select("SELECT * FROM `shop_stocks` WHERE (DATEDIFF(`expiry_date`,  $currentDate) <= 15) && (`shop_id` = 13)"); 
         $data['product']=DB::select("select * from shop_stocks where expiry_date < now() + INTERVAL $expiry_day day AND shop_id=$shop_id;"); 
 
-        //  dd($data['product'] );
+        //  dd($data['product']);
         //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
         return view('admin/webviews/admin_manage_stock',$data);
     }
