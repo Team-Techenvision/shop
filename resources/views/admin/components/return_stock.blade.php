@@ -3,24 +3,25 @@
     <div class="card">
       <div class="card-body">
         <h6 class="card-title">{{$page_title}}</h6>
-        @if(session()->has('message_success'))
-                  <div class="alert alert-success">
-                      {{ session()->get('message_success') }}
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-                  </div>
-              @endif
+        <div class="any_message mt-2">
+          @if(session()->has('message_success'))
+            <div class="alert alert-success">
+                {{ session()->get('message_success') }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          @endif
 
-        @if(session()->has('message'))
-                  <div class="alert alert-danger">
-                      {{ session()->get('message') }}
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-                  </div>
-              @endif
-        
+          @if(session()->has('message'))
+            <div class="alert alert-danger">
+                {{ session()->get('message') }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          @endif
+        </div>
       <form action="{{url('search-product-barcode') }}" method="post"> 
       @csrf    
         <div class="row">        
