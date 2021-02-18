@@ -107,7 +107,7 @@ $(document).ready(function()
 // ====================================
     $("#addCF").click(function()
     {
-        $("#customFields").append('<tr class="row addrows"><td class="col-sm-2"><input type="text" class="form-control product_brcodes" name="product_brcode" ></td><td class="col-sm-3"> <input type="text" class="form-control text-center product_name" name="product_name[]" readonly><input type="hidden" class="form-control text-center product_id" name="product_id[]" readonly></td><td class="col-sm-1"><input type="text" class="form-control text-center product_price" name="p_price[]"  value="1" readonly></td><td class="col-sm-1"><input type="text" class="form-control text-center product_gst" name="gst[]" value="1" readonly></td><td class="col-sm-2"><input type="number" class="form-control text-center productqty" name="p_qty[]"  value="1" min="1" required></td><td class="col-sm-2"><input type="text" class="form-control text-center amount" name="amt[]"  value="" readonly></td> <td class="col-sm-1"> <a href="javascript:void(0);" class="remCF btn btn-danger">Remove</a></td></tr>');
+        $("#customFields").append('<tr class="row addrows"><td class="col-sm-2 mt-3"><input type="text" class="form-control product_brcodes" name="product_brcode" ></td><td class="col-sm-3"> <input type="text" class="form-control text-center product_name" name="product_name[]" readonly><input type="hidden" class="form-control text-center product_id" name="product_id[]" readonly></td><td class="col-sm-1"><input type="text" class="form-control text-center product_price" name="p_price[]"  value="1" readonly></td><td class="col-sm-1"><input type="text" class="form-control text-center product_gst" name="gst[]" value="1" readonly></td><td class="col-sm-2"><input type="number" class="form-control text-center productqty" name="p_qty[]"  value="1" min="1" required></td><td class="col-sm-2"><input type="text" class="form-control text-center amount" name="amt[]"  value="" readonly></td> <td class="col-sm-1"> <a href="javascript:void(0);" class="remCF btn btn-danger">Remove</a></td></tr>');
         final_amount();
     });
   // =========================
@@ -234,7 +234,7 @@ $('table').on("keyup", ".product_brcodes", function(event)
     $len = $(this).val().length;
     var $row = jQuery(this).closest('tr');
     var $columns = $row.find('td'); 
-    if($len == 10 )
+    if($len >= 10 )
     {
       // alert($(this).val());
       $.ajax({

@@ -31,7 +31,7 @@
           </div>
           <div class="col-sm-4">                           
             <div class="form-group">             
-              <input type="text" class="form-control" name="barcode"  id="barcode" minlength="8" maxlength="12" placeholder="Barcode" required>               
+              <input type="text" class="form-control" name="barcode"  id="barcode" minlength="4" maxlength="15" placeholder="Barcode" required>               
             </div>
           </div>
           <div class="col-sm-4">                  

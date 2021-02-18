@@ -21,14 +21,12 @@
             <tbody> 
             @php 
               $count = 1;  
-
               @endphp 
               @foreach($shop_orders as $r)
               
             <tr> 
             <td> {{$count++}} </td>
-            <td>{{$r->phone}}</td>     
-            <!-- <td>{{$r->shop_id}}</td> -->
+            <td>{{$r->phone}}</td>    
             <td>{{$r->order_id}}</td>
             <td>{{$r->amount}}</td>
             <td>{{$r->created_at}}</td> 

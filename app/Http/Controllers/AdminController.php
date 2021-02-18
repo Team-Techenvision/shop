@@ -282,7 +282,8 @@ class AdminController extends Controller
              $data1->save();
              $last_id=$data1->id;
              $orders = DB::table('orders')->where('id',$last_id)->first();
-             $order_id = $orders->order_id;            
+             $order_id = $orders->order_id; 
+             $order_amount = $orders->amount;           
 
              //dd( $req->product_name);
             
@@ -322,7 +323,25 @@ class AdminController extends Controller
             ->where('orders.order_id','=', $order_id )
             ->get(); 
             $data['order_id'] = $order_id;
-            //dd($data['product']);            
+            //dd($data['product']);      
+            
+            // send sms when order placed successfully
+
+             $user_info = User::where('id', $cust_id)->first();
+            //  dd($user_info);
+            if($user_info->phone != null) { 
+                $msg=urlencode("Thank you for shopping with DrHelpDesk.
+                Order ID - ".$order_id."
+                Total Amount - Rs ".$order_amount."
+                Payment Mode - Cash 
+                Enjoy Shopping on Drhelpdesk. 
+                Stay Home !!! Stay Safe !!!");
+                $curl = curl_init("http://nimbusit.co.in/api/swsendSingle.asp?username=t1drhelpdesk&password=28307130&sender=DRDESK&sendto=".$user_info->phone."&message=".$msg);
+                curl_setopt ($curl,CURLOPT_RETURNTRANSFER,true);
+                $response=curl_exec($curl);
+                curl_close($curl);
+            } 
+
                 
          return view('admin/webviews/admin_manage_stock',$data);    
     }
@@ -485,7 +504,7 @@ public function downloadInvoice($order_id){
          $tax = $gst->gst_id;
          //dd($tax);
         $shop_id = Auth::user()->shop_id;  
-        $seven_random_number = mt_rand(0, 9999999); 
+        $seven_random_number = mt_rand(1000000, 9999999); 
         $barcode =  $shop_id.$seven_random_number; 
         // dd($barcode);
 
