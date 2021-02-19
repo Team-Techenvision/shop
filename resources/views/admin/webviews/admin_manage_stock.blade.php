@@ -40,7 +40,9 @@
             @elseif($flag == 14)
             	@include('admin.components/show_total_stock')         
             @elseif($flag == 15)
-            	@include('admin.components/return_stock')                     
+            	@include('admin.components/return_stock')
+            @elseif($flag == 16)
+            	@include('admin.components/daily_update')                        
             @endif
         </div>
 
@@ -48,7 +50,7 @@
 
 @push('plugin-scripts')
   <script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
-  <!-- <script src="{{ asset('assets/plugins/datatables-net-bs4/dataTables.bootstrap4.js') }}"></script> -->
+  <script src="{{ asset('assets/plugins/datatables-net-bs4/dataTables.bootstrap4.js') }}"></script>
 @endpush
 
 @push('custom-scripts')

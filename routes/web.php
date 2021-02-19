@@ -65,6 +65,10 @@ Route::post('br-product-detail','AdminController@br_product_detail');
 // ===============================
 Route::get('avaliable-quantity', 'AdminController@avaliable_quantity');
 Route::post('check-expiry', 'AdminController@check_expiry');
+Route::get('daily-update', 'AdminController@daily_update');
+Route::get('daily-sell-update/{date}', 'AdminController@daily_sell_update');
+
+
 
 
 

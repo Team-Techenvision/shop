@@ -49,7 +49,7 @@
           <?php  $product_name = DB::table('products')->select('product_name')->where('products_id',$r->products_id)->first();  ?> 
           
             <td>{{$product_name->product_name}}</td> 
-            
+            <td>{{$r->expiry_date}}</td>
             <?php if($r->avl_quantity) { ?>                  
             <td>{{$r->avl_quantity}}</td> 
             <?php } else { ?> 

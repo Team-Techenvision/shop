@@ -137,6 +137,10 @@ class AdminController extends Controller
                         ->join('products', 'products.products_id', '=', 'shop_stocks.products_id')
                         ->select('shop_stocks.*','products.product_name' )
                         ->where('barcode',$barcode)->first(); 
+        if(!$data['stock'])
+        {
+            $req->session()->flash('message', 'Product Not InStock!!!!');
+        }
         // dd($data);
         return view('admin/webviews/admin_manage_stock',$data);
     }
@@ -691,12 +695,13 @@ public function downloadInvoice($order_id){
         // $data['product']=DB::select("SELECT products_id,SUM(avl_quantity) as avl_quantity FROM `shop_stocks` where (shop_id =$shop_id)  GROUP BY (products_id) ORDER BY avl_quantity DESC");       
         // $data['product']=DB::select("SELECT products.product_name,SUM(shop_stocks.avl_quantity) as total FROM shop_stocks INNER JOIN products ON(products.products_id = shop_stocks.products_id) GROUP BY (shop_stocks.products_id)");       
         $data['product']=DB::select("select * from shop_stocks where  shop_id=$shop_id;"); 
-        dd($data['product'] );
+        // dd($data['product'] );
         //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
         return view('admin/webviews/admin_manage_stock',$data);
 
     }
-
+// ======================================================
+// select Drop Downlist option in show Product Expiry date
     public function check_expiry(Request $req)
     {
         // dd($req->Exp_date);
@@ -714,6 +719,21 @@ public function downloadInvoice($order_id){
         //  dd($data['product']);
         //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
         return view('admin/webviews/admin_manage_stock',$data);
+    }
+    public function daily_update()
+    {        
+        $data['main_breadcrum'] = 'Store';
+        $data['page_title'] = 'Daily Update';
+        $data['flag'] = 16;       
+        $shop_id = Auth::user()->shop_id;
+        $data['daily_report']=DB::select("SELECT date(created_at) AS Date ,SUM(amount) as tatal_amount FROM orders where (shop_id =$shop_id) GROUP BY (date(created_at))");
+        // dd($data['daily_report'] );       
+        return view('admin/webviews/admin_manage_stock',$data);
+
+    }
+    public function daily_sell_update($date)
+    {
+        echo $date; die();
     }
 
 
