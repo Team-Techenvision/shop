@@ -4,7 +4,7 @@
     <div class="card">
       <div class="card-body">
         <h6 class="card-title">{{$page_title}}</h6>        
-        <form action="{{url('check-expiry')}}" method="post">
+        <!-- <form action="{{url('check-expiry')}}" method="post">
         @csrf 
               <div class="row m-auto">
                 <div class="col-sm-8">
@@ -19,13 +19,13 @@
                       <option value="180">6 Month</option>
                     </select>                   
                   </div>                         
-                </div><!-- Col -->
+                </div><! -- Col - ->
               <div  class="col-sm-4 text-left"> 
-              <!-- <button type="submit" name="search" class="btn btn-info mt-4">Search</button>            -->
+              <! -- <button type="submit" name="search" class="btn btn-info mt-4">Search</button>            - ->
                 <input type="submit" name="search" value="search" class="btn btn-info" >
               </div>  
             </div>
-        </form>
+        </form> -->
         <div class="table-responsive">
           <table id="dataTableExample" class="table">
           <thead>     
@@ -33,7 +33,7 @@
                 <th>Sr. No.</th>
                 <!-- <th>Barcode</th>   -->
                 <th>Product Name</th>
-                <th>Expiry Date</th>                  
+                <!-- <th>Expiry Date</th>                   -->
                 <th>Available Quantity</th>               
               </tr>
             </thead>
@@ -43,13 +43,24 @@
 
               @endphp 
               @foreach($product as $r)
-              
-            <tr> 
+              <?php
+                if($r->avl_quantity <= 10)
+                { ?>
+                  <tr class="bg-danger"> 
+          <?php }
+             elseif($r->avl_quantity <= 50)
+             { ?>
+               <tr class="bg-warning"> 
+              <?php }
+                else
+                { ?>
+                  <tr> 
+          <?php } ?>
             <td> {{$count++}} </td>           
           <?php  $product_name = DB::table('products')->select('product_name')->where('products_id',$r->products_id)->first();  ?> 
           
             <td>{{$product_name->product_name}}</td> 
-            <td>{{$r->expiry_date}}</td>
+            
             <?php if($r->avl_quantity) { ?>                  
             <td>{{$r->avl_quantity}}</td> 
             <?php } else { ?> 

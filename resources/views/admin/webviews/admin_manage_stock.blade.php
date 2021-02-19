@@ -42,7 +42,7 @@
             @elseif($flag == 15)
             	@include('admin.components/return_stock')
             @elseif($flag == 16)
-            	@include('admin.components/daily_update')                        
+            	@include('admin.components/daily_sell')                        
             @endif
         </div>
 

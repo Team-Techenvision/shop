@@ -105,7 +105,7 @@
               <li class="nav-item"><a class="nav-link {{ active_class(['email/read']) }}" href="#">Add</a></li>               -->
               <li class="category-heading">Stock</li>
               <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{ url('/View-Stock') }}">list</a></li>
-              <li class="nav-item"><a class="nav-link {{ active_class(['apps/calendar']) }}" href="{{ url('/Add-Stock') }}">Add</a></li>             
+              <!-- <li class="nav-item"><a class="nav-link {{ active_class(['apps/calendar']) }}" href="{{ url('/Add-Stock') }}">Add</a></li>              -->
               <li class="nav-item"><a class="nav-link {{ active_class(['apps/calendar']) }}" href="{{ url('/Return-Stock') }}">Return</a></li>              
             </ul>
           </div>
@@ -138,7 +138,8 @@
             <ul class="submenu-item">
             <li class="category-heading">Reports</li>
               <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{url('avaliable-quantity')}}">Avaliable Stock</a></li>
-              <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{url('daily-update')}}">Daily Update</a></li>
+              <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{url('product-exp-report')}}">Product Expiry</a></li>
+              <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{url('daily-update')}}">Daily Sell </a></li>
               <!--href="{{ url('/cust-report') }}"-->
               
               <!-- <li class="category-heading">Order</li>

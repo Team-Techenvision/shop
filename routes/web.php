@@ -67,6 +67,10 @@ Route::get('avaliable-quantity', 'AdminController@avaliable_quantity');
 Route::post('check-expiry', 'AdminController@check_expiry');
 Route::get('daily-update', 'AdminController@daily_update');
 Route::get('daily-sell-update/{date}', 'AdminController@daily_sell_update');
+Route::get('product-exp-report', 'AdminController@product_exp_report');
+Route::post('check-expiry2', 'AdminController@check_expiry2');
+
+
 
 
 
