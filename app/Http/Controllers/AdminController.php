@@ -10,6 +10,8 @@ use App\gsttax;
 use App\product_order;
 use App\User;
 use App\order_item;
+use App\DeWallet;
+use App\Return_Stock;
 use App;
 use Auth;
 use PDF;
@@ -133,10 +135,13 @@ class AdminController extends Controller
         $data['page_title'] = 'Return Stock';
         $data['flag'] = 15;
         $barcode = $req->barcode;
+        $shop_id = Auth::user()->shop_id;
         $data['stock'] = DB::table('shop_stocks')
                         ->join('products', 'products.products_id', '=', 'shop_stocks.products_id')
                         ->select('shop_stocks.*','products.product_name' )
-                        ->where('barcode',$barcode)->first(); 
+                        ->where('barcode',$barcode)
+                        ->where('shop_id',$shop_id)
+                        ->first(); 
         if(!$data['stock'])
         {
             $req->session()->flash('message', 'Product Not InStock!!!!');
@@ -149,9 +154,19 @@ class AdminController extends Controller
        $return_quantity = $req->return_quantity;
        $avl_quantity = $req->avl_quantity;
 
+
+
        if($return_quantity <= $avl_quantity){
         $avl_quantity = $avl_quantity - $return_quantity;
         // dd($avl_quantity);
+
+              $data = new Return_Stock; 
+              $data->products_id= $req->products_id;
+              $data->return_quantity= $req->return_quantity;
+              $data->shop_id= $req->shop_id;
+              $data->save();
+
+
         shop_stock::where('id',$req->id)->update([
             'avl_quantity' => $avl_quantity           
         ]);
@@ -330,18 +345,42 @@ class AdminController extends Controller
             ->get(); 
             $data['order_id'] = $order_id;
             //dd($data['product']);      
-            
-            // send sms when order placed successfully
 
+
+            // add D-coin after placed order 
+            $user_dcoin_info = DB::table('de_wallets')->where('user_id', $cust_id)->first();
+
+            //  allready customer is present then do this 
+
+            if($user_dcoin_info !== null ){
+             $dcoin = $user_dcoin_info->coin;
+             $total_dcoin = $dcoin + round(($total_amt / 5));
+            // dd($total_dcoin);
+            $affected = DeWallet::where('id',$user_dcoin_info->id)
+              ->update(['coin' => $total_dcoin]);
+            }else{
+                //  new user do this 
+                $total_dcoin = round(($total_amt / 5));
+                $data2 = new DeWallet;              
+             $data2->user_id= $cust_id;
+             $data2->coin=$total_dcoin;
+             $data2->save();
+            }
+
+        
+            // send sms when order placed successfully
+            $user_dcoin_info = DB::table('de_wallets')->where('user_id', $cust_id)->first();
              $user_info = User::where('id', $cust_id)->first();
             //  dd($user_info);
             if($user_info->phone != null) { 
-                $msg=urlencode("Thank you for shopping with DrHelpDesk.
-                Order ID - ".$order_id."
-                Total Amount - Rs ".$order_amount."
-                Payment Mode - Cash 
-                Enjoy Shopping on Drhelpdesk. 
-                Stay Home !!! Stay Safe !!!");
+                $msg=urlencode("Thank you for shopping with DrHelpDesk. 
+            Order ID - ".$order_id."
+            Total Amount - Rs ".$order_amount."
+            Payment Mode - Cash 
+            Dcoin Added In Your Account ".$user_dcoin_info->coin."
+            To Redeem Dcoin Visit Our
+            Website http://drhelpdesk.in Or Download App
+            Enjoy Shopping With Us. ");
                 $curl = curl_init("http://nimbusit.co.in/api/swsendSingle.asp?username=t1drhelpdesk&password=28307130&sender=DRDESK&sendto=".$user_info->phone."&message=".$msg);
                 curl_setopt ($curl,CURLOPT_RETURNTRANSFER,true);
                 $response=curl_exec($curl);

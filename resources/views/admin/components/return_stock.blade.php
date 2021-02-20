@@ -70,6 +70,9 @@
             </div>
 
             <input type="hidden" name="id" value="{{$stock->id}}">
+            <?php $shop_id = Auth::user()->shop_id; ?>
+            <input type="hidden" name="shop_id" value="{{$shop_id}}">
+            <input type="hidden" name="products_id" value="{{$stock->products_id}}">
             
             <div class="row">
               <div class="col-sm-6">
