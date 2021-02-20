@@ -10,7 +10,7 @@
           <thead>     
               <tr>
                 <th>Sr. No.</th> 
-                <th>Customer Name</th> 
+                <!-- <th>Customer Name</th>  -->
                 <th>Order ID</th>
                 <th>Price</th>  
                 <th>order Date</th>
@@ -26,7 +26,7 @@
               
             <tr> 
             <td> {{$count++}} </td>
-            <td>{{$r->phone}}</td>    
+            <!-- <td>{{$r->phone}}</td>     -->
             <td>{{$r->order_id}}</td>
             <td>{{$r->amount}}</td>
             <td>{{$r->created_at}}</td> 

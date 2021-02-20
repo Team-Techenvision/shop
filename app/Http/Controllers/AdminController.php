@@ -47,6 +47,27 @@ class AdminController extends Controller
         Auth::logout();
         return Redirect('/');
     }
+
+    // ========================================
+    public function home_dashboard()
+    {
+        $data['flag'] = 1;
+        $shop_id = Auth::user()->shop_id; 
+        $Count_Customer1 = DB::select("SELECT * FROM users WHERE shop_id =$shop_id AND user_type=2");
+        $Count_stock1 = DB::select("SELECT DISTINCT `products_id` as count_product FROM `shop_stocks` WHERE shop_id=$shop_id"); 
+        $expiry_stock1 = DB::select("select timestampdiff(day,now(),`expiry_date`) AS expiry_day,`avl_quantity`,`products_id`,`expiry_date` from shop_stocks where expiry_date < now() + INTERVAL 30 day AND shop_id=$shop_id"); 
+        
+        $data['Count_Customer'] = count( $Count_Customer1);
+        // dd($data['Count_Customer']);
+        $data['Count_stock'] = count($Count_stock1);
+        // dd($data['Count_stock1']);
+        $data['expiry_stock'] = count($expiry_stock1);
+        // dd($data['expiry_stock']); 
+                   
+        return view('dashboard',$data);
+    }
+
+    // =========================================
  
     public function UserList(){
         $data['flag'] = 1;
@@ -233,6 +254,7 @@ class AdminController extends Controller
              
              $data1 = new User;
              $data1->phone=$cust_phone;
+             $data1->user_type=2;
              $data1->shop_id=$shop_id;
              $data1->save();
              $data['u_id']=$data1->id;
@@ -509,10 +531,12 @@ public function downloadInvoice($order_id){
     ->select('order_items.*','products.product_name','products.price','gst_tax.gst_value_percentage')
     ->where('order_items.order_id','=', $order_id )
     ->get(); 
-    //  dd($orderDetails);
+    //  dd($orderDetails->order_id);
    $data['orderDetails'] = $orderDetails;
 //    $data['order'] = $orders;
    $data['orderStatus'] = $orderStatus;
+   $shop_id = Auth::user()->shop_id;
+   $data['gst_count']=DB::select("select gst_tax.gst_value_percentage,SUM(order_items.sub_total * order_items.quantity) AS total from shop_stocks INNER join gst_tax ON(gst_tax.gst_id = shop_stocks.tax) INNER JOIN order_items ON(shop_stocks.products_id=order_items.prod_id) INNER JOIN orders ON(orders.order_id=order_items.order_id) WHERE( shop_stocks.shop_id= $shop_id AND orders.order_id='$orderDetails->order_id') GROUP BY(gst_tax.gst_value_percentage)"); 
    return view('admin/common/downloadinvoice', $data);
    
 //    $pdf = PDF::loadView('admin/common/downloadinvoice', $data);
@@ -625,7 +649,7 @@ public function downloadInvoice($order_id){
         ->where('users.shop_id','=', $shop_id)
         ->orderBy('orders.created_at', 'DESC')
         ->get(); 
-        //  dd( $data['shop_orders']);
+        // dd( $data['shop_orders']);
         //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
         return view('admin/webviews/admin_manage_stock',$data);
     }
@@ -824,7 +848,35 @@ public function downloadInvoice($order_id){
         //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
         return view('admin/webviews/store_all_report',$data);
     }
+    public function top_sell_product()
+    {
+        // echo "Hello";die();        
+        $data['main_breadcrum'] = 'Stock';
+        $data['page_title'] = 'Top Selling Product';
+        $data['flag'] = 4;       
+        $shop_id = Auth::user()->shop_id;           
+         
+        $data['top_selling']=DB::select("SELECT order_items.prod_id,SUM(order_items.quantity) AS MAXsell FROM order_items INNER JOIN orders ON (orders.order_id=order_items.order_id) WHERE (order_items.created_at > now() - INTERVAL 30 day AND orders.shop_id=$shop_id) GROUP BY (order_items.prod_id) ORDER BY MAXsell DESC"); 
 
+        //  dd($data['product']);
+        //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
+        return view('admin/webviews/store_all_report',$data);
+    }
+
+    public function top_selling(Request $req)
+    {
+        // dd($req->within_date);
+        $data['main_breadcrum'] = 'Stock';
+        $data['page_title'] = 'Top Selling Product';
+        $data['flag'] = 4;       
+        $shop_id = Auth::user()->shop_id;           
+         
+        $data['top_selling']=DB::select("SELECT order_items.prod_id,SUM(order_items.quantity) AS MAXsell FROM order_items INNER JOIN orders ON (orders.order_id=order_items.order_id) WHERE (order_items.created_at > now() - INTERVAL $req->within_date day AND orders.shop_id=$shop_id) GROUP BY (order_items.prod_id) ORDER BY MAXsell DESC"); 
+
+        //  dd($data['product']);
+        //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
+        return view('admin/webviews/store_all_report',$data);
+    }
 
 
 }

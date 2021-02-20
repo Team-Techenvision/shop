@@ -69,6 +69,10 @@ Route::get('daily-update', 'AdminController@daily_update');
 Route::get('daily-sell-update/{date}', 'AdminController@daily_sell_update');
 Route::get('product-exp-report', 'AdminController@product_exp_report');
 Route::post('check-expiry2', 'AdminController@check_expiry2');
+Route::get('top-sell-product', 'AdminController@top_sell_product');
+Route::post('top-selling', 'AdminController@top_selling');
+
+
 
 
 
@@ -79,11 +83,14 @@ Route::post('check-expiry2', 'AdminController@check_expiry2');
 //new code 
 
 Route::post('shop-home','AdminController@ShopHome');
-Route::get('home-bash', function () {
-    $data['flag'] = 1;
-    return view('dashboard');
-    //return view('admin/webviews/home_dashboard',$data);    
-});
+// ========================================================
+Route::get('home-bash', 'AdminController@home_dashboard');
+// =========================================================
+// Route::get('home-bash', function () {
+//     $data['flag'] = 1;
+//     return view('dashboard');
+//     //return view('admin/webviews/home_dashboard',$data);    
+// });
 
 
 
