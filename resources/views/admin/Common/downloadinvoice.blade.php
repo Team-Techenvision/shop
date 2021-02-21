@@ -169,15 +169,27 @@
 							<td style="font-weight: 400; color: black; text-align: left; font-size:14px;text-align: center; font-weight: bold;">CGST Amt</td>
 						</tr>
 						<!-- < ?php print_r($gst_count); die(); ?> -->
+						<?php $amt=0;$sgst_amt=0;$cgst_amt=0; ?>
 						@foreach($gst_count as $row)
 							<tr>
 								<td style="text-align: center;  font-size:14px;">{{round($row->total-(($row->total/100)*$row->gst_value_percentage),2)}}</td>
+								<?php $amt = $amt + round($row->total-(($row->total/100)*$row->gst_value_percentage),2); ?>
 								<td style="text-align: center;  font-size:14px;">{{$row->gst_value_percentage / 2}}</td>
 								<td style="text-align: center;  font-size:14px;">{{round((($row->total/100)*$row->gst_value_percentage)/2,2)}}</td>
+								<?php $sgst_amt = $sgst_amt + round((($row->total/100)*$row->gst_value_percentage)/2,2); ?>
 								<td style="text-align: center;  font-size:14px;">{{$row->gst_value_percentage / 2}}</td>
 								<td style="text-align: center;  font-size:14px;">{{round((($row->total/100)*$row->gst_value_percentage)/2,2)}}</td>
+								<?php $cgst_amt = $cgst_amt + round((($row->total/100)*$row->gst_value_percentage)/2,2); ?>
 							</tr>
 						@endforeach
+						<tr>
+								<td style="text-align: center;  font-size:14px;">{{$amt}}</td>
+								
+								<td style="text-align: center;  font-size:14px;"></td>
+								<td style="text-align: center;  font-size:14px;">{{$sgst_amt}}</td>
+								<td style="text-align: center;  font-size:14px;"></td>
+								<td style="text-align: center;  font-size:14px;">{{$cgst_amt}}</td>
+							</tr>
 						</table>
 					</td>
 					<td colspan="3" style="text-align: center;  font-size:14px;"></td>
