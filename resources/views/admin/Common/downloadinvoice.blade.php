@@ -125,7 +125,7 @@
 					<td style="border: 1px solid black;text-align: center;" colspan="4">Product Name</td>
 					<td style="border: 1px solid black;text-align: center;">Quantity</td>
 					<td style="border: 1px solid black;text-align: center;">Amount</td>
-					<td style="border: 1px solid black;text-align: center;">GST</td>
+					<td style="border: 1px solid black;text-align: center;">GST %</td>
 					<td style="border: 1px solid black;text-align: center;">Total Amount</td> 
 				</tr> 
 				<?php

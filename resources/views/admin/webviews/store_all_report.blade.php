@@ -14,9 +14,11 @@
             @if($flag == 1)
             	@include('admin.components/show_total_stock')
             @elseif($flag == 2)
-            	@include('admin.components/product_expiray_date')
+            	@include('admin.components/product_expiry_date')
             @elseif($flag == 3)
             	@include('admin.components/daily_sell_report')
+            @elseif($flag == 4)
+            	@include('admin.components/top_sell_product')  
             @endif
         </div>
 

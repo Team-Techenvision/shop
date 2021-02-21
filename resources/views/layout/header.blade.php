@@ -140,6 +140,7 @@
               <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{url('avaliable-quantity')}}">Avaliable Stock</a></li>
               <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{url('product-exp-report')}}">Product Expiry</a></li>
               <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{url('daily-update')}}">Daily Sell </a></li>
+              <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{url('top-sell-product')}}">Top Selling Product </a></li>
               <!--href="{{ url('/cust-report') }}"-->
               
               <!-- <li class="category-heading">Order</li>
