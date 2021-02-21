@@ -119,14 +119,18 @@
 			@if(count($order)>0)
 			<table style="width: 100%;" class="table">  
 				<tr>
-					<td style="border: 1px solid black;text-align: center;">Sr.No.</td> 
+					<td style="border: 1px solid black;text-align: center;font-weight: bold;">Sr.No.</td> 
 			 		<!-- <td style="border: 1px solid black;">Order Id</td>
 					<td style="border: 1px solid black;">Sub Order Id</td> -->
-					<td style="border: 1px solid black;text-align: center;" colspan="4">Product Name</td>
-					<td style="border: 1px solid black;text-align: center;">Quantity</td>
-					<td style="border: 1px solid black;text-align: center;">Amount</td>
-					<td style="border: 1px solid black;text-align: center;">GST %</td>
-					<td style="border: 1px solid black;text-align: center;">Total Amount</td> 
+					<td style="border: 1px solid black;text-align: center;font-weight: bold;" colspan="2">Product Name</td>
+					<td style="border: 1px solid black;text-align: center;font-weight: bold;">MFR/MKT</td>
+					<td style="border: 1px solid black;text-align: center;font-weight: bold;">BATCH</td>
+					<td style="border: 1px solid black;text-align: center;font-weight: bold;">MRP</td>
+					<td style="border: 1px solid black;text-align: center;font-weight: bold;">DIS</td>					
+					<td style="border: 1px solid black;text-align: center;font-weight: bold;">Rate</td>					
+					<td style="border: 1px solid black;text-align: center;font-weight: bold;">GST %</td>
+					<td style="border: 1px solid black;text-align: center;font-weight: bold;">Quantity</td>
+					<td style="border: 1px solid black;text-align: center;font-weight: bold;">Total Amount</td> 
 				</tr> 
 				<?php
 					$f = 0;
@@ -134,15 +138,20 @@
 					$count = 1;
 					$t_gst = 0;
 					$dis_count = 0;
-				?> 				
+				?> 	
+				<!-- < ?php   print_r($order);die();			?> -->
 				 @foreach($order as $row)					
 					<tr>
 						<td style="border: 1px solid black;text-align: center;">{{$count++}}</td>	 
 						 
-						<td style="border:1px solid black;" colspan="4">{{$row->product_name}} </td> <!--<br> Sub Order Id : {{$row-> sub_order_id}}  -->
-						<td style="border: 1px solid black;text-align: center;">{{$row->quantity}}</td> 
-						<td style="border: 1px solid black;text-align: center;">Rs {{$row->sub_total}}</td>  
-						<td style="border: 1px solid black;text-align: center;">{{$row->gst_value_percentage}}</td> 
+						<td style="border:1px solid black;" colspan="2">{{$row->product_name}} </td> <!--<br> Sub Order Id : {{$row-> sub_order_id}}  -->
+						<td style="border: 1px solid black;text-align: center;">MFR/MKT</td>
+						<td style="border: 1px solid black;text-align: center;">BATCH</td>
+						<td style="border: 1px solid black;text-align: center;">{{$row->price}}</td>
+						<td style="border: 1px solid black;text-align: center;">{{(($row->price - $row->sub_total) * $row->quantity)}}</td>						
+						<td style="border: 1px solid black;text-align: center;">Rs {{$row->sub_total}}</td>						 
+						<td style="border: 1px solid black;text-align: center;">{{$row->gst_value_percentage}}</td>
+						<td style="border: 1px solid black;text-align: center;">{{$row->quantity}}</td>  
 						<td style="border: 1px solid black;text-align: center;">{{($row->sub_total * $row->quantity)}}</td> 
 						<?php $t_gst = $t_gst + (($row->sub_total/100) * $row->gst_value_percentage) *  $row->quantity ;
 							$dis_count = $dis_count + (($row->price - $row->sub_total) * $row->quantity);
@@ -150,16 +159,36 @@
 					</tr>
 				@endforeach 			
 				<tr style="width: 100%;">
-					<td colspan="8" style="font-weight: 400; color: black; text-align: left; font-size:14px;">CGST
+					<td colspan="7" >
+						<table style="width:80%;">
+						<tr>
+							<td style="font-weight: 400; color: black; text-align: left; font-size:14px;text-align: center; font-weight: bold;">Taxable Amt</td>
+							<td style="font-weight: 400; color: black; text-align: left; font-size:14px;text-align: center; font-weight: bold;">SGST %</td>
+							<td style="font-weight: 400; color: black; text-align: left; font-size:14px;text-align: center; font-weight: bold;">SGST Amt</td>
+							<td style="font-weight: 400; color: black; text-align: left; font-size:14px;text-align: center; font-weight: bold;">CGST %</td>
+							<td style="font-weight: 400; color: black; text-align: left; font-size:14px;text-align: center; font-weight: bold;">CGST Amt</td>
+						</tr>
+						<!-- < ?php print_r($gst_count); die(); ?> -->
+						@foreach($gst_count as $row)
+							<tr>
+								<td style="text-align: center;  font-size:14px;">{{round($row->total-(($row->total/100)*$row->gst_value_percentage),2)}}</td>
+								<td style="text-align: center;  font-size:14px;">{{$row->gst_value_percentage / 2}}</td>
+								<td style="text-align: center;  font-size:14px;">{{round((($row->total/100)*$row->gst_value_percentage)/2,2)}}</td>
+								<td style="text-align: center;  font-size:14px;">{{$row->gst_value_percentage / 2}}</td>
+								<td style="text-align: center;  font-size:14px;">{{round((($row->total/100)*$row->gst_value_percentage)/2,2)}}</td>
+							</tr>
+						@endforeach
+						</table>
 					</td>
-					<td style="text-align: center;  font-size:14px;">Rs <?php echo $t_gst/2; ?></td> 
+					<td colspan="3" style="text-align: center;  font-size:14px;"></td>
+					<td colspan="1" style="text-align: center;  font-size:14px;"></td>  
 				</tr>
 			
-				<tr style="width: 100%;">
+				<!-- <tr style="width: 100%;">
 					<td colspan="8" style="font-weight: 400; color: black; text-align: left; font-size:14px;">SGST
 					</td>
-					<td style="text-align: center;  font-size:14px;">Rs <?php echo $t_gst/2; ?></td> 
-				</tr>
+					<td style="text-align: center;  font-size:14px;">Rs < ? php echo $t_gst/2; ?></td> 
+				</tr> -->
 
 				<!-- <tr style="width: 100%;">
 					<td colspan="8" style="font-weight: 400; color: black; text-align: left; font-size:14px;">IGST
@@ -167,17 +196,19 @@
 					<td style="text-align: center;  font-size:14px;">Rs 300.00</td> 
 				</tr> -->
 				<tr style="width: 100%;">
-					<td colspan="8" style="font-weight: 400; color: black; text-align: left; font-size:14px;">Total Discount
+				<td colspan="7"></td>
+					<td colspan="3" style="font-weight: 400; color: black; text-align: left; font-size:14px;">Total Discount
 					</td>
-					<td style="text-align: center;  font-size:14px;">Rs <?php echo $dis_count; ?></td> 
+					<td style="text-align: center;  font-size:14px;">Rs <?php echo round($dis_count,2); ?></td> 
 				</tr>
 
 				<tr style="">
-					<td colspan="8" style="font-weight: 700; color: black;  padding-top:10px; padding-bottom:10px;">TOTAL AMOUNT:</td>
-					<td style=" background-color: #eee; text-align: center; padding-top:10px; padding-bottom:10px;">Rs {{$orderDetails->amount}}</td> 
+					<td colspan="7"></td>
+					<td colspan="3" style="font-weight: 700; color: black;  padding-top:10px; padding-bottom:10px;">TOTAL AMOUNT:</td>
+					<td style=" background-color: #eee; text-align: center; padding-top:10px; padding-bottom:10px;">Rs {{round($orderDetails->amount,2)}}</td> 
 				</tr> 
             	<tr style="width: 100%;">
-					<td colspan="9" style="font-weight: 700; color: black; text-align: center; ">All prices inclusive of GST as per Applicable Rate.
+					<td colspan="11" style="font-weight: 700; color: black; text-align: center; ">All prices inclusive of GST as per Applicable Rate.
 					</td>
 				</tr>
             

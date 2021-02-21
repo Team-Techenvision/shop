@@ -492,10 +492,12 @@ public function downloadInvoice($order_id){
     ->select('order_items.*','products.product_name','products.price','gst_tax.gst_value_percentage')
     ->where('order_items.order_id','=', $order_id )
     ->get(); 
-    //  dd($orderDetails);
+    //  dd($orderDetails->order_id);
    $data['orderDetails'] = $orderDetails;
 //    $data['order'] = $orders;
    $data['orderStatus'] = $orderStatus;
+   $shop_id = Auth::user()->shop_id;
+   $data['gst_count']=DB::select("select gst_tax.gst_value_percentage,SUM(order_items.sub_total * order_items.quantity) AS total from shop_stocks INNER join gst_tax ON(gst_tax.gst_id = shop_stocks.tax) INNER JOIN order_items ON(shop_stocks.products_id=order_items.prod_id) INNER JOIN orders ON(orders.order_id=order_items.order_id) WHERE( shop_stocks.shop_id= $shop_id AND orders.order_id='$orderDetails->order_id') GROUP BY(gst_tax.gst_value_percentage)"); 
    return view('admin/common/downloadinvoice', $data);
    
 //    $pdf = PDF::loadView('admin/common/downloadinvoice', $data);
