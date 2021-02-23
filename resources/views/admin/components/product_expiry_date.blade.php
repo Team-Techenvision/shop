@@ -27,6 +27,11 @@
               </div>  
             </div>
         </form>
+        <!-- ======================================= -->
+        <div class="d-flex">
+          <label class="bg-danger btn" data-toggle="tooltip" title="Less Than 10 Days!">10 Day</label><label  class="btn bg-warning" data-toggle="tooltip" title="Less Than 50 Days!">50 Day</label>
+        </div>
+        <!-- ========================================== -->
         <div class="table-responsive">
           <table id="dataTableExample" class="table">
           <thead>     
