@@ -247,7 +247,7 @@ $('table').on("keyup", ".product_brcodes", function(event)
                 success : function(response){ 
                   var len = 0;
                   // alert(response);
-                  console.log(response);
+                  // console.log(response);
                  // tr.find('.product_price').val(response["special_price"]);
 
                   if(response['data'] != null)
