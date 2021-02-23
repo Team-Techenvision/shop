@@ -19,7 +19,7 @@
                                     <th>Sr. No.</th> 
                                     <th>Product Name</th> 
                                     <th>Price</th>
-                                    <th>GST %</th>  
+                                    <th>GST </th>  
                                     <th>Quantity</th>
                                     <th>Amount</th>                                                      
                                 </tr>
@@ -33,8 +33,11 @@
                                 <th>{{$row->sub_total}}</th>
                                 <th>{{$row->gst_value_percentage}}</th>  
                                 <th>{{$row->quantity}}</th>
-                                <th>{{($row->sub_total * $row->quantity) }}</th> 
-                                <?php $t_gst = $t_gst + (($row->sub_total/100) * $row->gst_value_percentage) *  $row->quantity ;
+                                <th>{{round(($row->sub_total * $row->quantity),2)}}</th> 
+                                <?php $product_total= 0; $product_total = $product_total + round(($row->sub_total * $row->quantity),2);
+                                
+                                $t_gst = $t_gst + ($product_total - round($product_total / ((100 + $row->gst_value_percentage)/100),2));
+
 							$dis_count = $dis_count + (($row->price - $row->sub_total) * $row->quantity);
 						?>                                           
                             </tr>
@@ -43,25 +46,25 @@
                          <tr>
                             <td colspan="5" class="font-weight-bold" style="font-weight: 400; color: black; text-align: left;">CGST
                             </td>
-                            <td style="text-align: left;  font-size:14px;">Rs <?php echo $t_gst/2; ?></td> 
+                            <td style="text-align: left;  font-size:14px;">Rs <?php echo round($t_gst/2,2); ?></td> 
                         </tr>
                         <tr>
                             <td colspan="5" class="font-weight-bold" style="font-weight: 400; color: black; text-align: left;">SGST
                             </td>
-                            <td style="text-align: left;  font-size:14px;">Rs <?php echo $t_gst/2; ?></td> 
+                            <td style="text-align: left;  font-size:14px;">Rs <?php echo round($t_gst/2,2); ?></td> 
                         </tr>
                         <tr>
                             <td colspan="5" class="font-weight-bold" style="font-weight: 400; color: black; text-align: left;">Total Discount
                             </td>
-                            <td style="text-align: left;  font-size:14px;">Rs  <?php echo $dis_count; ?></td> 
+                            <td style="text-align: left;  font-size:14px;">Rs  <?php echo round($dis_count,2); ?></td> 
                         </tr>
                          <tr>
                                 <th></th> 
                                 <th></th> 
                                 <th></th>
                                 <th></th> 
-                                <th>Total</th>  
-                                <th>{{$row->amount}}</th>
+                                <th>Total Amount</th>  
+                                <th>{{round($row->amount,2)}}</th>
                                                                              
                             </tr>               
                             </tbody>

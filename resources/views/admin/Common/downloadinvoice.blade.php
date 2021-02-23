@@ -127,7 +127,7 @@
 					<td style="border: 1px solid black;text-align: center;font-weight: bold;">BATCH</td>
 					<td style="border: 1px solid black;text-align: center;font-weight: bold;">MRP</td>
 					<td style="border: 1px solid black;text-align: center;font-weight: bold;">DIS</td>					
-					<td style="border: 1px solid black;text-align: center;font-weight: bold;">Rate</td>					
+					<!-- <td style="border: 1px solid black;text-align: center;font-weight: bold;">Rate</td>					 -->
 					<td style="border: 1px solid black;text-align: center;font-weight: bold;">GST %</td>
 					<td style="border: 1px solid black;text-align: center;font-weight: bold;">Quantity</td>
 					<td style="border: 1px solid black;text-align: center;font-weight: bold;">Total Amount</td> 
@@ -149,7 +149,7 @@
 						<td style="border: 1px solid black;text-align: center;">BATCH</td>
 						<td style="border: 1px solid black;text-align: center;">{{$row->price}}</td>
 						<td style="border: 1px solid black;text-align: center;">{{(($row->price - $row->sub_total) * $row->quantity)}}</td>						
-						<td style="border: 1px solid black;text-align: center;">Rs {{$row->sub_total}}</td>						 
+												  -->
 						<td style="border: 1px solid black;text-align: center;">{{$row->gst_value_percentage}}</td>
 						<td style="border: 1px solid black;text-align: center;">{{$row->quantity}}</td>  
 						<td style="border: 1px solid black;text-align: center;">{{($row->sub_total * $row->quantity)}}</td> 
@@ -172,14 +172,14 @@
 						<?php $amt=0;$sgst_amt=0;$cgst_amt=0; ?>
 						@foreach($gst_count as $row)
 							<tr>
-								<td style="text-align: center;  font-size:14px;">{{round($row->total-(($row->total/100)*$row->gst_value_percentage),2)}}</td>
-								<?php $amt = $amt + round($row->total-(($row->total/100)*$row->gst_value_percentage),2); ?>
+								<td style="text-align: center;  font-size:14px;">{{round($row->total / ((100 + $row->gst_value_percentage)/100),2)}}</td>
+								<?php $amt = $amt + round($row->total / ((100 + $row->gst_value_percentage)/100),2); ?>
 								<td style="text-align: center;  font-size:14px;">{{$row->gst_value_percentage / 2}}</td>
-								<td style="text-align: center;  font-size:14px;">{{round((($row->total/100)*$row->gst_value_percentage)/2,2)}}</td>
-								<?php $sgst_amt = $sgst_amt + round((($row->total/100)*$row->gst_value_percentage)/2,2); ?>
+								<td style="text-align: center;  font-size:14px;">{{round(($row->total - ($row->total / ((100 + $row->gst_value_percentage)/100))) / 2,2)}}</td>
+								<?php $sgst_amt = $sgst_amt + round(($row->total - ($row->total / ((100 + $row->gst_value_percentage)/100))) / 2,2); ?>
 								<td style="text-align: center;  font-size:14px;">{{$row->gst_value_percentage / 2}}</td>
-								<td style="text-align: center;  font-size:14px;">{{round((($row->total/100)*$row->gst_value_percentage)/2,2)}}</td>
-								<?php $cgst_amt = $cgst_amt + round((($row->total/100)*$row->gst_value_percentage)/2,2); ?>
+								<td style="text-align: center;  font-size:14px;">{{round(($row->total - ($row->total / ((100 + $row->gst_value_percentage)/100))) / 2,2)}}</td>
+								<?php $cgst_amt = $cgst_amt + round(($row->total - ($row->total / ((100 + $row->gst_value_percentage)/100))) / 2,2); ?>
 							</tr>
 						@endforeach
 						<tr>
@@ -209,14 +209,14 @@
 				</tr> -->
 				<tr style="width: 100%;">
 				<td colspan="7"></td>
-					<td colspan="3" style="font-weight: 400; color: black; text-align: left; font-size:14px;">Total Discount
+					<td colspan="2" style="font-weight: 400; color: black; text-align: left; font-size:14px;">Total Discount
 					</td>
 					<td style="text-align: center;  font-size:14px;">Rs <?php echo round($dis_count,2); ?></td> 
 				</tr>
 
 				<tr style="">
 					<td colspan="7"></td>
-					<td colspan="3" style="font-weight: 700; color: black;  padding-top:10px; padding-bottom:10px;">TOTAL AMOUNT:</td>
+					<td colspan="2" style="font-weight: 700; color: black;  padding-top:10px; padding-bottom:10px;">TOTAL AMOUNT:</td>
 					<td style=" background-color: #eee; text-align: center; padding-top:10px; padding-bottom:10px;">Rs {{round($orderDetails->amount,2)}}</td> 
 				</tr> 
             	<tr style="width: 100%;">
