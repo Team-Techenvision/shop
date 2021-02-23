@@ -717,7 +717,9 @@ public function downloadInvoice($order_id){
     public function br_product_detail()
     {
         $p_id  = $_POST['product'];
-        // echo $p_id ;
+         
+        // echo $p_id ; 
+        // echo "<br>";
         $product = DB::table('shop_stocks')       
         ->join('products', 'shop_stocks.products_id', '=', 'products.products_id') 
         ->join('gst_tax','gst_tax.gst_id', '=', 'shop_stocks.tax')          

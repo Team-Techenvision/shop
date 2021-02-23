@@ -231,6 +231,7 @@ $(document).ready(function()
 $('table').on("keyup", ".product_brcodes", function(event)
   { 
   // $(".product_brcodes").focusout(function(){
+    // alert($(this).val());
     $len = $(this).val().length;
     var $row = jQuery(this).closest('tr');
     var $columns = $row.find('td'); 
@@ -246,7 +247,7 @@ $('table').on("keyup", ".product_brcodes", function(event)
                 success : function(response){ 
                   var len = 0;
                   // alert(response);
-                  // console.log(response);
+                  console.log(response);
                  // tr.find('.product_price').val(response["special_price"]);
 
                   if(response['data'] != null)
