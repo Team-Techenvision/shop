@@ -27,6 +27,9 @@
               </div>  
             </div>
         </form>
+        <div class="d-flex">
+        <label class="bg-info btn" data-toggle="tooltip" title="Top Selling Product!">Top Selling</label>
+        </div>
         <div class="table-responsive">
           <table id="dataTableExample" class="table">
           <thead>     

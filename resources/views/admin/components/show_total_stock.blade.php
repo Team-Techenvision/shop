@@ -26,6 +26,9 @@
               </div>  
             </div>
         </form> -->
+        <div class="d-flex">
+        <label class="bg-danger btn"  data-toggle="tooltip" title="Less Than 10 Quantity!">10 Quantity</label><label  class="btn bg-warning"  data-toggle="tooltip" title="Less Than 50 Quantity!">50 Quantity</label>
+        </div>
         <div class="table-responsive">
           <table id="dataTableExample" class="table">
           <thead>     

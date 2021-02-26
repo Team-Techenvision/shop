@@ -104,7 +104,7 @@
               <li class="nav-item"><a class="nav-link {{ active_class(['email/inbox']) }}" href="#">List</a></li>
               <li class="nav-item"><a class="nav-link {{ active_class(['email/read']) }}" href="#">Add</a></li>               -->
               <li class="category-heading">Stock</li>
-              <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{ url('/View-Stock') }}">list</a></li>
+              <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{ url('/View-Stock') }}">List</a></li>
               <!-- <li class="nav-item"><a class="nav-link {{ active_class(['apps/calendar']) }}" href="{{ url('/Add-Stock') }}">Add</a></li>              -->
               <li class="nav-item"><a class="nav-link {{ active_class(['apps/calendar']) }}" href="{{ url('/Return-Stock') }}">Return</a></li>              
             </ul>
