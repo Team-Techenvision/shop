@@ -100,6 +100,7 @@ class AdminController extends Controller
             ->select('products.*','shop_stocks.*')
             ->where('shop_stocks.shop_id','=',$shop_id)
             ->get(); 
+            // dd($data);
             return view('admin/webviews/admin_manage_stock',$data);
         }
         else
@@ -760,16 +761,16 @@ public function downloadInvoice($order_id){
     public function br_product_detail()
     {
         $p_id  = $_POST['product'];
-         
+        // dd($p_id);
         // echo $p_id ; 
         // echo "<br>";
         $product = DB::table('shop_stocks')       
         ->join('products', 'shop_stocks.products_id', '=', 'products.products_id') 
         ->join('gst_tax','gst_tax.gst_id', '=', 'shop_stocks.tax')          
         ->select('products.price','products.product_name','products.special_price','shop_stocks.*','gst_tax.gst_value_percentage')
-        ->where('shop_stocks.barcode','=',$p_id )
+        ->where('products.barcode','=',$p_id )
         ->get(); 
-
+        // dd($product);
        $producttest['data'] =  $product; 
    echo json_encode($producttest);
    exit; 
