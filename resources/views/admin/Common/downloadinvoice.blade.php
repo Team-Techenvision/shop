@@ -102,14 +102,7 @@
 								<td style="width: 100%; margin-top: 0px; margin-bottom: 0px; font-size: 14px; text-align: left; font-weight: 600; ">GST Number : <span style="font-weight: 600; font-size: 14px; padding-left:15px;">29ABJFA4579J1ZU</span></td>
 							</tr>                       
 						</table>
-					</td>
-					<!-- <td  style="width: 50%;">
-						<table style="width: 100%;">						
-						<tr style="width: 100%;">
-							<td style="width: 100%; margin-top: 0px; margin-bottom: 0px; font-size: 14px; text-align: left; font-weight: 600; "> Invoice Date : <span style="font-weight: 600; font-size: 14px; padding-left:15px;"><?php echo date("Y/m/d"); ?></span></td>
-							</tr> 
-						</table>
-					</td> -->
+					</td>				 
 				</tr>
 			</table>
 		</td>
@@ -126,7 +119,7 @@
 					<td style="border: 1px solid black;text-align: center;font-weight: bold;">MFR/MKT</td>
 					<td style="border: 1px solid black;text-align: center;font-weight: bold;">BATCH</td>
 					<td style="border: 1px solid black;text-align: center;font-weight: bold;">MRP</td>
-					<td style="border: 1px solid black;text-align: center;font-weight: bold;">DIS</td>					
+					<td style="border: 1px solid black;text-align: center;font-weight: bold;">Discount</td>					
 					<!-- <td style="border: 1px solid black;text-align: center;font-weight: bold;">Rate</td>					 -->
 					<td style="border: 1px solid black;text-align: center;font-weight: bold;">GST %</td>
 					<td style="border: 1px solid black;text-align: center;font-weight: bold;">Quantity</td>
@@ -139,7 +132,7 @@
 					$t_gst = 0;
 					$dis_count = 0;
 				?> 	
-				<!-- < ?php   print_r($order);die();			?> -->
+			 
 				 @foreach($order as $row)					
 					<tr>
 						<td style="border: 1px solid black;text-align: center;">{{$count++}}</td>	 
@@ -168,7 +161,7 @@
 							<td style="font-weight: 400; color: black; text-align: left; font-size:14px;text-align: center; font-weight: bold;">CGST %</td>
 							<td style="font-weight: 400; color: black; text-align: left; font-size:14px;text-align: center; font-weight: bold;">CGST Amt</td>
 						</tr>
-						<!-- < ?php print_r($gst_count); die(); ?> -->
+						 
 						<?php $amt=0;$sgst_amt=0;$cgst_amt=0; ?>
 						@foreach($gst_count as $row)
 							<tr>
@@ -194,19 +187,7 @@
 					</td>
 					<td colspan="3" style="text-align: center;  font-size:14px;"></td>
 					<td colspan="1" style="text-align: center;  font-size:14px;"></td>  
-				</tr>
-			
-				<!-- <tr style="width: 100%;">
-					<td colspan="8" style="font-weight: 400; color: black; text-align: left; font-size:14px;">SGST
-					</td>
-					<td style="text-align: center;  font-size:14px;">Rs < ? php echo $t_gst/2; ?></td> 
-				</tr> -->
-
-				<!-- <tr style="width: 100%;">
-					<td colspan="8" style="font-weight: 400; color: black; text-align: left; font-size:14px;">IGST
-					</td>
-					<td style="text-align: center;  font-size:14px;">Rs 300.00</td> 
-				</tr> -->
+				</tr>			
 				<tr style="width: 100%;">
 				<td colspan="7"></td>
 					<td colspan="2" style="font-weight: 400; color: black; text-align: left; font-size:14px;">Total Discount

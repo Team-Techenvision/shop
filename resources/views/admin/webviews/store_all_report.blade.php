@@ -18,7 +18,9 @@
             @elseif($flag == 3)
             	@include('admin.components/daily_sell_report')
             @elseif($flag == 4)
-            	@include('admin.components/top_sell_product')  
+            	@include('admin.components/top_sell_product')
+            @elseif($flag == 5)
+            	@include('admin.components/return_stock_report')                
             @endif
         </div>
 

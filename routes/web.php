@@ -71,6 +71,14 @@ Route::get('product-exp-report', 'AdminController@product_exp_report');
 Route::post('check-expiry2', 'AdminController@check_expiry2');
 Route::get('top-sell-product', 'AdminController@top_sell_product');
 Route::post('top-selling', 'AdminController@top_selling');
+// ===================================================================
+Route::get('return_stock_report', 'AdminController@return_stock_report');
+Route::post('search-return-qty', 'AdminController@search_return_qty');
+Route::get('export', 'AdminController@export')->name('export');
+// Route::get('export1/{$data}', 'AdminController@export');
+// =================================================
+
+
 
 
 

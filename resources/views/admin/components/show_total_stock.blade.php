@@ -28,6 +28,7 @@
         </form> -->
         <div class="d-flex">
         <label class="bg-danger btn"  data-toggle="tooltip" title="Less Than 10 Quantity!">10 Quantity</label><label  class="btn bg-warning"  data-toggle="tooltip" title="Less Than 50 Quantity!">50 Quantity</label>
+        <a class="btn btn-success m-auto" href="{{url('export')}}">Export In Excel</a>
         </div>
         <div class="table-responsive">
           <table id="dataTableExample" class="table">
@@ -59,11 +60,8 @@
                 { ?>
                   <tr> 
           <?php } ?>
-            <td> {{$count++}} </td>           
-          <?php  $product_name = DB::table('products')->select('product_name')->where('products_id',$r->products_id)->first();  ?> 
-          
-            <td>{{$product_name->product_name}}</td> 
-            
+            <td> {{$count++}} </td> 
+            <td>{{$r->product_name}}</td> 
             <?php if($r->avl_quantity) { ?>                  
             <td>{{$r->avl_quantity}}</td> 
             <?php } else { ?> 

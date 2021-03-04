@@ -13,11 +13,11 @@
                     <label class="control-label mr-1 mt-2 h4">Check </label>
                     <select name="within_date" id="Exp_date" class="form-control rounded w-50 float-right" required>
                       <option value="">Select Day</option>                   
-                      <option value="5">5 Day</option>
+                      <!-- <option value="5">5 Day</option> -->
                       <option value="15">15 Day</option>
                       <option value="30">1 Month</option>
                       <option value="60">2 Month</option>
-                      <option value="180">6 Month</option>
+                      <option value="90">3 Month</option>
                     </select>                   
                   </div>                         
                 </div><!-- Col -->
@@ -29,6 +29,7 @@
         </form>
         <div class="d-flex">
         <label class="bg-info btn" data-toggle="tooltip" title="Top Selling Product!">Top Selling</label>
+        <a class="btn btn-success m-auto" href="{{ route('export') }}">Export In Excel</a>
         </div>
         <div class="table-responsive">
           <table id="dataTableExample" class="table">
@@ -51,10 +52,8 @@
                @else
                <tr>
                @endif         
-            <td>{{$count++}} </td>           
-          <?php $product_name = DB::table('products')->select('product_name')->where('products_id',$r->prod_id)->first();  ?> 
-          
-            <td>{{$product_name->product_name}}</td> 
+            <td>{{$count++}} </td> 
+            <td>{{$r->product_name}}</td> 
             <td>{{$r->MAXsell}}</td> 
             </tr>
 
