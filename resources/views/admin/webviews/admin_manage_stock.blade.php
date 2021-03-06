@@ -37,12 +37,12 @@
             	@include('admin.components/print_product_barcode')
             @elseif($flag == 13)
             	@include('admin.components/order_detail')
-            @elseif($flag == 14)
-            	@include('admin.components/show_total_stock')         
-            @elseif($flag == 15)
-            	@include('admin.components/return_stock')
-            @elseif($flag == 16)
-            	@include('admin.components/daily_sell')                        
+            <!-- @elseif($flag == 14)
+            	@include('admin.components/show_total_stock')          -->
+            <!-- @elseif($flag == 15)
+            	@include('admin.components/return_stock') -->
+            <!-- @elseif($flag == 16)
+            	@include('admin.components/daily_sell')                         -->
             @endif
         </div>
 

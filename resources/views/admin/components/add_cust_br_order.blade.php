@@ -247,7 +247,7 @@ $('table').on("keyup", ".product_brcodes", function(event)
                 success : function(response){ 
                   var len = 0;
                   // alert(response);
-                  console.log(response);
+                  // console.log(response);
                  // tr.find('.product_price').val(response["special_price"]);
 
                   if(response['data'] != null)
@@ -266,8 +266,18 @@ $('table').on("keyup", ".product_brcodes", function(event)
                        {
                           $columns.find('.product_price').val(response['data'][i].price);                       
                        }
-                       $columns.find('.product_name').val(response['data'][i].product_name);
-                       $columns.find('.product_id').val(response['data'][i].products_id);
+                       $p_name  = "";
+                       if(response['data'][i].size_name)
+                       {
+                        $p_name = response['data'][i].product_name + ' '+response['data'][i].size_name;
+                       }
+                       else
+                       {
+                          $p_name = response['data'][i].product_name;
+                       }
+                      //  $columns.find('.product_name').val(response['data'][i].product_name);
+                      $columns.find('.product_name').val($p_name);
+                       $columns.find('.product_id').val(response['data'][i].id);
 
 
                        $columns.find('.product_gst').val(response['data'][i].gst_value_percentage);

@@ -137,7 +137,7 @@
 					<tr>
 						<td style="border: 1px solid black;text-align: center;">{{$count++}}</td>	 
 						 
-						<td style="border:1px solid black;" colspan="2">{{$row->product_name}} </td> <!--<br> Sub Order Id : {{$row-> sub_order_id}}  -->
+						<td style="border:1px solid black;" colspan="2">{{$row->prod_name}} </td> 
 						<td style="border: 1px solid black;text-align: center;">MFR/MKT</td>
 						<td style="border: 1px solid black;text-align: center;">BATCH</td>
 						<td style="border: 1px solid black;text-align: center;">{{$row->price}}</td>

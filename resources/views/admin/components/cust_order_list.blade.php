@@ -29,7 +29,7 @@
                         @foreach($product_order as $row)
                             <tr>
                                 <th><?php echo $i; ?></th> 
-                                <th>{{$row->product_name}}</th> 
+                                <th>{{$row->prod_name}}</th> 
                                 <th>{{$row->sub_total}}</th>
                                 <th>{{$row->gst_value_percentage}}</th>  
                                 <th>{{$row->quantity}}</th>

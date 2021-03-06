@@ -48,8 +48,11 @@
               
             <tr> 
             <td> {{$count++}} </td>
-            <td>{{$r->product_name}}</td>     
-            <!-- <td>{{$r->shop_id}}</td> -->
+            @if($r->size_name)
+            <td>{{$r->product_name}} ({{$r->size_name}})</td>
+            @else
+              <td>{{$r->product_name}}</td>
+            @endif           
             <td>{{$r->input_quantity}}</td>
             <td>{{$r->avl_quantity}}</td>
             <td>{{$r->expiry_date}}</td> 

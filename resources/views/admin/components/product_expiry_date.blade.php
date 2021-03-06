@@ -67,7 +67,7 @@
           <?php } ?>
             <td> {{$count++}} </td>
 
-            <td>{{$r->product_name}}</td>
+            <td>{{$r->product_name}} ({{$r->size_name}})</td>
             <td>{{$r->expiry_date}}</td>
             <?php if($r->avl_quantity) { ?>                  
             <td>{{$r->avl_quantity}}</td> 

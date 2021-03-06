@@ -4,7 +4,7 @@
             <select name="product" id="product_id" class="form-control rounded w-50">
                 <option value="pr_one">Product One</option>
                 <option value="pr_two">Product Two</option>
-                <option value="pr_three">OpProduct Three</option>
+                <option value="pr_three">Product Three</option>
                 <option value="pr_four">Product Four</option>
             </select>
             <div class="d-flex ml-3">

@@ -51,14 +51,19 @@
                 <div class="col-sm-4">                  
                     <div class="form-group">
                       <label class="control-label">Product Name</label>
-                      <input type="text" class="form-control text-center" name="product_name" value="{{$stock->product_name}}" id="product_name" readonly>
+                      <!-- < ?php print_r($stock);die(); ?> -->
+                       @if(!$stock[0]->size_name)
+                      <input type="text" class="form-control text-center" name="product_name" value="{{$stock[0]->product_name}}" id="product_name" readonly>
+                       @else                      
+                          <input type="text" class="form-control text-center" name="product_name" value="{{$stock[0]->product_name}} ({{$stock[0]->size_name}})" id="product_name" readonly>
+                       @endif
                     </div>
                   </div>
 
                   <div class="col-sm-4">                  
                     <div class="form-group">
-                      <label class="control-label">Available Quantity</label>
-                      <input type="text" class="form-control text-center" name="avl_quantity" value="{{$stock->avl_quantity}}" id="avl_quantity" readonly>
+                      <label class="control-label">Available Quantity</label>                      
+                      <input type="text" class="form-control text-center" name="avl_quantity" value="{{$stock[0]->avl_quantity}}" id="avl_quantity" readonly>
                     </div>
                   </div>
                   <div class="col-sm-4">                  
@@ -69,10 +74,10 @@
                   </div>
             </div>
 
-            <input type="hidden" name="id" value="{{$stock->id}}">
+            <input type="hidden" name="id" value="{{$stock[0]->id}}">
             <?php $shop_id = Auth::user()->shop_id; ?>
             <input type="hidden" name="shop_id" value="{{$shop_id}}">
-            <input type="hidden" name="products_id" value="{{$stock->products_id}}">
+            <input type="hidden" name="products_id" value="{{$stock[0]->products_id}}">
             
             <div class="row">
               <div class="col-sm-6">

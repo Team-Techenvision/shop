@@ -61,7 +61,7 @@
                   <tr> 
           <?php } ?>
             <td> {{$count++}} </td> 
-            <td>{{$r->product_name}}</td> 
+            <td>{{$r->product_name}} ({{$r->size_name}})</td> 
             <?php if($r->avl_quantity) { ?>                  
             <td>{{$r->avl_quantity}}</td> 
             <?php } else { ?> 
