@@ -81,8 +81,12 @@
                     <h6 class="card-title">Store Staff</h6>              
                   </div>
                   <div class="row">
-                    <div class="col-12 col-md-12 text-center">              
-                      <h3 class="text-dark">{{$Count_staff}}</h3>               
+                    <div class="col-12 col-md-12 text-center"> 
+                    @if($Count_staff)             
+                      <h3 class="text-dark">{{$Count_staff}}</h3>
+                      @else
+                      <h3 class="text-dark">{{$Count_staff}}</h3>
+                      @endif               
                     </div>            
                   </div>
                 </div>
@@ -97,8 +101,12 @@
                 <h6 class="card-title">AVAILABLE QUANTITY</h6>              
               </div>
               <div class="row">
-                <div class="col-12 col-md-12 text-center">              
-                  <h3 class="text-dark">{{$Count_stock}}</h3>               
+                <div class="col-12 col-md-12 text-center">
+                @if($Count_stock)              
+                  <h3 class="text-dark">{{$Count_stock}}</h3>
+                  @else
+                  <h3 class="text-dark">{{$Count_stock}}</h3>
+                  @endif               
                 </div>            
               </div>
             </div>
@@ -114,7 +122,11 @@
               </div>
               <div class="row">
                 <div class="col-12 col-md-12 text-center">
-                  <h3 class="text-dark">{{$daily_sell1}}</h3>               
+                @if($daily_sell1)
+                  <h3 class="text-dark">{{$daily_sell1}}</h3>
+                  @else   
+                  <h3 class="text-dark">00</h3>
+                  @endif            
                 </div>            
               </div>
             </div>
@@ -131,7 +143,11 @@
               </div>
               <div class="row">
                 <div class="col-12 col-md-12 text-center">
-                  <h3 class="text-dark">{{$top_sell}}</h3>               
+                @if($top_sell)
+                  <h3 class="text-dark">{{$top_sell}}</h3> 
+                  @else
+                  <h3 class="text-dark">00</h3> 
+                  @endif              
                 </div>            
               </div>
             </div>
@@ -148,7 +164,11 @@
               </div>
               <div class="row">
                 <div class="col-12 col-md-12 text-center">
-                  <h3 class="text-dark">{{$expiry_stock}}</h3>               
+                @if($expiry_stock)
+                  <h3 class="text-dark">{{$expiry_stock}}</h3> 
+                @else
+                <h3 class="text-dark">00</h3>
+                @endif                
                 </div>            
               </div>
             </div>
@@ -164,7 +184,11 @@
               </div>
               <div class="row">
                 <div class="col-12 col-md-12 text-center">
-                  <h3 class="text-dark">{{$return_stock}}</h3>               
+                @if($return_stock)
+                  <h3 class="text-dark">{{$return_stock}}</h3>
+                  @else  
+                  <h3 class="text-dark">00</h3>
+                  @endif             
                 </div>            
               </div>
             </div>

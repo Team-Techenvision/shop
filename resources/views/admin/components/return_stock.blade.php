@@ -44,7 +44,9 @@
       </div>
     </form> 
 
-    @if(isset($stock))
+    
+    @if(count($stock) > 0)
+
     <form action="{{url('return-product-submit') }}" method="post">
     @csrf  
         <div class="row mt-5">
@@ -89,6 +91,7 @@
     </form>
 
     @endif
+
   <div class="any_message mt-3">  
     @if ($errors->any())
       <div class="alert alert-danger">
