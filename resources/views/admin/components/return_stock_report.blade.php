@@ -21,14 +21,14 @@
                     </select>                   
                   </div>                         
                 </div><!-- Col -->
-              <div  class="col-sm-4 text-left"> 
-              <!-- <button type="submit" name="search" class="btn btn-info mt-4">Search</button>           -->
-                <input type="submit" name="search" value="search" class="btn btn-info" >
-              </div>  
+                <div  class="col-sm-4 text-left"> 
+                  <button type="submit" name="search" class="btn btn-info">Search</button>          
+                  <!-- <input type="submit" name="search" value="search" class="btn btn-info" > -->
+                </div>  
             </div>
         </form>
-        <div class="d-flex text-center">
-        <a class="btn btn-success m-auto" href="{{ route('export') }}">Export In Excel</a>
+        <div class="d-flex text-center mt-2">
+          <a class="btn btn-success m-auto" href="{{route('export')}}">Export In Excel</a>
         </div>
         <!-- <div class="d-flex">
         <label class="bg-info btn" data-toggle="tooltip" title="Top Selling Product!">Top Selling</label>
@@ -46,13 +46,14 @@
             <tbody> 
             @php 
               $count = 1;  
-
+            
               @endphp 
+              <!-- print_r($return_stock); -->
               @foreach($return_stock as $r)
               <tr>       
             <td>{{$count++}} </td>  
-            <td>{{$r->product_name}}</td> 
-            <td>{{$r->return_quantity}}</td> 
+            <td>{{$r->product_name}} @if($r->size_name)({{$r->size_name}})@endif</td> 
+            <td>{{$r->return_quantity}} (@if($r->per_stript_qty){{round(($r->return_quantity /$r->per_stript_qty),2)}}@else{{round(($r->return_quantity /1),2)}} @endif)</td> 
             </tr>
 
             @endforeach

@@ -38,7 +38,7 @@
                                 
                                 $t_gst = $t_gst + ($product_total - round($product_total / ((100 + $row->gst_value_percentage)/100),2));
 
-							$dis_count = $dis_count + (($row->price - $row->sub_total) * $row->quantity);
+							$dis_count = $dis_count + ((($row->price/$row->per_stript_qty) - $row->sub_total) * $row->quantity);
 						?>                                           
                             </tr>
                             <?php $i++; ?>

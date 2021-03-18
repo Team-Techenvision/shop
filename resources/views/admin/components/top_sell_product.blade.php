@@ -44,7 +44,7 @@
             <tbody> 
             @php 
               $count = 1;  
-
+            
               @endphp 
               @foreach($top_selling as $r)
               @if($count == 1)
@@ -54,7 +54,7 @@
                @endif         
             <td>{{$count++}} </td> 
             <td>{{$r->product_name}}</td> 
-            <td>{{$r->MAXsell}}</td> 
+            <td>{{$r->MAXsell}} (@if($r->per_stript_qty){{round(($r->MAXsell /$r->per_stript_qty),2)}}@else{{round(($r->MAXsell /1),2)}} @endif)</td> 
             </tr>
 
             @endforeach

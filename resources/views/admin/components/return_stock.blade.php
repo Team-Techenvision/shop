@@ -45,7 +45,7 @@
     </form> 
 
     
-    @if(count($stock) > 0)
+    @if($stock)
 
     <form action="{{url('return-product-submit') }}" method="post">
     @csrf  

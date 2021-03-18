@@ -44,7 +44,7 @@
             <tbody> 
             @php 
               $count = 1;  
-
+         
               @endphp 
               @foreach($product as $r)
               <?php
@@ -67,7 +67,7 @@
             <td>{{$r->product_name}}</td> 
             @endif
             <?php if($r->avl_quantity) { ?>                  
-            <td>{{$r->avl_quantity}}</td> 
+            <td>{{round($r->avl_quantity,2)}} (@if($r->per_stript_qty){{round(($r->avl_quantity /$r->per_stript_qty),2)}}@else{{round(($r->avl_quantity /1),2)}} @endif)</td> 
             <?php } else { ?> 
                 <td>00</td> <?php } ?>
             </tr>
