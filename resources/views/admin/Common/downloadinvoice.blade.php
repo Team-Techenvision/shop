@@ -159,7 +159,7 @@
 						</table>
 					</td>
 					<td colspan="3" style="text-align: center;  font-size:14px;"></td>
-					<td colspan="1" style="text-align: center;  font-size:14px;"></td>  
+					<!-- <td colspan="" style="text-align: center;  font-size:14px;"></td>   -->
 				</tr>			
 				<tr style="width: 100%;">
 				<td colspan="7"></td>

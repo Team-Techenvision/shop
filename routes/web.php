@@ -25,6 +25,7 @@ Route::post('post-login', 'AdminController@postlogin');
 
 Route::middleware(['ShopAdmin'])->group(function() {
 Route::get('View-User', 'AdminController@UserList');
+Route::get('Login-Status', 'AdminController@Login_Status');
 Route::get('Add-User', 'AdminController@UserAdd');
 Route::get('View-Stock', 'AdminController@StockList');
 Route::get('Add-Stock', 'AdminController@StockAdd');
@@ -54,7 +55,7 @@ Route::get('cust-orderDetail/{order_id}', 'AdminController@cust_order_list');
 
 Route::get('download-invoice/{order_id}','AdminController@downloadInvoice');
 Route::get('logout', 'AdminController@logout');
-});
+Route::get('home-bash', 'AdminController@home_dashboard');
 // ============================
 Route::get('profile', 'AdminController@user_profile');
 Route::post('update-profile','AdminController@update_profile');
@@ -63,18 +64,23 @@ Route::post('submit-Password','AdminController@submit_Password');
 Route::get('barcode-order', 'AdminController@BarCode_Order');
 Route::post('br-product-detail','AdminController@br_product_detail');
 // ===============================
-Route::get('avaliable-quantity', 'AdminController@avaliable_quantity');
+Route::get('avaliable-quantity', 'ReportsController@avaliable_quantity');
+Route::get('product-exp-report', 'ReportsController@product_exp_report');
+Route::post('check-expiry2', 'ReportsController@check_expiry2');
+Route::get('daily-update', 'ReportsController@daily_update');
+Route::get('daily-sell-update/{date}', 'ReportsController@daily_sell_update');
+Route::get('top-sell-product', 'ReportsController@top_sell_product');
+Route::post('top-selling', 'ReportsController@top_selling');
+Route::get('return_stock_report', 'ReportsController@return_stock_report');
+Route::post('search-return-qty', 'ReportsController@search_return_qty');
+
+
 Route::post('check-expiry', 'AdminController@check_expiry');
-Route::get('daily-update', 'AdminController@daily_update');
-Route::get('daily-sell-update/{date}', 'AdminController@daily_sell_update');
-Route::get('product-exp-report', 'AdminController@product_exp_report');
-Route::post('check-expiry2', 'AdminController@check_expiry2');
-Route::get('top-sell-product', 'AdminController@top_sell_product');
-Route::post('top-selling', 'AdminController@top_selling');
 // ===================================================================
-Route::get('return_stock_report', 'AdminController@return_stock_report');
-Route::post('search-return-qty', 'AdminController@search_return_qty');
 Route::get('export', 'AdminController@export')->name('export');
+
+});
+
 // Route::get('export1/{$data}', 'AdminController@export');
 // =================================================
 
@@ -92,7 +98,6 @@ Route::get('export', 'AdminController@export')->name('export');
 
 Route::post('shop-home','AdminController@ShopHome');
 // ========================================================
-Route::get('home-bash', 'AdminController@home_dashboard');
 // =========================================================
 // Route::get('home-bash', function () {
 //     $data['flag'] = 1;

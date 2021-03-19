@@ -87,7 +87,7 @@
               <li class="category-heading">  Shop Employee</li>
               <li class="nav-item"><a class="nav-link {{ active_class(['email/inbox']) }}" href="{{url('/view-Emplist')}}">List</a></li>
               <li class="nav-item"><a class="nav-link {{ active_class(['email/read']) }}" href="{{url('/Add-employee')}}">Add Employee</a></li>              
-              
+              <li class="nav-item"><a class="nav-link {{ active_class(['email/read']) }}" href="{{url('/Login-Status')}}">Login Status</a></li> 
             </ul>
           </div>
         </li>

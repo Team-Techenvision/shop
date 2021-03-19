@@ -14,7 +14,7 @@
           @csrf
           <div class="d-flex justify-content-between mb-3">
             <div class="d-flex">
-               <lable class="form-control text-right w-auto"> Shop Id :</lable>
+               <lable class="form-control text-right w-auto"> Store Id :</lable>
                <?php  if(Auth::user()->shop_id != ""){ ?>             
                <input type="text" class="form-control text-center col-sm-4" name="shop_id"  value="<?php  echo Auth::user()->shop_id; ?>" readonly>
             <?php } ?>
