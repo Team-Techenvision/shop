@@ -224,7 +224,7 @@ public function excel_sheet($get_record)
     //  while($row = mysqli_fetch_array($return_stock))
      foreach($return_stock as $row)
      { 
-         if($row->size_name)
+        if($row->size_name!="Main")
          {
             $product_name = "$row->product_name ($row->size_name)";
             $unit = round($row->return_quantity / $row->per_stript_qty,3);
@@ -340,7 +340,7 @@ public function Expiry_excel($get_record)
          else{
             $per_strip = $row->per_stript_qty;
          }
-         if($row->size_name)
+         if($row->size_name!="Main")
          {
             $product_name = "$row->product_name ($row->size_name)";
             $unit = round($row->avl_quantity / $per_strip,3);
@@ -395,7 +395,7 @@ public function avaliable_Qty()
         else{
            $per_strip = $row->per_stript_qty;
         }
-        if($row->size_name)
+        if($row->size_name!="Main")
         {
            $product_name = "$row->product_name ($row->size_name)";
            $unit = round($row->avl_quantity / $per_strip,3);

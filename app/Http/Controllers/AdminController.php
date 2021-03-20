@@ -82,13 +82,13 @@ class AdminController extends Controller
         $shop_id = Auth::user()->shop_id; 
         $Count_Customer1 = DB::select("SELECT * FROM users WHERE shop_id =$shop_id AND user_type=2");
         $Count_staff = DB::select("SELECT * FROM users WHERE (shop_id =$shop_id AND role IS NOT null)");
-        $top_selling = DB::select("SELECT SUM(order_items.quantity) AS MAXsell FROM order_items INNER JOIN orders ON (orders.order_id=order_items.order_id) INNER JOIN products ON (products.products_id = order_items.prod_id) WHERE (order_items.created_at > now() - INTERVAL 30 day AND orders.shop_id=104) GROUP BY (order_items.prod_id) ORDER BY MAXsell DESC LIMIT 1");
+        $top_selling = DB::select("SELECT SUM(order_items.quantity) AS MAXsell FROM order_items INNER JOIN orders ON (orders.order_id=order_items.order_id) INNER JOIN products ON (products.products_id = order_items.prod_id) WHERE (order_items.created_at > now() - INTERVAL 30 day AND orders.shop_id=$shop_id) GROUP BY (order_items.prod_id) ORDER BY MAXsell DESC LIMIT 1");
         $data['top_sell']=0;
         foreach($top_selling  as $r)
         {
             $data['top_sell'] = $r->MAXsell;
         }
-        $daily_sell = DB::select("select SUM(`amount`) as t_sell from orders where (shop_id=104 AND `created_at` >= CURDATE())");
+        $daily_sell = DB::select("select SUM(`amount`) as t_sell from orders where (shop_id=$shop_id AND `created_at` >= CURDATE())");
         // dd($data['daily_sell']);
         foreach($daily_sell  as $r)
         {

@@ -49,7 +49,7 @@
               
             <tr> 
             <td> {{$count++}} </td>
-            @if($r->size_name)
+            @if($r->size_name!="Main")
             <td>{{$r->product_name}} ({{$r->size_name}})</td>
             @else
               <td>{{$r->product_name}}</td>
