@@ -29,7 +29,7 @@
         </form>
         <div class="d-flex">
         <label class="bg-info btn" data-toggle="tooltip" title="Top Selling Product!">Top Selling</label>
-        <a class="btn btn-success m-auto" href="{{ route('export') }}">Export In Excel</a>
+        <a class="btn btn-success m-auto" href="{{ url('top_s_export_excel/'.$record_Date) }}">Export In Excel</a>
         </div>
         <div class="table-responsive">
           <table id="dataTableExample" class="table">

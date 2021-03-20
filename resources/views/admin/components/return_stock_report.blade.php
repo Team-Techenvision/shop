@@ -28,7 +28,8 @@
             </div>
         </form>
         <div class="d-flex text-center mt-2">
-          <a class="btn btn-success m-auto" href="{{route('export')}}">Export In Excel</a>
+          <a class="btn btn-success m-auto" href="{{url('export_excel/'.$record_Date)}}">Export In Excel</a>
+          
         </div>
         <!-- <div class="d-flex">
         <label class="bg-info btn" data-toggle="tooltip" title="Top Selling Product!">Top Selling</label>
@@ -64,3 +65,5 @@
               </div>
             </div>
           </div>
+
+         

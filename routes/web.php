@@ -78,6 +78,15 @@ Route::post('search-return-qty', 'ReportsController@search_return_qty');
 Route::post('check-expiry', 'AdminController@check_expiry');
 // ===================================================================
 Route::get('export', 'AdminController@export')->name('export');
+Route::get('/export_excel/{date_record}', 'ReportsController@excel_sheet')->name('export_excel');
+Route::get('/top_s_export_excel/{date_record}', 'ReportsController@export_top_selling')->name('top_s_export_excel');
+Route::get('/Expiry_s_export_excel/{date_record}', 'ReportsController@Expiry_excel')->name('top_s_export_excel');
+Route::get('/Avaliable_s_export_excel', 'ReportsController@avaliable_Qty')->name('Avaliable_s_export_excel');
+
+
+
+
+
 
 });
 

@@ -46,6 +46,7 @@ class AdminController extends Controller
     if(Auth::attempt($data))
     {
      $u_id = Auth::user()->id; 
+     date_default_timezone_set("Asia/Kolkata");
         $data2 = new login_info; 
         $data2->user_id= $u_id;
         $data2->save();
@@ -61,7 +62,7 @@ class AdminController extends Controller
 
     // logout code
     public function logout() {
-        // date_default_timezone_set("Asia/Kolkata");
+        date_default_timezone_set("Asia/Kolkata");
         DB::table('login_details')
               ->where('id',Session::get('login_id'))
               ->update(['updated_at' => date("Y-m-d h:i:s")]);
