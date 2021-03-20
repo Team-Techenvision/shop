@@ -29,7 +29,7 @@
         </form>
         <div class="d-flex">
         <label class="bg-info btn" data-toggle="tooltip" title="Top Selling Product!">Top Selling</label>
-        <a class="btn btn-success m-auto" href="{{ route('export') }}">Export In Excel</a>
+        <a class="btn btn-success m-auto" href="{{ url('top_s_export_excel/'.$record_Date) }}">Export In Excel</a>
         </div>
         <div class="table-responsive">
           <table id="dataTableExample" class="table">
@@ -44,7 +44,7 @@
             <tbody> 
             @php 
               $count = 1;  
-
+            
               @endphp 
               @foreach($top_selling as $r)
               @if($count == 1)
@@ -54,7 +54,7 @@
                @endif         
             <td>{{$count++}} </td> 
             <td>{{$r->product_name}}</td> 
-            <td>{{$r->MAXsell}}</td> 
+            <td>{{$r->MAXsell}} (@if($r->per_stript_qty){{round(($r->MAXsell /$r->per_stript_qty),2)}}@else{{round(($r->MAXsell /1),2)}} @endif)</td> 
             </tr>
 
             @endforeach

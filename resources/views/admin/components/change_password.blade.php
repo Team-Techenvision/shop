@@ -1,13 +1,13 @@
 <div class="col-md-8 m-auto"> 
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title text-center">{{$page_title}}</h3>	
+                        <h3 class="box-title text-center text-warning font-weight-bold">{{$page_title}}</h3>	
                         <form action="{{url('submit-Password')}}" method="post">
                         @csrf
                             <div class="box-body">
                             <div class="row">
-                                <div class="col-md-6 m-auto">
-                                    <div class="form-group">
+                                <div class="col-md-6 m-auto shadow-lg">
+                                    <div class="form-group mt-2">
                                         <label>Old Password</label>
                                         <input type="password" class="form-control" name="old_pass" required>                                     
                                     </div>                                    

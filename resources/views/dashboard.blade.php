@@ -85,7 +85,7 @@
                     @if($Count_staff)             
                       <h3 class="text-dark">{{$Count_staff}}</h3>
                       @else
-                      <h3 class="text-dark">{{$Count_staff}}</h3>
+                      <h3 class="text-dark">00</h3>
                       @endif               
                     </div>            
                   </div>
@@ -98,14 +98,14 @@
           <div class="card bg-primary">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-baseline">
-                <h6 class="card-title">AVAILABLE QUANTITY</h6>              
+                <h6 class="card-title">AVAILABLE Stock</h6>              
               </div>
               <div class="row">
                 <div class="col-12 col-md-12 text-center">
                 @if($Count_stock)              
                   <h3 class="text-dark">{{$Count_stock}}</h3>
                   @else
-                  <h3 class="text-dark">{{$Count_stock}}</h3>
+                  <h3 class="text-dark">00</h3>
                   @endif               
                 </div>            
               </div>

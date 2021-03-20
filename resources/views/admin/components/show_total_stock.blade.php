@@ -28,7 +28,7 @@
         </form> -->
         <div class="d-flex">
         <label class="bg-danger btn"  data-toggle="tooltip" title="Less Than 10 Quantity!">10 Quantity</label><label  class="btn bg-warning"  data-toggle="tooltip" title="Less Than 50 Quantity!">50 Quantity</label>
-        <a class="btn btn-success m-auto" href="{{url('export')}}">Export In Excel</a>
+        <a class="btn btn-success m-auto" href="{{url('Avaliable_s_export_excel/')}}">Export In Excel</a>
         </div>
         <div class="table-responsive">
           <table id="dataTableExample" class="table">
@@ -44,7 +44,7 @@
             <tbody> 
             @php 
               $count = 1;  
-
+         
               @endphp 
               @foreach($product as $r)
               <?php
@@ -67,7 +67,7 @@
             <td>{{$r->product_name}}</td> 
             @endif
             <?php if($r->avl_quantity) { ?>                  
-            <td>{{$r->avl_quantity}}</td> 
+            <td>{{round($r->avl_quantity,2)}} (@if($r->per_stript_qty){{round(($r->avl_quantity /$r->per_stript_qty),2)}}@else{{round(($r->avl_quantity /1),2)}} @endif)</td> 
             <?php } else { ?> 
                 <td>00</td> <?php } ?>
             </tr>

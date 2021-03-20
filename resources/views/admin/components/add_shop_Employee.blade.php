@@ -1,12 +1,12 @@
 <div class="col-md-12"> 
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">{{$page_title}}</h3>	
+                        <h3 class="box-title text-center">{{$page_title}}</h3>	
                         <form action="{{url('submit-employee')}}" method="post">
                         @csrf
                             <div class="box-body">
                             <div class="row">
-                                <div class="col-md-6 m-auto">
+                                <div class="col-md-6 m-auto shadow-lg p-2 rounded">
                                     <div class="form-group">
                                         <label>Employee Name</label>
                                         <input type="text" class="form-control" name="emp_name" required>                                     

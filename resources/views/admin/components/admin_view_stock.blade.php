@@ -42,8 +42,9 @@
             <tbody> 
             @php 
               $count = 1;  
-
+           
               @endphp 
+
               @foreach($product as $r)
               
             <tr> 
@@ -53,8 +54,8 @@
             @else
               <td>{{$r->product_name}}</td>
             @endif           
-            <td>{{$r->input_quantity}}</td>
-            <td>{{$r->avl_quantity}}</td>
+            <td>{{round($r->input_quantity,2)}} (@if($r->per_stript_qty){{round(($r->input_quantity /$r->per_stript_qty),2)}}@else{{round(($r->input_quantity /1),2)}} @endif)</td>
+            <td>{{round($r->avl_quantity,2)}} (@if($r->per_stript_qty){{round(($r->avl_quantity /$r->per_stript_qty),2)}}@else{{round(($r->avl_quantity /1),2)}} @endif)</td>
             <td>{{$r->expiry_date}}</td> 
            <?php  $no = strlen($r->barcode);
                 if($no ==10)

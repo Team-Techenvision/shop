@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Invoice</title>
+	<link rel="shortcut icon" href="{{ asset('/1.png') }}">
 	<style>
 		.table{
 			border-collapse: collapse;
@@ -22,30 +23,6 @@
 </head>
 <body>
 <table style="width: 100%; border: none !important;">
-	<!-- <tr style="width: 100%;">
-		<td style="width: 100%;">
-			<table style="width: 100%;">
-				<tr style="width: 100%;">
-					<td style="width: 30%; text-align: left;">
-						<img src="{{asset('images/DHD-Logo.png')}}" alt="Dr. Helpdesk"  class="img-fluid" style="height: 150px;">
-					</td>
-                <td style="width: 10%; text-align: right;"></td>
-					<td style="width: 50%; text-align: right;">
-						<table style="width: 100%;">
-							<tr style="width: 100%;">
-								<td style="font-size: 22px; margin-bottom: 0px; width: 100%; font-weight: 700;">Tax Invoice/Bill of Supply/Cash Memo</td>
-							</tr>
-							<tr style="width: 100%;">
-								<td style="margin-top: 5px; font-size: 18px; font-weight: 100; width: 100%;">AENSA Health Solutions Private Limited</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr> -->
-
-
 	<tr style="width: 100%;">
 		<td style="width: 100%;">
 			<table style="width: 100%;">
@@ -60,8 +37,6 @@
 							</tr>
 						</table>
 					</td>
-                
-					
 				</tr>
 			</table>
 		</td>
@@ -113,14 +88,12 @@
 			<table style="width: 100%;" class="table">  
 				<tr>
 					<td style="border: 1px solid black;text-align: center;font-weight: bold;">Sr.No.</td> 
-			 		<!-- <td style="border: 1px solid black;">Order Id</td>
-					<td style="border: 1px solid black;">Sub Order Id</td> -->
+			 		
 					<td style="border: 1px solid black;text-align: center;font-weight: bold;" colspan="2">Product Name</td>
 					<td style="border: 1px solid black;text-align: center;font-weight: bold;">MFR/MKT</td>
 					<td style="border: 1px solid black;text-align: center;font-weight: bold;">BATCH</td>
 					<td style="border: 1px solid black;text-align: center;font-weight: bold;">MRP</td>
 					<td style="border: 1px solid black;text-align: center;font-weight: bold;">Discount</td>					
-					<!-- <td style="border: 1px solid black;text-align: center;font-weight: bold;">Rate</td>					 -->
 					<td style="border: 1px solid black;text-align: center;font-weight: bold;">GST %</td>
 					<td style="border: 1px solid black;text-align: center;font-weight: bold;">Quantity</td>
 					<td style="border: 1px solid black;text-align: center;font-weight: bold;">Total Amount</td> 
@@ -141,13 +114,13 @@
 						<td style="border: 1px solid black;text-align: center;">MFR/MKT</td>
 						<td style="border: 1px solid black;text-align: center;">BATCH</td>
 						<td style="border: 1px solid black;text-align: center;">{{$row->price}}</td>
-						<td style="border: 1px solid black;text-align: center;">{{(($row->price - $row->sub_total) * $row->quantity)}}</td>						
-												  -->
+						<td style="border: 1px solid black;text-align: center;">{{round(((($row->price/$row->per_stript_qty) - $row->sub_total) * $row->quantity),3)}}</td>						
+												
 						<td style="border: 1px solid black;text-align: center;">{{$row->gst_value_percentage}}</td>
 						<td style="border: 1px solid black;text-align: center;">{{$row->quantity}}</td>  
 						<td style="border: 1px solid black;text-align: center;">{{($row->sub_total * $row->quantity)}}</td> 
 						<?php $t_gst = $t_gst + (($row->sub_total/100) * $row->gst_value_percentage) *  $row->quantity ;
-							$dis_count = $dis_count + (($row->price - $row->sub_total) * $row->quantity);
+							$dis_count = $dis_count + ((($row->price/$row->per_stript_qty) - $row->sub_total) * $row->quantity);
 						?> 
 					</tr>
 				@endforeach 			
@@ -186,7 +159,7 @@
 						</table>
 					</td>
 					<td colspan="3" style="text-align: center;  font-size:14px;"></td>
-					<td colspan="1" style="text-align: center;  font-size:14px;"></td>  
+					<!-- <td colspan="" style="text-align: center;  font-size:14px;"></td>   -->
 				</tr>			
 				<tr style="width: 100%;">
 				<td colspan="7"></td>
@@ -198,7 +171,7 @@
 				<tr style="">
 					<td colspan="7"></td>
 					<td colspan="2" style="font-weight: 700; color: black;  padding-top:10px; padding-bottom:10px;">TOTAL AMOUNT:</td>
-					<td style=" background-color: #eee; text-align: center; padding-top:10px; padding-bottom:10px;">Rs {{round($orderDetails->amount,2)}}</td> 
+					<td style=" background-color: #eee; text-align: center; padding-top:10px; padding-bottom:10px;">Rs {{round($orderDetails->amount)}}</td> 
 				</tr> 
             	<tr style="width: 100%;">
 					<td colspan="11" style="font-weight: 700; color: black; text-align: center; ">All prices inclusive of GST as per Applicable Rate.

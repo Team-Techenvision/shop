@@ -30,7 +30,7 @@
         <!-- ======================================= -->
         <div class="d-flex">
           <label class="bg-danger btn" data-toggle="tooltip" title="Less Than 10 Days!">10 Day</label><label  class="btn bg-warning" data-toggle="tooltip" title="Less Than 50 Days!">50 Day</label>
-          <a class="btn btn-success m-auto" href="{{ route('export') }}">Export In Excel</a>
+          <a class="btn btn-success m-auto" href="{{ url('Expiry_s_export_excel/'.$record_Date) }}">Export In Excel</a>
         </div>
         <!-- <div class="d-flex text-center">
         <a class="btn btn-success m-auto" href="{{ route('export') }}">Export In Excel</a>
@@ -73,7 +73,7 @@
             @endif
             <td>{{$r->expiry_date}}</td>
             <?php if($r->avl_quantity) { ?>                  
-            <td>{{$r->avl_quantity}}</td> 
+            <td>{{$r->avl_quantity}} (@if($r->per_stript_qty){{round(($r->avl_quantity /$r->per_stript_qty),2)}}@else{{round(($r->avl_quantity /1),2)}} @endif)</td> 
             <?php } else { ?> 
                 <td>00</td> <?php } ?>
             </tr>

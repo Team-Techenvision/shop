@@ -14,7 +14,7 @@
           @csrf
           <div class="d-flex justify-content-between mb-3">
             <div class="d-flex">
-               <lable class="form-control text-right w-auto"> Shop Id :</lable>
+               <lable class="form-control text-right w-auto"> Store Id :</lable>
                <?php  if(Auth::user()->shop_id != ""){ ?>             
                <input type="text" class="form-control text-center col-sm-4" name="shop_id"  value="<?php  echo Auth::user()->shop_id; ?>" readonly>
             <?php } ?>
@@ -29,7 +29,7 @@
             <td class="col-sm-2">
                 <div class="form-group">
                       <label class="control-label">BarCode</label>
-                     <input type="text" class="form-control product_brcodes" name="product_brcode" >
+                     <input type="text" class="form-control product_brcodes" name="product_brcode" required>
                 </div>
               </td>                
               <td class="col-sm-3">
@@ -42,13 +42,13 @@
               <td class="col-sm-1">
                 <div class="form-group">
                       <label class="control-label">Price</label>
-                      <input type="text" class="form-control text-center product_price" name="p_price[]"  value="1" readonly>
+                      <input type="text" class="form-control text-center product_price p-0" name="p_price[]"  value="" readonly>
                 </div>
               </td>
               <td class="col-sm-1">                              
                 <div class="form-group">
                   <label class="control-label">GST %</label>
-                  <input type="text" class="form-control text-center product_gst" name="gst[]"  value="1" readonly>
+                  <input type="text" class="form-control text-center product_gst" name="gst[]"  value="" readonly>
                 </div>              
               </td>
               <td class="col-sm-2">
@@ -107,7 +107,7 @@ $(document).ready(function()
 // ====================================
     $("#addCF").click(function()
     {
-        $("#customFields").append('<tr class="row addrows"><td class="col-sm-2 mt-3"><input type="text" class="form-control product_brcodes" name="product_brcode" ></td><td class="col-sm-3"> <input type="text" class="form-control text-center product_name" name="product_name[]" readonly><input type="hidden" class="form-control text-center product_id" name="product_id[]" readonly></td><td class="col-sm-1"><input type="text" class="form-control text-center product_price" name="p_price[]"  value="1" readonly></td><td class="col-sm-1"><input type="text" class="form-control text-center product_gst" name="gst[]" value="1" readonly></td><td class="col-sm-2"><input type="number" class="form-control text-center productqty" name="p_qty[]"  value="1" min="1" required></td><td class="col-sm-2"><input type="text" class="form-control text-center amount" name="amt[]"  value="" readonly></td> <td class="col-sm-1"> <a href="javascript:void(0);" class="remCF btn btn-danger">Remove</a></td></tr>');
+        $("#customFields").append('<tr class="row addrows mb-1"><td class="col-sm-2"><input type="text" class="form-control product_brcodes" name="product_brcode" required></td><td class="col-sm-3"> <input type="text" class="form-control text-center product_name" name="product_name[]" readonly><input type="hidden" class="form-control text-center product_id" name="product_id[]" readonly></td><td class="col-sm-1"><input type="text" class="form-control text-center product_price p-0" name="p_price[]"  value="" readonly></td><td class="col-sm-1"><input type="text" class="form-control text-center product_gst" name="gst[]" value="" readonly></td><td class="col-sm-2"><input type="number" class="form-control text-center productqty" name="p_qty[]"  value="1" min="1" required></td><td class="col-sm-2"><input type="text" class="form-control text-center amount" name="amt[]"  value="" readonly></td> <td class="col-sm-1"> <a href="javascript:void(0);" class="remCF btn btn-danger">Remove</a></td></tr>');
         final_amount();
     });
   // =========================
@@ -139,7 +139,7 @@ $(document).ready(function()
         $total = $price * qtyvalue;
         // $gst_amt = ($price * qtyvalue)/100 * 10;
         // $final_amt =$total + $gst_amt;
-        $columns.find('.amount').val($total);       
+        $columns.find('.amount').val($total.toFixed(2));       
         final_amount();
         //total($final_amt);
   });
@@ -159,7 +159,7 @@ $(document).ready(function()
           }
 
         })
-        $('#total').val(sum.toFixed(2)); 
+        $('#total').val(sum.toFixed()); 
   }
     // ============================================
   // $('table').on("change", ".product_id", function(event)
@@ -260,11 +260,15 @@ $('table').on("keyup", ".product_brcodes", function(event)
                        
                        if(response['data'][i].special_price)
                        {
-                          $columns.find('.product_price').val(response['data'][i].special_price);                         
+                          // $columns.find('.product_price').val(response['data'][i].special_price);
+                          $columns.find('.product_price').val(response['data'][i].price_per_pic);                         
+
                        }
                        else
                        {
-                          $columns.find('.product_price').val(response['data'][i].price);                       
+                          // $columns.find('.product_price').val(response['data'][i].price); 
+                          $columns.find('.product_price').val(response['data'][i].price_per_pic);                       
+
                        }
                        $p_name  = "";
                        if(response['data'][i].size_name)
@@ -292,7 +296,7 @@ $('table').on("keyup", ".product_brcodes", function(event)
                             $total = $price * 1;
                             // $gst_amt = ($price * 1)/100 * 10;
                             // $final_amt =$total + $gst_amt;                            
-                            $columns.find('.amount').val($total);
+                            $columns.find('.amount').val($total.toFixed(3));
                             final_amount();                             
                       }
                     }
