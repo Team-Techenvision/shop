@@ -95,9 +95,11 @@ public function daily_sell_update($date, $amount)
 {
     // echo $date; echo $amount; die();
     $shop_id = Auth::user()->shop_id;
-    $to = 'dhananjay.sawant91@gmail.com';
+    $shop_name = DB::table('shop_infos')->where('id',$shop_id)->first('shop_name');
+    // dd($shop_name->shop_name);
+    $to = 'contactprashantpp@gmail.com';
     $subject = 'Daily Sell Report';
-    $message = "Your $date Daily Sell Amount is $amount";
+    $message = "Your $date Daily Sell Amount is $amount From Store $shop_name->shop_name.";
     $headers = 'From:support@drhelpdesk.in';
    
     Mail::send('emails.daily_report', ['msg' => $message, 'user' => "demo"] , function($message) use ($to){

@@ -3,7 +3,18 @@
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title">{{$page_title}}</h6>       
+        <h6 class="card-title">{{$page_title}}</h6>      
+
+         <div class="any_message mt-2">
+          @if(session()->has('message'))
+            <div class="alert alert-success">
+                {{ session()->get('message') }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          @endif
+        </div> 
         <div class="table-responsive">
           <table id="dataTableExample" class="table">
           <thead>     
