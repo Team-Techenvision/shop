@@ -30,7 +30,12 @@
         <!-- ======================================= -->
         <div class="d-flex">
           <label class="bg-danger btn" data-toggle="tooltip" title="Less Than 10 Days!">10 Day</label><label  class="btn bg-warning" data-toggle="tooltip" title="Less Than 50 Days!">50 Day</label>
+          <!-- <a class="btn btn-success m-auto" href="{{ url('Expiry_s_export_excel/'.$record_Date) }}">Export In Excel</a> -->
+          <?php if(!$store_product){ ?>
+          <button class="btn btn-success m-auto" disabled>Export In Excel</button>
+         <?php }else{ ?>
           <a class="btn btn-success m-auto" href="{{ url('Expiry_s_export_excel/'.$record_Date) }}">Export In Excel</a>
+        <?php }?>
         </div>
         <!-- <div class="d-flex text-center">
         <a class="btn btn-success m-auto" href="{{ route('export') }}">Export In Excel</a>

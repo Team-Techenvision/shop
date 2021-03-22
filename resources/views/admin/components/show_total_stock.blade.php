@@ -34,7 +34,7 @@
         <?php if(!$product){ ?>
         <button class="btn btn-success m-auto" disabled>Export In Excel</button>
         <?php }else{ ?>
-        <a class="btn btn-success m-auto" href="{{ url('top_s_export_excel/'.$record_Date) }}" >Export In Excel</a>
+        <a class="btn btn-success m-auto" href="{{ url('Avaliable_s_export_excel/') }}" >Export In Excel</a>
           
          <?php }?>
         </div>
