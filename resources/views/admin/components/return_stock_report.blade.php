@@ -28,8 +28,14 @@
             </div>
         </form>
         <div class="d-flex text-center mt-2">
-        <?php if(!$return_stock){$status = "disabled";}{$status="";}?>
-          <a class="btn btn-success m-auto" href="{{url('export_excel/'.$record_Date)}}" <?php echo $status; ?>>Export In Excel</a>
+        <!-- <?//php if(!$return_stock){$status = "disabled";}{$status="";}?> -->
+          <!-- <a class="btn btn-success m-auto" href="{{url('export_excel/'.$record_Date)}}" <?//php echo $status; ?>>Export In Excel</a> -->
+          <?php if(!$return_stock){ ?>
+        <button class="btn btn-success m-auto" disabled>Export In Excel</button>
+        <?php }else{ ?>
+        <a class="btn btn-success m-auto" href="{{ url('top_s_export_excel/'.$record_Date) }}" >Export In Excel</a>
+          
+         <?php }?>
           
         </div>
         <!-- <div class="d-flex">

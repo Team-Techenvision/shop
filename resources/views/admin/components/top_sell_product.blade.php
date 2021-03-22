@@ -29,7 +29,13 @@
         </form>
         <div class="d-flex">
         <label class="bg-info btn" data-toggle="tooltip" title="Top Selling Product!">Top Selling</label>
-        <a class="btn btn-success m-auto" href="{{ url('top_s_export_excel/'.$record_Date) }}">Export In Excel</a>
+        <!-- <a class="btn btn-success m-auto" href="{{ url('top_s_export_excel/'.$record_Date) }}">Export In Excel</a> -->
+        <?php if(!$top_selling){ ?>
+        <button class="btn btn-success m-auto" disabled>Export In Excel</button>
+        <?php }else{ ?>
+        <a class="btn btn-success m-auto" href="{{ url('top_s_export_excel/'.$record_Date) }}" >Export In Excel</a>
+          
+         <?php }?>
         </div>
         <div class="table-responsive">
           <table id="dataTableExample" class="table">
