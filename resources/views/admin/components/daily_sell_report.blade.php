@@ -12,7 +12,7 @@
                 <!-- <th>Barcode</th>   -->
                 <th>Date</th>
                 <th>Sell Total Amount</th>                                
-                <!-- <th>Send Mail</th>        -->
+                <th>Send Mail</th>       
               </tr>
             </thead>
             <tbody> 
@@ -21,12 +21,12 @@
 
               @endphp 
               @foreach($daily_report as $r)
-              
+             @php $daily_sell_amount = number_format($r->tatal_amount, 2); @endphp
             <tr> 
             <td> {{$count++}} </td> 
             <td>{{$r->Date}}</td> 
-            <td>{{number_format($r->tatal_amount, 2) }}</td>
-            <td><a href="{{url('daily-sell-update/'.$r->Date)}}" class="btn btn-info">Send</a></td>            
+            <td>@php echo $daily_sell_amount @endphp</td>
+            <td><a href="{{url('daily-sell-update/'.$r->Date.'/'.$daily_sell_amount)}}" class="btn btn-info">Send</a></td>            
             </tr>
 
             @endforeach

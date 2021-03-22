@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Auth;
 use DB;
+use Mail;
 // use Excel;
 use Illuminate\Http\Request;
 // use App\Exports\UsersExport;
@@ -90,9 +91,20 @@ public function daily_update()
 
 }
 // send email for daily sell update
-public function daily_sell_update($date)
+public function daily_sell_update($date, $amount)
 {
-    echo $date; die();
+    // echo $date; echo $amount; die();
+    $shop_id = Auth::user()->shop_id;
+    $to = 'dhananjay.sawant91@gmail.com';
+    $subject = 'Daily Sell Report';
+    $message = "Your $date Daily Sell Amount is $amount";
+    $headers = 'From:support@drhelpdesk.in';
+   
+    Mail::send('emails.daily_report', ['msg' => $message, 'user' => "demo"] , function($message) use ($to){
+    $message->to($to, 'User')->subject('Daily Sell Report');
+    $message->from('support@drhelpdesk.in','Drhelpdesk');
+});
+return redirect('daily-update')->with('message','Mail Sent Successfully!');
 
 }
 

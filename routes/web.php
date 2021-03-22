@@ -68,7 +68,7 @@ Route::get('avaliable-quantity', 'ReportsController@avaliable_quantity');
 Route::get('product-exp-report', 'ReportsController@product_exp_report');
 Route::post('check-expiry2', 'ReportsController@check_expiry2');
 Route::get('daily-update', 'ReportsController@daily_update');
-Route::get('daily-sell-update/{date}', 'ReportsController@daily_sell_update');
+Route::get('daily-sell-update/{date}/{amount}', 'ReportsController@daily_sell_update');
 Route::get('top-sell-product', 'ReportsController@top_sell_product');
 Route::post('top-selling', 'ReportsController@top_selling');
 Route::get('return_stock_report', 'ReportsController@return_stock_report');
