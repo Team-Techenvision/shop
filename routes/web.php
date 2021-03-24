@@ -11,10 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('admin/common/login');
-    //return view('dashboard');
-});
+// Route::get('/', function () {
+//     return view('admin/common/login');
+//     //return view('dashboard');
+// });
+
+Route::get('/', 'AdminController@login');
 
 Route::get('Register', function () {
     return view('admin/common/register');

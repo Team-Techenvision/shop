@@ -19,7 +19,7 @@ class ShopAdmin
         if (Auth::user() &&  Auth::user()->user_type == 7 && Auth::user()->is_block == 0) {
             return $next($request);
         }
-
-        return redirect('/')->with('message','User Account Block!!');
+        // return redirect('/')->with('message','User Account Block!!');
+        return redirect('/');
     }
 }

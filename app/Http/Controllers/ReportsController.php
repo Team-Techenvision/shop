@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Auth;
 use DB;
 use Mail;
+use Carbon\carbon;
 // use Excel;
 use Illuminate\Http\Request;
 // use App\Exports\UsersExport;
@@ -14,27 +15,40 @@ class ReportsController extends Controller
     //   
    
 
-    // ======================avaliable_quantity Reports================================
+    // ======================avaliable quantity Reports================================
 public function avaliable_quantity()
 {
     $data['main_breadcrum'] = 'Stock';
-    $data['page_title'] = 'Available Quantity';
-    // $data['flag'] = 14;   
+    $data['page_title'] = 'Available Quantity'; 
     $data['flag'] = 1;     
     $shop_id = Auth::user()->shop_id;         
     // $data['product']=DB::select("SELECT products_id,SUM(avl_quantity) as avl_quantity FROM `shop_stocks` where (shop_id =$shop_id)  GROUP BY (products_id) ORDER BY avl_quantity asc");
     // $data['product']=DB::select("SELECT shop_stocks.products_id,products.product_name, SUM(shop_stocks.avl_quantity) as avl_quantity FROM `shop_stocks` INNER JOIN products ON(products.products_id=shop_stocks.products_id) where (shop_stocks.shop_id =$shop_id) GROUP BY (shop_stocks.attribute_id) ORDER BY avl_quantity ASC");       
     // $data['product']=DB::select("SELECT s_stock.products_id,products.product_name,sizes.size_name, SUM(s_stock.avl_quantity) as avl_quantity FROM shop_stocks s_stock INNER JOIN products ON(products.products_id=s_stock.products_id)INNER JOIN product_attributes p_attr ON(p_attr.id=s_stock.attribute_id)INNER JOIN sizes ON(sizes.id=p_attr.product_size) where (s_stock.shop_id =$shop_id) GROUP BY (s_stock.attribute_id) ORDER BY avl_quantity ASC");       
-    $data['product']=DB::select("SELECT s_stock.products_id,products.product_name,sizes.size_name, SUM(s_stock.avl_quantity) as avl_quantity,p_attr.per_stript_qty FROM shop_stocks s_stock LEFT JOIN products ON(products.products_id=s_stock.products_id)LEFT JOIN product_attributes p_attr ON(p_attr.id=s_stock.attribute_id)LEFT JOIN sizes ON(sizes.id=p_attr.product_size) where (s_stock.shop_id =$shop_id) GROUP BY (s_stock.attribute_id) ORDER BY avl_quantity ASC");       
+    // ====================
+    //   $data['product']=DB::select("SELECT s_stock.products_id,products.product_name,sizes.size_name, SUM(s_stock.avl_quantity) as avl_quantity,p_attr.per_stript_qty FROM shop_stocks s_stock LEFT JOIN products ON(products.products_id=s_stock.products_id)LEFT JOIN product_attributes p_attr ON(p_attr.id=s_stock.attribute_id)LEFT JOIN sizes ON(sizes.id=p_attr.product_size) where (s_stock.shop_id =101) GROUP BY (s_stock.attribute_id) ORDER BY avl_quantity ASC");       
+    //   =====================
     // $data['product']=DB::select("select * from shop_stocks where  shop_id=$shop_id;"); 
     // dd($data['product'] );
     //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
     // return view('admin/webviews/admin_manage_stock',$data);
+    // dd($shop_id);
+    $data['product'] = DB::table('shop_stocks')
+    ->select(DB::raw('shop_stocks.products_id,products.product_name,sizes.size_name,shop_stocks.avl_quantity as avl_quantity,p_attr.per_stript_qty'))
+    ->join('products','products.products_id','=','shop_stocks.products_id')
+    ->join('product_attributes as p_attr','p_attr.id','=','shop_stocks.attribute_id')
+    ->join('sizes','sizes.id','=','p_attr.product_size')
+    ->where('shop_stocks.shop_id',$shop_id)
+    ->orderBy('shop_stocks.avl_quantity', 'ASC')
+    ->groupBy('shop_stocks.attribute_id')
+    ->get();
+
+    // dd($data['product']);
     return view('admin/webviews/store_all_report',$data);
 
 }
 
-// ======================avaliable_quantity================================
+// ======================avaliable quantity================================
 
 // ==================product_exp_report========================
 public function product_exp_report()
@@ -84,9 +98,12 @@ public function daily_update()
     $data['page_title'] = 'Daily Update';
     $data['flag'] = 3;       
     $shop_id = Auth::user()->shop_id;
+
     // echo $shop_id;
-    $data['daily_report']=DB::select("SELECT date(created_at) AS Date ,SUM(amount) as tatal_amount FROM orders where (shop_id =$shop_id) GROUP BY (date(created_at)) order by created_at desc");        
-    // dd($data['daily_report'] );       
+    // dd($data);
+    // $data['daily_report']=DB::select( DB::raw("SELECT date(created_at) AS Date ,SUM(amount) as tatal_amount FROM orders where (shop_id =$shop_id) GROUP BY (date(created_at)) order by created_at desc"));        
+    $data['daily_report']=DB::table('orders')->select(DB::raw('date(created_at) AS Date'),DB::raw('SUM(amount) as tatal_amount'))->where('shop_id',$shop_id)->groupBy(DB::raw('date(created_at)'))->orderBy('created_at', 'desc')->get();     
+    // dd($data['daily_report']);       
     return view('admin/webviews/store_all_report',$data);
 
 }
