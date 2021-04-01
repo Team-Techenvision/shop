@@ -25,9 +25,22 @@ public function avaliable_quantity()
     // $data['product']=DB::select("SELECT products_id,SUM(avl_quantity) as avl_quantity FROM `shop_stocks` where (shop_id =$shop_id)  GROUP BY (products_id) ORDER BY avl_quantity asc");
     // $data['product']=DB::select("SELECT shop_stocks.products_id,products.product_name, SUM(shop_stocks.avl_quantity) as avl_quantity FROM `shop_stocks` INNER JOIN products ON(products.products_id=shop_stocks.products_id) where (shop_stocks.shop_id =$shop_id) GROUP BY (shop_stocks.attribute_id) ORDER BY avl_quantity ASC");       
     // $data['product']=DB::select("SELECT s_stock.products_id,products.product_name,sizes.size_name, SUM(s_stock.avl_quantity) as avl_quantity FROM shop_stocks s_stock INNER JOIN products ON(products.products_id=s_stock.products_id)INNER JOIN product_attributes p_attr ON(p_attr.id=s_stock.attribute_id)INNER JOIN sizes ON(sizes.id=p_attr.product_size) where (s_stock.shop_id =$shop_id) GROUP BY (s_stock.attribute_id) ORDER BY avl_quantity ASC");       
-    $data['product']=DB::select("SELECT s_stock.products_id,products.product_name,sizes.size_name, SUM(s_stock.avl_quantity) as avl_quantity,p_attr.per_stript_qty FROM shop_stocks s_stock LEFT JOIN products ON(products.products_id=s_stock.products_id)LEFT JOIN product_attributes p_attr ON(p_attr.id=s_stock.attribute_id)LEFT JOIN sizes ON(sizes.id=p_attr.product_size) where (s_stock.shop_id =$shop_id) GROUP BY (s_stock.attribute_id) ORDER BY avl_quantity ASC");       
+    // =========================
+    // $data['product']=DB::select("SELECT s_stock.products_id,products.product_name,sizes.size_name, SUM(s_stock.avl_quantity) as avl_quantity,p_attr.per_stript_qty FROM shop_stocks s_stock LEFT JOIN products ON(products.products_id=s_stock.products_id)LEFT JOIN product_attributes p_attr ON(p_attr.id=s_stock.attribute_id)LEFT JOIN sizes ON(sizes.id=p_attr.product_size) where (s_stock.shop_id =$shop_id) GROUP BY (s_stock.attribute_id) ORDER BY avl_quantity ASC");       
+
+    $data['product'] = DB::table('shop_stocks as s_stock')
+    ->select(DB::raw('s_stock.products_id,products.product_name,sizes.size_name,SUM(s_stock.avl_quantity) as avl_quantity,p_attr.per_stript_qty'))
+    ->join('products','products.products_id','=','s_stock.products_id')
+    ->join('product_attributes as p_attr','p_attr.id','=','s_stock.attribute_id')
+    ->join('sizes','sizes.id','=','p_attr.product_size')
+    ->where('s_stock.shop_id',$shop_id)
+    ->orderBy('s_stock.avl_quantity', 'ASC')
+    ->groupBy('s_stock.attribute_id')
+    ->get();
+    // $record = $product->groupBy('s_stock.attribute_id');
+    // dd($record);
     // $data['product']=DB::select("select * from shop_stocks where  shop_id=$shop_id;"); 
-    // dd($data['product'] );
+    // dd($data['product']);
     //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
     // return view('admin/webviews/admin_manage_stock',$data);
     return view('admin/webviews/store_all_report',$data);
@@ -46,7 +59,21 @@ public function product_exp_report()
     // $data['store_product']=DB::select("select timestampdiff(day,now(),`expiry_date`) AS expiry_day,`avl_quantity`,`products_id`,expiry_date from shop_stocks where shop_id=$shop_id ORDER BY `expiry_date` ASC");               
     // $data['store_product']=DB::select("select products.product_name,timestampdiff(day,now(),shop_stocks.`expiry_date`) AS expiry_day,shop_stocks.`avl_quantity`,shop_stocks.`products_id`,expiry_date from shop_stocks INNER JOIN products ON(products.products_id=shop_stocks.products_id) where shop_stocks.shop_id=$shop_id ORDER BY shop_stocks.`expiry_date` ASC");               
     // $data['store_product']=DB::select("select products.product_name,sizes.size_name,timestampdiff(day,now(),s_stock.`expiry_date`) AS expiry_day,s_stock.`avl_quantity`,s_stock.`products_id`,s_stock.expiry_date from shop_stocks s_stock INNER JOIN products ON(products.products_id=s_stock.products_id)INNER JOIN product_attributes p_attr ON(p_attr.id=s_stock.attribute_id)INNER JOIN sizes ON(sizes.id=p_attr.product_size) where (s_stock.shop_id=$shop_id) ORDER BY (s_stock.`expiry_date`) ASC");               
-    $data['store_product']=DB::select("select products.product_name,sizes.size_name,timestampdiff(day,now(),s_stock.`expiry_date`) AS expiry_day,s_stock.`avl_quantity`,s_stock.`products_id`,s_stock.expiry_date,p_attr.per_stript_qty from shop_stocks s_stock LEFT JOIN products ON(products.products_id=s_stock.products_id)LEFT JOIN product_attributes p_attr ON(p_attr.id=s_stock.attribute_id)LEFT JOIN sizes ON(sizes.id=p_attr.product_size) where (s_stock.shop_id=$shop_id) ORDER BY (s_stock.`expiry_date`) ASC");               
+    // ==========================================
+    // $data['store_product']=DB::select("select products.product_name,sizes.size_name,timestampdiff(day,now(),s_stock.`expiry_date`) AS expiry_day,s_stock.`avl_quantity`,s_stock.`products_id`,s_stock.expiry_date,p_attr.per_stript_qty from shop_stocks s_stock LEFT JOIN products ON(products.products_id=s_stock.products_id)LEFT JOIN product_attributes p_attr ON(p_attr.id=s_stock.attribute_id)LEFT JOIN sizes ON(sizes.id=p_attr.product_size) where (s_stock.shop_id=$shop_id) ORDER BY (s_stock.`expiry_date`) ASC");               
+
+
+    $data['store_product'] = DB::table('shop_stocks as s_stock')
+    ->select(DB::raw('products.product_name,sizes.size_name,timestampdiff(day,now(),s_stock.`expiry_date`) AS expiry_day,s_stock.`avl_quantity`,s_stock.`products_id`,s_stock.expiry_date,p_attr.per_stript_qty'))
+    ->join('products','products.products_id','=','s_stock.products_id')
+    ->join('product_attributes as p_attr','p_attr.id','=','s_stock.attribute_id')
+    ->join('sizes','sizes.id','=','p_attr.product_size')
+    ->where('s_stock.shop_id',$shop_id)
+    ->orderBy('s_stock.expiry_date', 'ASC')   
+    ->get();
+
+
+
     $data['record_Date']="0";
     // dd($data['store_product']);
     return view('admin/webviews/store_all_report',$data);
@@ -68,7 +95,19 @@ public function check_expiry2(Request $req)
     // $data['store_product']=DB::select("select timestampdiff(day,now(),shop_stocks.`expiry_date`) AS expiry_day,shop_stocks.`avl_quantity`,shop_stocks.`products_id`,shop_stocks.`expiry_date`,products.product_name from shop_stocks INNER JOIN products ON(products.products_id=shop_stocks.products_id) where shop_stocks.expiry_date < now() + INTERVAL $expiry_day day AND shop_stocks.shop_id=$shop_id"); 
     
     $data['store_product']=DB::select("select timestampdiff(day,now(),shop_stocks.expiry_date) AS expiry_day,shop_stocks.avl_quantity,shop_stocks.products_id,shop_stocks.expiry_date,products.product_name,sizes.size_name,p_attr.per_stript_qty from shop_stocks LEFT JOIN product_attributes p_attr ON(p_attr.id=shop_stocks.attribute_id)LEFT JOIN products ON(products.products_id=shop_stocks.products_id)LEFT join sizes ON(sizes.id=p_attr.product_size) where expiry_date < now() + INTERVAL $expiry_day day AND shop_id=$shop_id");               
+    
+
     //  dd($data['store_product']);
+
+    $data['product'] = DB::table('shop_stocks as s_stock')
+    ->select(DB::raw('s_stock.products_id,products.product_name,sizes.size_name,SUM(s_stock.avl_quantity) as avl_quantity,p_attr.per_stript_qty'))
+    ->join('products','products.products_id','=','s_stock.products_id')
+    ->join('product_attributes as p_attr','p_attr.id','=','s_stock.attribute_id')
+    ->join('sizes','sizes.id','=','p_attr.product_size')
+    ->where('s_stock.shop_id',$shop_id)
+    ->orderBy('s_stock.avl_quantity', 'ASC')
+    ->groupBy('s_stock.attribute_id')
+    ->get();
     $data['record_Date']=$expiry_day;
     //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
     return view('admin/webviews/store_all_report',$data);

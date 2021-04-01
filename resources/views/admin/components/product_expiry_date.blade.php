@@ -18,6 +18,7 @@
                       <option value="30">1 Month</option>
                       <option value="60">2 Month</option>
                       <option value="90">3 Month</option>
+                      <option value="180">6 Month</option>
                     </select>                   
                   </div>                         
                 </div><!-- Col -->
@@ -29,7 +30,7 @@
         </form>
         <!-- ======================================= -->
         <div class="d-flex">
-          <label class="bg-danger btn" data-toggle="tooltip" title="Less Than 10 Days!">10 Day</label><label  class="btn bg-warning" data-toggle="tooltip" title="Less Than 50 Days!">50 Day</label>
+          <label class="bg-danger btn" data-toggle="tooltip" title="Less Than 90 Days!">90 Day</label><label  class="btn bg-warning" data-toggle="tooltip" title="Less Than 180 Days!">180 Day</label>
           <!-- <a class="btn btn-success m-auto" href="{{ url('Expiry_s_export_excel/'.$record_Date) }}">Export In Excel</a> -->
           <?php if(!$store_product){ ?>
           <button class="btn btn-success m-auto" disabled>Export In Excel</button>
@@ -60,11 +61,11 @@
               @foreach($store_product as $r)
               <?php             
              
-                if($r->expiry_day < 10)
+                if($r->expiry_day < 90)
                 { ?>
                   <tr class="bg-danger"> 
           <?php }
-                elseif($r->expiry_day < 50)
+                elseif($r->expiry_day < 180)
                 { ?>
                   <tr class="bg-warning"> 
           <?php } else { ?>

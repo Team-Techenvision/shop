@@ -39,8 +39,13 @@
                 <th>{{$row->name}}</th>
                                          
                 <th>{{$row->phone}}</th>
-                <th>{{$row->created_at}}</th>  
-                <th>{{$row->updated_at}}</th> 
+                <!-- < ?php $login = date("Y-m-d  h:i:s A", {{$row->created_at}}); ?>  -->
+                <?php $in_d = strtotime($row->created_at); ?>
+                <th><?php echo date("Y-m-d h:i:s A", $in_d); ?></th>
+                <!-- <th>{{$row->created_at}}</th>   -->
+                <?php $out_d = strtotime($row->updated_at); ?>
+
+                <th><?php echo date("Y-m-d h:i:s A", $out_d); ?></th> 
                
                   <th>                         
                    <form action="{{url('change-status')}}" method="post" >

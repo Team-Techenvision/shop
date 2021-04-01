@@ -629,17 +629,17 @@ public function downloadInvoice($order_id){
 //    $data['order'] = $orders;
    $data['orderStatus'] = $orderStatus;
  
-//    $data['gst_count']=DB::select("select gst_tax.gst_value_percentage,SUM(order_items.sub_total * order_items.quantity) AS total from shop_stocks INNER join gst_tax ON(gst_tax.gst_id = shop_stocks.tax) INNER JOIN order_items ON(shop_stocks.products_id=order_items.prod_id) INNER JOIN orders ON(orders.order_id=order_items.order_id) WHERE( shop_stocks.shop_id= $shop_id AND orders.order_id=$order_id) GROUP BY(gst_tax.gst_value_percentage)"); 
+//    $data['gst_count']=DB::select("select gst_tax.gst_value_percentage,SUM(order_items.sub_total * order_items.quantity) AS total from shop_stocks INNER join gst_tax ON(gst_tax.gst_id = shop_stocks.tax) INNER JOIN order_items ON(shop_stocks.products_id=order_items.prod_id) INNER JOIN orders ON(orders.order_id=order_items.order_id) WHERE( shop_stocks.shop_id= $shop_id AND orders.order_id= $order_id) GROUP BY(gst_tax.gst_value_percentage)"); 
 //    $data['gst_count']=DB::select("SELECT * FROM order_items LEFT JOIN product_attributes p_attr ON(p_attr.id=order_items.prod_id)LEFT JOIN products ON(products.products_id=p_attr.products_id)LEFT JOIN gst_tax ON(gst_tax.gst_id=products.gst_id)WHERE(order_items.order_id=60439d3c4fc06) GROUP BY(gst_tax.gst_id)"); 
    $data['gst_count'] = DB::table('order_items')
-   ->join('orders', 'orders.order_id', '=', 'order_items.order_id')
-            ->join('product_attributes', 'product_attributes.id', '=', 'order_items.prod_id')
-            ->join('products', 'products.products_id', '=', 'product_attributes.products_id')
-            ->join('gst_tax', 'gst_tax.gst_id', '=', 'products.gst_id')                                
-            ->selectRaw('SUM(order_items.sub_total * order_items.quantity) AS total,order_items.prod_name , product_attributes.price,order_items.sub_total,order_items.prod_id,order_items.quantity,gst_tax.gst_value_percentage,orders.amount,orders.order_id')
-            ->where('order_items.order_id','=', $order_id)
-            ->groupBy('gst_tax.gst_id')
-            ->get(); 
+    ->join('orders', 'orders.order_id', '=', 'order_items.order_id')
+    ->join('product_attributes', 'product_attributes.id', '=', 'order_items.prod_id')
+    ->join('products', 'products.products_id', '=', 'product_attributes.products_id')
+    ->join('gst_tax', 'gst_tax.gst_id', '=', 'products.gst_id')                                
+    ->selectRaw('SUM(order_items.sub_total * order_items.quantity) AS total,order_items.prod_name , product_attributes.price,order_items.sub_total,order_items.prod_id,order_items.quantity,gst_tax.gst_value_percentage,orders.amount,orders.order_id')
+    ->where('order_items.order_id','=', $order_id)
+    ->groupBy('gst_tax.gst_id')
+    ->get(); 
 
 //    dd($data['gst_count']);
    return view('admin/common/downloadinvoice', $data);
