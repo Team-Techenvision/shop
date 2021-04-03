@@ -20,7 +20,6 @@ class ShopAdmin
             return $next($request);
         }
         // return redirect('/')->with('message','User Account Block!!');
-
         return redirect('/');
     }
 }

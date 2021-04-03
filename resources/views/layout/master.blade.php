@@ -18,6 +18,9 @@
   <link href="{{ asset('assets/fonts/feather-font/css/iconfont.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/flag-icon-css/css/flag-icon.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/perfect-scrollbar/perfect-scrollbar.css') }}" rel="stylesheet" />
+  <!-- <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" /> -->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
   <!-- end plugin css -->
 
   @stack('plugin-styles')
@@ -47,6 +50,8 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('assets/plugins/feather-icons/feather.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ 
     <!-- end base js -->
 
     <!-- plugin js -->
@@ -61,6 +66,20 @@
         $(".any_message").fadeOut(4500);
       });
     </script>
+
+    <script type="text/javascript">
+          
+            $("#form_date").datepicker({
+              minDate: '0', 
+              dateFormat: 'yy-mm-dd'
+            });
+            
+            $("#to_date").datepicker({
+              minDate: '0', 
+              dateFormat: 'yy-mm-dd'
+            });
+         
+        </script>
     <!-- ======================== -->
     <!-- end common js -->
   

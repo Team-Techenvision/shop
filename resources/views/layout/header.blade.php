@@ -123,6 +123,8 @@
               <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{ url('/list-invoice') }}">Order List</a></li>
             <li class="category-heading">Customer Order</li>
               <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{ url('/cust-order') }}">Add order</a></li>
+              <!-- <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{ url('/cust-order-return') }}">Return Order</a></li> -->
+
              
             </ul>
           </div>
@@ -141,6 +143,8 @@
               <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{url('product-exp-report')}}">Product Expiry</a></li>
               <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{url('daily-update')}}">Daily Sell </a></li>
               <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{url('top-sell-product')}}">Top Selling Product </a></li>
+              <!-- <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{url('not-sell-product')}}">Not Sell Product </a></li> -->
+              
               <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{url('return_stock_report')}}">Return Stock </a></li>
 
               

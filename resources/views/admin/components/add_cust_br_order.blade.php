@@ -21,7 +21,16 @@
             </div>
             <div class="d-flex">
               <lable class="form-control text-right w-auto" > Customer Id :</lable>
-              <input type="text" class="form-control text-center col-sm-4" name="cust_id"  value="{{$u_id}}" readonly>
+              <input type="text" class="form-control text-center col-sm-2" name="cust_id"  value="{{$u_id}}" readonly>
+              <lable class="form-control text-right w-auto" > Payment Mode:</lable>
+              <select name="payment_mode" id="payment_mode" class="form-control w-25 rounded mr-2" required>
+                        <!-- <option value="Shop">Shop</option>                    -->
+                        <!-- <option value="5">5 Day</option> -->
+                        <option value="Cash">Cash</option>
+                        <option value="Card">Card</option>
+                        <option value="UPI">UPI</option>
+                        <option value="Qr_Code">Qr Code</option>                       
+                      </select>
             </div>
           </div>
           <table class="form-table w-100" id="customFields">

@@ -30,6 +30,15 @@ use Maatwebsite\Excel\Facades\Excel;
 class AdminController extends Controller
 {
 
+    public function login(){
+        if(Auth::check()){
+            return redirect('/home-bash');
+        }else{
+            return view('admin/common/login');
+        }
+
+    }
+
     // login code
     public function postlogin(Request $req){
     //  dd($req);
@@ -373,7 +382,10 @@ class AdminController extends Controller
       $cust_id = $req->cust_id;
       $total_amt = $req->total;
       $order_id = uniqid();      
-      $payment_mode = "shop";
+    //   $payment_mode = "shop";
+      $payment_mode = $req->payment_mode;
+    //   dd($payment_mode);
+
 
       $data1 = new product_order; 
              $data1->emp_id= $emp_id;
@@ -604,6 +616,7 @@ public function cust_order_list($order_id)
 
 // Print invoice
 public function downloadInvoice($order_id){ 
+    // dd($order_id);
     $orderDetails = DB::table('orders')->where('order_id', $order_id)->first();
     // $orders = DB::table('order_items')->where('order_id',$order_id)->get();
     $orderStatus = DB::table('order_status')->get();
@@ -742,16 +755,34 @@ public function downloadInvoice($order_id){
     {
         $emp_id = Auth::user()->id;
         $shop_id = Auth::user()->shop_id;
-        // echo $shop_id;
-        $data['main_breadcrum'] = 'Shop';
-        $data['page_title'] = 'Shop Order List';
-        $data['flag'] = 13; 
-        $data['shop_orders'] = DB::table('users')
-        ->join('orders', 'users.id', '=','orders.emp_id')
-        ->select('orders.*','users.phone','users.name')
-        ->where('users.shop_id','=', $shop_id)
-        ->orderBy('orders.created_at', 'DESC')
-        ->get(); 
+         $role = Auth::user()->role;
+         if($role==1)
+         {
+            // echo  "admin $emp_id";
+            $data['main_breadcrum'] = 'Shop';
+            $data['page_title'] = 'Shop Order List';
+            $data['flag'] = 13; 
+            $data['shop_orders'] = DB::table('users')
+            ->join('orders', 'users.id', '=','orders.emp_id')
+            ->select('orders.*','users.phone','users.name')
+            ->where('users.shop_id','=', $shop_id)           
+            ->orderBy('orders.created_at', 'DESC')
+            ->get();  
+         }
+         else
+         {
+            //  echo "emp $emp_id";
+            $data['main_breadcrum'] = 'Shop';
+            $data['page_title'] = 'Shop Order List';
+            $data['flag'] = 13; 
+            $data['shop_orders'] = DB::table('users')
+            ->join('orders', 'users.id', '=','orders.emp_id')
+            ->select('orders.*','users.phone','users.name')
+            ->where('users.shop_id','=', $shop_id)
+            ->where('orders.emp_id','=', $emp_id)
+            ->orderBy('orders.created_at', 'DESC')
+            ->get(); 
+         }
         // dd( $data['shop_orders']);
         //$data['stock'] = DB::table('shop_stocks')->orderBy('id','asc')->get(); 
         return view('admin/webviews/admin_manage_stock',$data);
@@ -920,6 +951,47 @@ public function downloadInvoice($order_id){
         {
             return back();
         }   
+    }
+
+    public function Cust_Order_Return()
+    {
+        
+    $data['main_breadcrum'] = 'Return';
+    $data['page_title'] = 'Customer Oder Id';
+    $data['flag'] = 16; 
+    $data['cust_order1'] = 2;
+    $shop_id = Auth::user()->shop_id;    
+    // dd($data);    
+    return view('admin/webviews/admin_manage_stock',$data);
+
+    }
+
+    public function Cust_Resturn_Order_id(Request $req)
+    {
+        // dd($req->order_id);        
+        $data['main_breadcrum'] = 'Return';
+        $data['page_title'] = 'Customer Oder Id';
+        $data['flag'] = 16; 
+        $shop_id = Auth::user()->shop_id;
+        $data['cust_order'] = DB::table('users')
+            ->join('orders', 'users.id', '=','orders.emp_id')
+            ->select('orders.*','users.phone','users.name')
+            ->where('users.shop_id','=', $shop_id)           
+            ->where('orders.order_id','=', $req->order_id)           
+            ->first(); 
+         if($data['cust_order'])
+         {
+            $data['cust_order1'] = 1;
+         } 
+         else
+         {
+            $data['cust_order1'] = 2;
+            $req->session()->flash('message', 'Bill ID Not Match!!!!');
+         }   
+
+        // dd($data['cust_order']);   
+    return view('admin/webviews/admin_manage_stock',$data);
+
     }
 
 

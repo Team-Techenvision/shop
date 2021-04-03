@@ -11,10 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('admin/common/login');
-    //return view('dashboard');
-});
+// Route::get('/', function () {
+//     return view('admin/common/login');
+//     //return view('dashboard');
+// });
+
+Route::get('/', 'AdminController@login');
 
 Route::get('Register', function () {
     return view('admin/common/register');
@@ -34,6 +36,10 @@ Route::post('search-product-barcode', 'AdminController@Productbarcode');
 Route::post('return-product-submit', 'AdminController@Productreturnsubmit');
 
 Route::post('product-order','AdminController@addproductorder');
+Route::get('cust-order-return', 'AdminController@Cust_Order_Return');
+Route::post('cust-resturn-order-id','AdminController@Cust_Resturn_Order_id');
+
+
 //new code rahul
 Route::get('cust-order', 'AdminController@customerorder');
 Route::post('add-cust-order', 'AdminController@add_cust_order');
@@ -67,10 +73,14 @@ Route::post('br-product-detail','AdminController@br_product_detail');
 Route::get('avaliable-quantity', 'ReportsController@avaliable_quantity');
 Route::get('product-exp-report', 'ReportsController@product_exp_report');
 Route::post('check-expiry2', 'ReportsController@check_expiry2');
+Route::post('form-to-expiry', 'ReportsController@Form_To_Expiry');
+
 Route::get('daily-update', 'ReportsController@daily_update');
 Route::get('daily-sell-update/{date}/{amount}', 'ReportsController@daily_sell_update');
 Route::get('top-sell-product', 'ReportsController@top_sell_product');
 Route::post('top-selling', 'ReportsController@top_selling');
+Route::get('not-sell-product', 'ReportsController@Not_Sell_Product');
+Route::post('Not-selling', 'ReportsController@Not_Selling_Product');
 Route::get('return_stock_report', 'ReportsController@return_stock_report');
 Route::post('search-return-qty', 'ReportsController@search_return_qty');
 
