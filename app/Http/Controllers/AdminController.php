@@ -640,6 +640,7 @@ public function downloadInvoice($order_id){
     //  dd($data['order']);
    $data['orderDetails'] = $orderDetails;
 //    $data['order'] = $orders;
+// dd($data['orderDetails']);
    $data['orderStatus'] = $orderStatus;
  
 //    $data['gst_count']=DB::select("select gst_tax.gst_value_percentage,SUM(order_items.sub_total * order_items.quantity) AS total from shop_stocks INNER join gst_tax ON(gst_tax.gst_id = shop_stocks.tax) INNER JOIN order_items ON(shop_stocks.products_id=order_items.prod_id) INNER JOIN orders ON(orders.order_id=order_items.order_id) WHERE( shop_stocks.shop_id= $shop_id AND orders.order_id= $order_id) GROUP BY(gst_tax.gst_value_percentage)"); 

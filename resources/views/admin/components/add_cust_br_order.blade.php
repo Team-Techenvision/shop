@@ -27,7 +27,7 @@
                         <!-- <option value="Shop">Shop</option>                    -->
                         <!-- <option value="5">5 Day</option> -->
                         <option value="Cash">Cash</option>
-                        <option value="Card">Card</option>
+                        <option value="Card">Card Credit/Debit</option>
                         <option value="UPI">UPI</option>
                         <option value="Qr_Code">Qr Code</option>                       
                       </select>

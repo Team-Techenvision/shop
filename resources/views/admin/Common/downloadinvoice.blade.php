@@ -33,7 +33,7 @@
 								<td style="font-size: 22px; margin-bottom: 0px; width: 100%; font-weight: 600;"> Tax Invoice</td>
 							</tr>
 							<tr style="width: 100%;">
-								<td style="margin-top: 5px; font-size: 18px; font-weight: 100; width: 100%;">AENSA Health Solutions Private Limited</td>
+								<td style="margin-top: 5px; font-size: 18px; font-weight: 100; width: 100%;">Dr. Help Desk (DHD)</td>
 							</tr>
 						</table>
 					</td>
@@ -51,6 +51,9 @@
 						<table style="width: 100%;">
                         <tr style="width: 100%;">
 								<td style="width: 100%; margin-top: 0px; margin-bottom: 0px; font-size: 14px; text-align: left; font-weight: 600; "> Invoice Number : <span style="font-weight: 600; font-size: 14px; padding-left:15px;">{{$orderDetails->order_id}}</span></td>
+							</tr>
+							<tr style="width: 100%;">
+								<td style="width: 100%; margin-top: 0px; margin-bottom: 0px; font-size: 14px; text-align: left; font-weight: 600; "> Payment Mode : <span style="font-weight: 600; font-size: 14px; padding-left:15px;">{{$orderDetails->payment_mode}}</span></td>
 							</tr>
 						</table>
 					</td>
