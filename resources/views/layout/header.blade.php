@@ -123,7 +123,7 @@
               <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{ url('/list-invoice') }}">Order List</a></li>
             <li class="category-heading">Customer Order</li>
               <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{ url('/cust-order') }}">Add order</a></li>
-              <!-- <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{ url('/cust-order-return') }}">Return Order</a></li> -->
+              <li class="nav-item"><a class="nav-link {{ active_class(['apps/chat']) }}" href="{{ url('/cust-order-return') }}">Return Order</a></li>
 
              
             </ul>

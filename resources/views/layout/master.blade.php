@@ -78,6 +78,13 @@
               minDate: '0', 
               dateFormat: 'yy-mm-dd'
             });
+
+
+            $(".cust_prod_return").click(function()
+            {
+              var order_id = $(this).find('.cust_order_id').text();
+              alert(order_id);
+            });
          
         </script>
     <!-- ======================== -->
