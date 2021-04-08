@@ -82,8 +82,72 @@
 
             $(".cust_prod_return").click(function()
             {
-              var order_id = $(this).find('.cust_order_id').text();
-              alert(order_id);
+              // var order_id = $(this).find('.cust_order_id span').html();
+              var order_id = $('.cust_order_id span').html();
+
+              $('.p_order_id').val(order_id);
+
+              // alert(order_id);
+            });
+            $('#check_brcode_product').click(function()
+            {
+              // var id = $(".p_barcode").val();
+              // alert($(".p_barcode").val());
+              if($(".p_barcode").val())
+              {
+                $.ajax({
+                  type: "post",          
+                  url: "{{ url('br-return-cust-order')}}",
+                  dataType: "json",
+                  data: {"_token": "{{ csrf_token() }}",
+                        "product":$(".p_barcode").val(),"order_id":$(".p_order_id").val()},
+                  success : function(response){
+                    if(response['data'].length > 0)
+                    {
+                      $(".Product_Name").val(response['data'][0].prod_name);
+                      $(".p_attr_id").val(response['data'][0].id);
+                      $(".Price").val(response['data'][0].sub_total);
+                      $(".quantity").val(response['data'][0].quantity);
+                      console.log(response);
+                    }
+                    else
+                    {
+                      $(".Product_Name , .quantity, .Price").val('');
+                      $('.model_error_sms').text("Invalid Product BarCode !!!");              
+                      $(".model_error_sms").css("display", "block");
+                      $(".model_error_sms").fadeOut(4500);
+                    }
+
+                  } 
+
+                });
+              }
+              else{
+                  $('.model_error_sms').text("Please Enter Product Barcode !!!");
+                  // alert("Please Enter Product Barcode!!!");
+                  $(".model_error_sms").css("display", "block");
+                  $(".model_error_sms").fadeOut(4500);
+              }
+
+            });
+
+            $("#btn_return").click(function()
+            {
+              var return_item = $('.Return_Qty').val();
+              var buy_quantity = $('.quantity').val();
+              if(buy_quantity >=return_item)
+              {
+                return true;
+              }
+              else
+              {
+                $('.model_error_sms').text("Return Quantity Less OR Equal Buying Quantity !!!");              
+                $(".model_error_sms").css("display", "block");
+                $(".model_error_sms").fadeOut(4500);
+                return false;
+              }
+
+
             });
          
         </script>

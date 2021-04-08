@@ -41,6 +41,7 @@ return array(
     'App\\login_info' => $baseDir . '/app/login_info.php',
     'App\\order_item' => $baseDir . '/app/order_item.php',
     'App\\product_order' => $baseDir . '/app/product_order.php',
+    'App\\return_items' => $baseDir . '/app/return_items.php',
     'App\\shop_stock' => $baseDir . '/app/shop_stock.php',
     'Asm89\\Stack\\Cors' => $vendorDir . '/asm89/stack-cors/src/Asm89/Stack/Cors.php',
     'Asm89\\Stack\\CorsService' => $vendorDir . '/asm89/stack-cors/src/Asm89/Stack/CorsService.php',

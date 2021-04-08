@@ -46,6 +46,7 @@
                       <label class="control-label">Product</label>
                       <input type="text" class="form-control text-center product_name" name="product_name[]" readonly>
                       <input type="hidden" class="form-control text-center product_id" name="product_id[]" readonly>                       
+                      <input type="hidden" class="form-control text-center avl_stock" name="avl_stock[]" readonly>                       
                 </div>
               </td>
               <td class="col-sm-1">
@@ -116,7 +117,7 @@ $(document).ready(function()
 // ====================================
     $("#addCF").click(function()
     {
-        $("#customFields").append('<tr class="row addrows mb-1"><td class="col-sm-2"><input type="text" class="form-control product_brcodes" name="product_brcode" required></td><td class="col-sm-3"> <input type="text" class="form-control text-center product_name" name="product_name[]" readonly><input type="hidden" class="form-control text-center product_id" name="product_id[]" readonly></td><td class="col-sm-1"><input type="text" class="form-control text-center product_price p-0" name="p_price[]"  value="" readonly></td><td class="col-sm-1"><input type="text" class="form-control text-center product_gst" name="gst[]" value="" readonly></td><td class="col-sm-2"><input type="number" class="form-control text-center productqty" name="p_qty[]"  value="1" min="1" required></td><td class="col-sm-2"><input type="text" class="form-control text-center amount" name="amt[]"  value="" readonly></td> <td class="col-sm-1"> <a href="javascript:void(0);" class="remCF btn btn-danger">Remove</a></td></tr>');
+        $("#customFields").append('<tr class="row addrows mb-1"><td class="col-sm-2"><input type="text" class="form-control product_brcodes" name="product_brcode" required></td><td class="col-sm-3"> <input type="text" class="form-control text-center product_name" name="product_name[]" readonly><input type="hidden" class="form-control text-center product_id" name="product_id[]" readonly><input type="hidden" class="form-control text-center avl_stock" name="avl_stock[]" readonly></td><td class="col-sm-1"><input type="text" class="form-control text-center product_price p-0" name="p_price[]"  value="" readonly></td><td class="col-sm-1"><input type="text" class="form-control text-center product_gst" name="gst[]" value="" readonly></td><td class="col-sm-2"><input type="number" class="form-control text-center productqty" name="p_qty[]"  value="1" min="1" required></td><td class="col-sm-2"><input type="text" class="form-control text-center amount" name="amt[]"  value="" readonly></td> <td class="col-sm-1"> <a href="javascript:void(0);" class="remCF btn btn-danger">Remove</a></td></tr>');
         final_amount();
     });
   // =========================
@@ -142,14 +143,26 @@ $(document).ready(function()
        }
         var $row = jQuery(this).closest('tr');
         var $columns = $row.find('td');
-        $price = $columns.find('.product_price').val();
-        $gst = $columns.find('.product_gst').val();
+        var avl_stock_in = $columns.find('.avl_stock').val();
+        alert(avl_stock_in +" "+ qtyvalue);
+        if(qtyvalue == avl_stock_in || qtyvalue < avl_stock_in )
+        {
+          alert("In");
+          $price = $columns.find('.product_price').val();
+          $gst = $columns.find('.product_gst').val();
 
-        $total = $price * qtyvalue;
-        // $gst_amt = ($price * qtyvalue)/100 * 10;
-        // $final_amt =$total + $gst_amt;
-        $columns.find('.amount').val($total.toFixed(2));       
-        final_amount();
+          $total = $price * qtyvalue;
+          // $gst_amt = ($price * qtyvalue)/100 * 10;
+          // $final_amt =$total + $gst_amt;
+          $columns.find('.amount').val($total.toFixed(2));       
+          final_amount();
+        }
+        else{
+          alert("out");
+              var def_one = 1;
+              $columns.find('.productqty').val(def_one);
+              alert("Product Quantity Not Avaliable !!!");
+        }
         //total($final_amt);
   });
     // ==================================     
@@ -291,6 +304,7 @@ $('table').on("keyup", ".product_brcodes", function(event)
                       //  $columns.find('.product_name').val(response['data'][i].product_name);
                       $columns.find('.product_name').val($p_name);
                        $columns.find('.product_id').val(response['data'][i].id);
+                       $columns.find('.avl_stock').val(response['data'][i].avl_quantity);                      
 
 
                        $columns.find('.product_gst').val(response['data'][i].gst_value_percentage);

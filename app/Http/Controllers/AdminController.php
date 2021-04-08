@@ -12,6 +12,7 @@ use App\User;
 use App\order_item;
 use App\DeWallet;
 use App\Return_Stock;
+use App\return_items;
 use App\login_info;
 use App;
 use Auth;
@@ -371,7 +372,7 @@ class AdminController extends Controller
     // ==============================================================
     public function submitcustorder(Request $req)
     {  
-        // dd($req);
+        //  dd($req->product_name);
        //dd(count($req->product_name));
        // $lenght = count($req->product_name);
        //for($i=0;i<lenght;$i++)      
@@ -820,7 +821,6 @@ public function downloadInvoice($order_id){
         else
         {
           $req->session()->flash('alert-danger', 'Profile Not Updated!!'); 
-
          }
          return back();
     }
@@ -894,7 +894,7 @@ public function downloadInvoice($order_id){
         $shop_id = Auth::user()->shop_id;
         // dd($p_id); // echo $p_id ;  // echo "<br>";
         // $product=DB::select("SELECT product_attributes.id,product_attributes.price,product_attributes.special_price,products.product_name,sizes.size_name,gst_tax.gst_value_percentage FROM `shop_stocks` INNER JOIN products ON (products.products_id=shop_stocks.products_id) INNER JOIN gst_tax ON (gst_tax.gst_id=products.gst_id)INNER JOIN product_attributes ON (product_attributes.id=shop_stocks.attribute_id)INNER JOIN sizes ON (sizes.id=product_attributes.product_size) WHERE (product_attributes.barcode=$p_id)");       
-        $product = DB::select("SELECT p_attr.id,p_attr.price,p_attr.special_price,p_attr.price_per_pic,gst_tax.gst_value_percentage,products.product_name,sizes.size_name FROM shop_stocks LEFT JOIN products ON (products.products_id=shop_stocks.products_id)LEFT JOIN gst_tax ON(gst_tax.gst_id=products.gst_id)LEFT JOIN product_attributes p_attr ON(p_attr.id=shop_stocks.attribute_id)LEFT JOIN sizes ON(sizes.id=p_attr.product_size) WHERE(shop_stocks.shop_id=$shop_id AND p_attr.barcode=$p_id)");
+        $product = DB::select("SELECT p_attr.id,p_attr.price,p_attr.special_price,p_attr.price_per_pic,gst_tax.gst_value_percentage,products.product_name,sizes.size_name,shop_stocks.avl_quantity FROM shop_stocks LEFT JOIN products ON (products.products_id=shop_stocks.products_id)LEFT JOIN gst_tax ON(gst_tax.gst_id=products.gst_id)LEFT JOIN product_attributes p_attr ON(p_attr.id=shop_stocks.attribute_id)LEFT JOIN sizes ON(sizes.id=p_attr.product_size) WHERE(shop_stocks.shop_id=$shop_id AND p_attr.barcode=$p_id)");
         // $product = DB::table('shop_stocks')       
         // ->join('products', 'shop_stocks.products_id', '=', 'products.products_id') 
         // ->join('product_attributes','product_attributes.id', '=', 'shop_stocks.attribute_id') 
@@ -993,6 +993,101 @@ public function downloadInvoice($order_id){
         // dd($data['cust_order']);   
     return view('admin/webviews/admin_manage_stock',$data);
 
+    }
+
+    public function Br_Return_Cust_Order()
+    {
+         $p_id  = $_POST['product'];
+         $order_id  = $_POST['order_id'];
+        
+        $shop_id = Auth::user()->shop_id;
+        // dd($p_id); // echo $p_id ;  // echo "<br>";
+        // $product=DB::select("SELECT product_attributes.id,product_attributes.price,product_attributes.special_price,products.product_name,sizes.size_name,gst_tax.gst_value_percentage FROM `shop_stocks` INNER JOIN products ON (products.products_id=shop_stocks.products_id) INNER JOIN gst_tax ON (gst_tax.gst_id=products.gst_id)INNER JOIN product_attributes ON (product_attributes.id=shop_stocks.attribute_id)INNER JOIN sizes ON (sizes.id=product_attributes.product_size) WHERE (product_attributes.barcode=$p_id)");       
+        // $product = DB::select("SELECT order_items.prod_name,order_items.quantity,order_items.sub_total FROM order_items INNER JOIN orders ON(orders.order_id=order_items.order_id)INNER JOIN product_attributes p_attr ON(p_attr.id=order_items.prod_id) WHERE (order_items.order_id=$order_id  AND p_attr.barcode=$p_id AND orders.shop_id=$shop_id)");
+         
+        $product = DB::table('order_items')       
+        ->join('orders','orders.order_id','=','order_items.order_id') 
+        ->join('product_attributes','product_attributes.id','=','order_items.prod_id')                
+        ->select('order_items.prod_name','order_items.quantity','order_items.sub_total','product_attributes.id')
+        ->where([['order_items.order_id','=',$order_id],['product_attributes.barcode','=',$p_id],['orders.shop_id','=',$shop_id]])
+        ->get(); 
+        // dd($product);
+       $producttest['data'] =  $product; 
+   echo json_encode($producttest);
+   exit; 
+    }
+//     public function Br_Return_Cust_Order(Request $req)
+//     {
+//         //  $p_id  = $_POST['product'];
+//         //  $order_id  = $_POST['order_id'];
+//          $order_id  = $req->p_order_id;
+//          $p_id = $req->p_barcode;
+//         // dd($req);
+//         $shop_id = Auth::user()->shop_id;
+//         // dd($p_id); // echo $p_id ;  // echo "<br>";
+//         // $product=DB::select("SELECT product_attributes.id,product_attributes.price,product_attributes.special_price,products.product_name,sizes.size_name,gst_tax.gst_value_percentage FROM `shop_stocks` INNER JOIN products ON (products.products_id=shop_stocks.products_id) INNER JOIN gst_tax ON (gst_tax.gst_id=products.gst_id)INNER JOIN product_attributes ON (product_attributes.id=shop_stocks.attribute_id)INNER JOIN sizes ON (sizes.id=product_attributes.product_size) WHERE (product_attributes.barcode=$p_id)");       
+//         // $product = DB::select("SELECT order_items.prod_name,order_items.quantity,order_items.sub_total FROM order_items INNER JOIN orders ON(orders.order_id=order_items.order_id)INNER JOIN product_attributes p_attr ON(p_attr.id=order_items.prod_id) WHERE (orders.order_id=$order_id  AND p_attr.barcode=$p_id AND orders.shop_id=$shop_id)");
+//         $product = DB::table('order_items')       
+//         ->join('orders','orders.order_id','=','order_items.order_id') 
+//         ->join('product_attributes','product_attributes.id','=','order_items.prod_id')                
+//         ->select('order_items.prod_name','order_items.quantity','order_items.sub_total')
+//         ->where([['order_items.order_id','=',$order_id],['product_attributes.barcode','=',$p_id],['orders.shop_id','=',$shop_id]])
+//         // ->where('p_attr.barcode','=',$p_id)
+//         // ->where('orders.shop_id','=',$shop_id)
+//         ->get(); 
+//         //  dd($product);
+// //        $producttest['data'] =  $product; 
+// //    echo json_encode($producttest);
+// //    exit; 
+//     }
+    public function Cust_Resturn_Product(Request $req)
+    {
+        // dd($req);
+        $shop_id = Auth::user()->shop_id;
+        $emp_id = Auth::user()->id;
+        $this->validate($req,[
+            'p_barcode'=>'required',        
+            'Return_Qty'=>'required|numeric'           
+         ]);
+
+        $data1 = new return_items;           
+        $data1->Bill_id=$req->p_order_id;
+        $data1->Product_Name= $req->Product_Name;
+        $data1->Price=$req->Price;
+        $data1->Buy_Qty=$req->Quantity;
+        $data1->Return_Qty=$req->Return_Qty;
+        $data1->Shop_id=$shop_id;
+        $data1->emp_id =$emp_id; 
+        $result = $data1->save();
+
+        if($data1)
+        {
+            $item_stock = DB::table('shop_stocks')           
+            ->select('avl_quantity')
+            ->where([['shop_id','=',$shop_id],['attribute_id','=',$req->p_attr_id]])                       
+            ->first();             
+            $update_item =  $item_stock->avl_quantity + $req->Return_Qty;
+
+            // dd($update_item);
+            // $update_stock = DB::update(DB::RAW("UPDATE shop_stocks SET (`avl_quantity` = avl_quantity + $req->Return_Qty) WHERE (`shop_id` =$shop_id AND 'attribute_id'=$req->p_attr_id)")); 
+            // dd($update_stock->tosql());
+            
+            $update_stock = DB::table('shop_stocks')
+            ->where([['shop_id','=',$shop_id],['attribute_id','=',$req->p_attr_id]])
+            ->update(['avl_quantity' => $update_item]);
+            if($update_stock)
+            {
+                $req->session()->flash('message_success', 'Product Successfully Updated !!');   
+            }
+            $req->session()->flash('message_success', 'Product Successfully not Updated !!');            
+
+        }else{
+          $req->session()->flash('message', 'Product Not Updated !!!');
+           
+        }
+
+        return redirect('/cust-order-return');
+    
     }
 
 

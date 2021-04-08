@@ -38,6 +38,12 @@ Route::post('return-product-submit', 'AdminController@Productreturnsubmit');
 Route::post('product-order','AdminController@addproductorder');
 Route::get('cust-order-return', 'AdminController@Cust_Order_Return');
 Route::post('cust-resturn-order-id','AdminController@Cust_Resturn_Order_id');
+Route::post('cust-resturn-product','AdminController@Cust_Resturn_Product');
+Route::post('br-return-cust-order','AdminController@Br_Return_Cust_Order');
+
+
+
+
 
 
 //new code rahul
